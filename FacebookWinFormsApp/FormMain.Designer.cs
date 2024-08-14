@@ -32,12 +32,14 @@
             this.buttonLogout = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPageHomePage = new System.Windows.Forms.TabPage();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.textBoxAppID = new System.Windows.Forms.TextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPageFindMatch = new System.Windows.Forms.TabPage();
+            this.tabPageFeature2 = new System.Windows.Forms.TabPage();
+            this.labelUserName = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tabPageHomePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,15 +72,15 @@
             this.label1.Location = new System.Drawing.Point(314, 17);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(559, 36);
+            this.label1.Size = new System.Drawing.Size(225, 24);
             this.label1.TabIndex = 53;
-            this.label1.Text = "This is the AppID of \"Design Patterns App 2.4\". The grader will use it to test yo" +
-    "ur app.\r\nType here your own AppID to test it:";
+            this.label1.Text = "Type here AppID to test it:";
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPageHomePage);
+            this.tabControl1.Controls.Add(this.tabPageFindMatch);
+            this.tabControl1.Controls.Add(this.tabPageFeature2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -86,26 +88,27 @@
             this.tabControl1.Size = new System.Drawing.Size(1243, 697);
             this.tabControl1.TabIndex = 54;
             // 
-            // tabPage1
+            // tabPageHomePage
             // 
-            this.tabPage1.Controls.Add(this.pictureBoxProfile);
-            this.tabPage1.Controls.Add(this.textBoxAppID);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.buttonLogout);
-            this.tabPage1.Controls.Add(this.buttonLogin);
-            this.tabPage1.Location = new System.Drawing.Point(4, 27);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1235, 666);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPageHomePage.Controls.Add(this.labelUserName);
+            this.tabPageHomePage.Controls.Add(this.pictureBoxProfile);
+            this.tabPageHomePage.Controls.Add(this.textBoxAppID);
+            this.tabPageHomePage.Controls.Add(this.label1);
+            this.tabPageHomePage.Controls.Add(this.buttonLogout);
+            this.tabPageHomePage.Controls.Add(this.buttonLogin);
+            this.tabPageHomePage.Location = new System.Drawing.Point(4, 31);
+            this.tabPageHomePage.Name = "tabPageHomePage";
+            this.tabPageHomePage.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageHomePage.Size = new System.Drawing.Size(1235, 662);
+            this.tabPageHomePage.TabIndex = 0;
+            this.tabPageHomePage.Text = "Home Page";
+            this.tabPageHomePage.UseVisualStyleBackColor = true;
             // 
             // pictureBoxProfile
             // 
-            this.pictureBoxProfile.Location = new System.Drawing.Point(18, 96);
+            this.pictureBoxProfile.Location = new System.Drawing.Point(77, 145);
             this.pictureBoxProfile.Name = "pictureBoxProfile";
-            this.pictureBoxProfile.Size = new System.Drawing.Size(79, 78);
+            this.pictureBoxProfile.Size = new System.Drawing.Size(150, 100);
             this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxProfile.TabIndex = 55;
             this.pictureBoxProfile.TabStop = false;
@@ -114,23 +117,42 @@
             // 
             this.textBoxAppID.Location = new System.Drawing.Point(317, 61);
             this.textBoxAppID.Name = "textBoxAppID";
-            this.textBoxAppID.Size = new System.Drawing.Size(237, 24);
+            this.textBoxAppID.Size = new System.Drawing.Size(237, 28);
             this.textBoxAppID.TabIndex = 54;
-            this.textBoxAppID.Text = "1450160541956417";
+            this.textBoxAppID.Text = "1320566432232601";
             // 
-            // tabPage2
+            // tabPageFindMatch
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 27);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1235, 666);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPageFindMatch.Location = new System.Drawing.Point(4, 31);
+            this.tabPageFindMatch.Name = "tabPageFindMatch";
+            this.tabPageFindMatch.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFindMatch.Size = new System.Drawing.Size(1235, 662);
+            this.tabPageFindMatch.TabIndex = 1;
+            this.tabPageFindMatch.Text = "Find Match";
+            this.tabPageFindMatch.UseVisualStyleBackColor = true;
+            // 
+            // tabPageFeature2
+            // 
+            this.tabPageFeature2.Location = new System.Drawing.Point(4, 31);
+            this.tabPageFeature2.Name = "tabPageFeature2";
+            this.tabPageFeature2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFeature2.Size = new System.Drawing.Size(1235, 662);
+            this.tabPageFeature2.TabIndex = 2;
+            this.tabPageFeature2.Text = "Feature2";
+            this.tabPageFeature2.UseVisualStyleBackColor = true;
+            // 
+            // labelUserName
+            // 
+            this.labelUserName.AutoSize = true;
+            this.labelUserName.Location = new System.Drawing.Point(77, 104);
+            this.labelUserName.Name = "labelUserName";
+            this.labelUserName.Size = new System.Drawing.Size(190, 24);
+            this.labelUserName.TabIndex = 56;
+            this.labelUserName.Text = "No user logged in yet";
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1243, 697);
             this.Controls.Add(this.tabControl1);
@@ -138,10 +160,10 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Facebook Desktop";
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.tabPageHomePage.ResumeLayout(false);
+            this.tabPageHomePage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
             this.ResumeLayout(false);
 
@@ -153,10 +175,12 @@
 		private System.Windows.Forms.Button buttonLogout;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TabControl tabControl1;
-		private System.Windows.Forms.TabPage tabPage1;
-		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.TabPage tabPageHomePage;
+		private System.Windows.Forms.TabPage tabPageFindMatch;
         private System.Windows.Forms.TextBox textBoxAppID;
         private System.Windows.Forms.PictureBox pictureBoxProfile;
+        private System.Windows.Forms.TabPage tabPageFeature2;
+        private System.Windows.Forms.Label labelUserName;
     }
 }
 

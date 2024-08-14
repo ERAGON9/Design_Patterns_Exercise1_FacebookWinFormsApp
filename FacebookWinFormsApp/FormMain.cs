@@ -13,28 +13,23 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
+        private LoginResult m_LoginResult;
+        private User m_LoggedInUser;
+
         public FormMain()
         {
             InitializeComponent();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
         }
 
-        FacebookWrapper.LoginResult m_LoginResult;
-
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText("design.patterns");
-
-            if (m_LoginResult == null)
-            {
-                login();
-            }
+            login();
         }
 
         private void login()
         {
             m_LoginResult = FacebookService.Login(
-                /// (This is Desig Patter's App ID. replace it with your own)
                 textBoxAppID.Text,
                 /// requested permissions:
                 "email",
@@ -42,13 +37,20 @@ namespace BasicFacebookFeatures
                 /// add any relevant permissions
                 );
 
-            if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
+            if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage) && !string.IsNullOrEmpty(m_LoginResult.AccessToken))
             {
-                buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
-                buttonLogin.BackColor = Color.LightGreen;
-                pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
+                m_LoggedInUser = m_LoginResult.LoggedInUser;
+                buttonLogin.Text = $"Logged in";
+                labelUserName.Text = $"Hello {m_LoggedInUser.Name}";
+                labelUserName.BackColor = Color.LightGreen;
+                //buttonLogin.BackColor = Color.LightGreen;
+                pictureBoxProfile.ImageLocation = m_LoggedInUser.PictureNormalURL;
                 buttonLogin.Enabled = false;
                 buttonLogout.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show(m_LoginResult.ErrorMessage, "Login Failed");
             }
         }
 
@@ -56,8 +58,11 @@ namespace BasicFacebookFeatures
         {
             FacebookService.LogoutWithUI();
             buttonLogin.Text = "Login";
-            buttonLogin.BackColor = buttonLogout.BackColor;
+            labelUserName.Text = "No user logged in yet";
+            labelUserName.BackColor = buttonLogout.BackColor;
             m_LoginResult = null;
+            m_LoggedInUser = null;
+            pictureBoxProfile.ImageLocation = null;
             buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
         }
