@@ -44,7 +44,7 @@ namespace BasicFacebookFeatures
                 labelUserName.Text = $"Hello {m_LoggedInUser.Name}";
                 labelUserName.BackColor = Color.LightGreen;
                 //buttonLogin.BackColor = Color.LightGreen;
-                pictureBoxProfile.ImageLocation = m_LoggedInUser.PictureNormalURL;
+                pictureBoxProfile.ImageLocation = m_LoggedInUser.PictureLargeURL;
                 buttonLogin.Enabled = false;
                 buttonLogout.Enabled = true;
             }
