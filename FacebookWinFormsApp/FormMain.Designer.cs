@@ -38,9 +38,16 @@
             this.tabPageFindMatch = new System.Windows.Forms.TabPage();
             this.tabPageFeature2 = new System.Windows.Forms.TabPage();
             this.labelUserName = new System.Windows.Forms.Label();
+            this.labelTitle1 = new System.Windows.Forms.Label();
+            this.labelTitle2 = new System.Windows.Forms.Label();
+            this.labelGenderPreference = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.labelFriendList = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageHomePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
+            this.tabPageFindMatch.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonLogin
@@ -123,6 +130,12 @@
             // 
             // tabPageFindMatch
             // 
+            this.tabPageFindMatch.Controls.Add(this.label3);
+            this.tabPageFindMatch.Controls.Add(this.labelFriendList);
+            this.tabPageFindMatch.Controls.Add(this.label2);
+            this.tabPageFindMatch.Controls.Add(this.labelGenderPreference);
+            this.tabPageFindMatch.Controls.Add(this.labelTitle2);
+            this.tabPageFindMatch.Controls.Add(this.labelTitle1);
             this.tabPageFindMatch.Location = new System.Drawing.Point(4, 31);
             this.tabPageFindMatch.Name = "tabPageFindMatch";
             this.tabPageFindMatch.Padding = new System.Windows.Forms.Padding(3);
@@ -150,6 +163,62 @@
             this.labelUserName.TabIndex = 56;
             this.labelUserName.Text = "No user logged in yet";
             // 
+            // labelTitle1
+            // 
+            this.labelTitle1.AutoSize = true;
+            this.labelTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTitle1.Location = new System.Drawing.Point(382, 32);
+            this.labelTitle1.Name = "labelTitle1";
+            this.labelTitle1.Size = new System.Drawing.Size(490, 52);
+            this.labelTitle1.TabIndex = 0;
+            this.labelTitle1.Text = "Welcom to Find Match!";
+            // 
+            // labelTitle2
+            // 
+            this.labelTitle2.AutoSize = true;
+            this.labelTitle2.Location = new System.Drawing.Point(365, 93);
+            this.labelTitle2.Name = "labelTitle2";
+            this.labelTitle2.Size = new System.Drawing.Size(540, 24);
+            this.labelTitle2.TabIndex = 1;
+            this.labelTitle2.Text = "Lets try find out your best next date based on common hobbies!\r\n";
+            // 
+            // labelGenderPreference
+            // 
+            this.labelGenderPreference.AutoSize = true;
+            this.labelGenderPreference.Location = new System.Drawing.Point(513, 175);
+            this.labelGenderPreference.Name = "labelGenderPreference";
+            this.labelGenderPreference.Size = new System.Drawing.Size(176, 24);
+            this.labelGenderPreference.TabIndex = 2;
+            this.labelGenderPreference.Text = "Gender preference:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(513, 298);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(147, 24);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Age preference:";
+            // 
+            // labelFriendList
+            // 
+            this.labelFriendList.AutoSize = true;
+            this.labelFriendList.Location = new System.Drawing.Point(517, 448);
+            this.labelFriendList.Name = "labelFriendList";
+            this.labelFriendList.Size = new System.Drawing.Size(96, 24);
+            this.labelFriendList.TabIndex = 4;
+            this.labelFriendList.Text = "Friend list:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(351, 477);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(404, 18);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "(Sorted by number of shared like pages in descending order)";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
@@ -165,6 +234,8 @@
             this.tabPageHomePage.ResumeLayout(false);
             this.tabPageHomePage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
+            this.tabPageFindMatch.ResumeLayout(false);
+            this.tabPageFindMatch.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -181,6 +252,12 @@
         private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.TabPage tabPageFeature2;
         private System.Windows.Forms.Label labelUserName;
+        private System.Windows.Forms.Label labelTitle1;
+        private System.Windows.Forms.Label labelTitle2;
+        private System.Windows.Forms.Label labelGenderPreference;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelFriendList;
+        private System.Windows.Forms.Label label2;
     }
 }
 
