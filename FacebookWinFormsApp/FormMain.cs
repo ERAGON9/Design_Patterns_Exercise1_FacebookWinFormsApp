@@ -33,7 +33,8 @@ namespace BasicFacebookFeatures
                 textBoxAppID.Text,
                 /// requested permissions:
                 "email",
-                "public_profile"
+                "public_profile",
+                "user_friends"
                 /// add any relevant permissions
                 );
 
@@ -44,7 +45,7 @@ namespace BasicFacebookFeatures
                 labelUserName.Text = $"Hello {m_LoggedInUser.Name}";
                 labelUserName.BackColor = Color.LightGreen;
                 //buttonLogin.BackColor = Color.LightGreen;
-                pictureBoxProfile.ImageLocation = m_LoggedInUser.PictureNormalURL;
+                pictureBoxProfile.ImageLocation = m_LoggedInUser.PictureLargeURL;
                 buttonLogin.Enabled = false;
                 buttonLogout.Enabled = true;
             }
