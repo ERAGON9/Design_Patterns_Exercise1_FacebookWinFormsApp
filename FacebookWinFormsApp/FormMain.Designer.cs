@@ -48,20 +48,21 @@
             this.pictureBoxFindMatchRight = new System.Windows.Forms.PictureBox();
             this.radioButtonMale = new System.Windows.Forms.RadioButton();
             this.radioButtonFemale = new System.Windows.Forms.RadioButton();
-            this.numericUpDownFromAge = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMinAge = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.numericUpDownToAge = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMaxAge = new System.Windows.Forms.NumericUpDown();
             this.listBoxFriendList = new System.Windows.Forms.ListBox();
             this.pictureBoxFriendList = new System.Windows.Forms.PictureBox();
+            this.buttonFindMatch = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPageHomePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.tabPageFindMatch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFindMatchLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFindMatchRight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFromAge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownToAge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinAge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxAge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -146,12 +147,13 @@
             // tabPageFindMatch
             // 
             this.tabPageFindMatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
+            this.tabPageFindMatch.Controls.Add(this.buttonFindMatch);
             this.tabPageFindMatch.Controls.Add(this.pictureBoxFriendList);
             this.tabPageFindMatch.Controls.Add(this.listBoxFriendList);
             this.tabPageFindMatch.Controls.Add(this.label5);
-            this.tabPageFindMatch.Controls.Add(this.numericUpDownToAge);
+            this.tabPageFindMatch.Controls.Add(this.numericUpDownMaxAge);
             this.tabPageFindMatch.Controls.Add(this.label4);
-            this.tabPageFindMatch.Controls.Add(this.numericUpDownFromAge);
+            this.tabPageFindMatch.Controls.Add(this.numericUpDownMinAge);
             this.tabPageFindMatch.Controls.Add(this.radioButtonFemale);
             this.tabPageFindMatch.Controls.Add(this.radioButtonMale);
             this.tabPageFindMatch.Controls.Add(this.pictureBoxFindMatchRight);
@@ -171,13 +173,13 @@
             // 
             // tabPageFeature2
             // 
+            this.tabPageFeature2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
             this.tabPageFeature2.Location = new System.Drawing.Point(4, 31);
             this.tabPageFeature2.Name = "tabPageFeature2";
             this.tabPageFeature2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageFeature2.Size = new System.Drawing.Size(1235, 662);
             this.tabPageFeature2.TabIndex = 2;
             this.tabPageFeature2.Text = "Feature2";
-            this.tabPageFeature2.UseVisualStyleBackColor = true;
             // 
             // labelUserName
             // 
@@ -193,7 +195,7 @@
             // 
             this.labelTitle1.AutoSize = true;
             this.labelTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitle1.Location = new System.Drawing.Point(382, 32);
+            this.labelTitle1.Location = new System.Drawing.Point(374, 32);
             this.labelTitle1.Name = "labelTitle1";
             this.labelTitle1.Size = new System.Drawing.Size(515, 52);
             this.labelTitle1.TabIndex = 0;
@@ -202,7 +204,7 @@
             // labelTitle2
             // 
             this.labelTitle2.AutoSize = true;
-            this.labelTitle2.Location = new System.Drawing.Point(360, 98);
+            this.labelTitle2.Location = new System.Drawing.Point(358, 101);
             this.labelTitle2.Name = "labelTitle2";
             this.labelTitle2.Size = new System.Drawing.Size(549, 24);
             this.labelTitle2.TabIndex = 1;
@@ -213,7 +215,7 @@
             this.labelGenderPreference.AutoSize = true;
             this.labelGenderPreference.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelGenderPreference.Location = new System.Drawing.Point(513, 172);
+            this.labelGenderPreference.Location = new System.Drawing.Point(513, 144);
             this.labelGenderPreference.Name = "labelGenderPreference";
             this.labelGenderPreference.Size = new System.Drawing.Size(210, 26);
             this.labelGenderPreference.TabIndex = 2;
@@ -224,7 +226,7 @@
             this.labelAgePreference.AutoSize = true;
             this.labelAgePreference.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAgePreference.Location = new System.Drawing.Point(513, 296);
+            this.labelAgePreference.Location = new System.Drawing.Point(513, 254);
             this.labelAgePreference.Name = "labelAgePreference";
             this.labelAgePreference.Size = new System.Drawing.Size(174, 26);
             this.labelAgePreference.TabIndex = 3;
@@ -235,7 +237,7 @@
             this.labelFriendList.AutoSize = true;
             this.labelFriendList.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelFriendList.Location = new System.Drawing.Point(517, 423);
+            this.labelFriendList.Location = new System.Drawing.Point(517, 434);
             this.labelFriendList.Name = "labelFriendList";
             this.labelFriendList.Size = new System.Drawing.Size(117, 26);
             this.labelFriendList.TabIndex = 4;
@@ -245,7 +247,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(362, 453);
+            this.label3.Location = new System.Drawing.Point(362, 464);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(460, 20);
             this.label3.TabIndex = 5;
@@ -253,35 +255,35 @@
             // 
             // pictureBoxFindMatchLeft
             // 
-            this.pictureBoxFindMatchLeft.Location = new System.Drawing.Point(276, 34);
+            this.pictureBoxFindMatchLeft.Location = new System.Drawing.Point(250, 8);
             this.pictureBoxFindMatchLeft.Name = "pictureBoxFindMatchLeft";
-            this.pictureBoxFindMatchLeft.Size = new System.Drawing.Size(100, 50);
+            this.pictureBoxFindMatchLeft.Size = new System.Drawing.Size(100, 100);
             this.pictureBoxFindMatchLeft.TabIndex = 6;
             this.pictureBoxFindMatchLeft.TabStop = false;
             // 
             // pictureBoxFindMatchRight
             // 
-            this.pictureBoxFindMatchRight.Location = new System.Drawing.Point(903, 32);
+            this.pictureBoxFindMatchRight.Location = new System.Drawing.Point(913, 8);
             this.pictureBoxFindMatchRight.Name = "pictureBoxFindMatchRight";
-            this.pictureBoxFindMatchRight.Size = new System.Drawing.Size(100, 50);
+            this.pictureBoxFindMatchRight.Size = new System.Drawing.Size(100, 100);
             this.pictureBoxFindMatchRight.TabIndex = 7;
             this.pictureBoxFindMatchRight.TabStop = false;
             // 
             // radioButtonMale
             // 
             this.radioButtonMale.AutoSize = true;
-            this.radioButtonMale.Location = new System.Drawing.Point(522, 221);
+            this.radioButtonMale.Location = new System.Drawing.Point(522, 188);
             this.radioButtonMale.Name = "radioButtonMale";
             this.radioButtonMale.Size = new System.Drawing.Size(72, 28);
             this.radioButtonMale.TabIndex = 8;
-            this.radioButtonMale.TabStop = true;
             this.radioButtonMale.Text = "Male";
             this.radioButtonMale.UseVisualStyleBackColor = true;
             // 
             // radioButtonFemale
             // 
             this.radioButtonFemale.AutoSize = true;
-            this.radioButtonFemale.Location = new System.Drawing.Point(621, 221);
+            this.radioButtonFemale.Checked = true;
+            this.radioButtonFemale.Location = new System.Drawing.Point(621, 188);
             this.radioButtonFemale.Name = "radioButtonFemale";
             this.radioButtonFemale.Size = new System.Drawing.Size(95, 28);
             this.radioButtonFemale.TabIndex = 9;
@@ -289,13 +291,13 @@
             this.radioButtonFemale.Text = "Female";
             this.radioButtonFemale.UseVisualStyleBackColor = true;
             // 
-            // numericUpDownFromAge
+            // numericUpDownMinAge
             // 
-            this.numericUpDownFromAge.Location = new System.Drawing.Point(535, 350);
-            this.numericUpDownFromAge.Name = "numericUpDownFromAge";
-            this.numericUpDownFromAge.Size = new System.Drawing.Size(68, 28);
-            this.numericUpDownFromAge.TabIndex = 10;
-            this.numericUpDownFromAge.Value = new decimal(new int[] {
+            this.numericUpDownMinAge.Location = new System.Drawing.Point(524, 304);
+            this.numericUpDownMinAge.Name = "numericUpDownMinAge";
+            this.numericUpDownMinAge.Size = new System.Drawing.Size(68, 28);
+            this.numericUpDownMinAge.TabIndex = 10;
+            this.numericUpDownMinAge.Value = new decimal(new int[] {
             18,
             0,
             0,
@@ -304,28 +306,28 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(474, 352);
+            this.label4.Location = new System.Drawing.Point(474, 306);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(55, 24);
+            this.label4.Size = new System.Drawing.Size(46, 24);
             this.label4.TabIndex = 11;
-            this.label4.Text = "From";
+            this.label4.Text = "Min:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(620, 352);
+            this.label5.Location = new System.Drawing.Point(606, 306);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(33, 24);
+            this.label5.Size = new System.Drawing.Size(51, 24);
             this.label5.TabIndex = 13;
-            this.label5.Text = "To";
+            this.label5.Text = "Max:";
             // 
-            // numericUpDownToAge
+            // numericUpDownMaxAge
             // 
-            this.numericUpDownToAge.Location = new System.Drawing.Point(662, 350);
-            this.numericUpDownToAge.Name = "numericUpDownToAge";
-            this.numericUpDownToAge.Size = new System.Drawing.Size(68, 28);
-            this.numericUpDownToAge.TabIndex = 12;
-            this.numericUpDownToAge.Value = new decimal(new int[] {
+            this.numericUpDownMaxAge.Location = new System.Drawing.Point(662, 304);
+            this.numericUpDownMaxAge.Name = "numericUpDownMaxAge";
+            this.numericUpDownMaxAge.Size = new System.Drawing.Size(68, 28);
+            this.numericUpDownMaxAge.TabIndex = 12;
+            this.numericUpDownMaxAge.Value = new decimal(new int[] {
             26,
             0,
             0,
@@ -336,18 +338,28 @@
             this.listBoxFriendList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxFriendList.FormattingEnabled = true;
             this.listBoxFriendList.ItemHeight = 25;
-            this.listBoxFriendList.Location = new System.Drawing.Point(421, 483);
+            this.listBoxFriendList.Location = new System.Drawing.Point(421, 494);
             this.listBoxFriendList.Name = "listBoxFriendList";
             this.listBoxFriendList.Size = new System.Drawing.Size(316, 154);
             this.listBoxFriendList.TabIndex = 14;
             // 
             // pictureBoxFriendList
             // 
-            this.pictureBoxFriendList.Location = new System.Drawing.Point(751, 509);
+            this.pictureBoxFriendList.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBoxFriendList.Location = new System.Drawing.Point(751, 520);
             this.pictureBoxFriendList.Name = "pictureBoxFriendList";
             this.pictureBoxFriendList.Size = new System.Drawing.Size(100, 100);
             this.pictureBoxFriendList.TabIndex = 15;
             this.pictureBoxFriendList.TabStop = false;
+            // 
+            // buttonFindMatch
+            // 
+            this.buttonFindMatch.Location = new System.Drawing.Point(518, 368);
+            this.buttonFindMatch.Name = "buttonFindMatch";
+            this.buttonFindMatch.Size = new System.Drawing.Size(198, 40);
+            this.buttonFindMatch.TabIndex = 16;
+            this.buttonFindMatch.Text = "Lets Find Match!";
+            this.buttonFindMatch.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -368,8 +380,8 @@
             this.tabPageFindMatch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFindMatchLeft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFindMatchRight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFromAge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownToAge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinAge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxAge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendList)).EndInit();
             this.ResumeLayout(false);
 
@@ -398,11 +410,12 @@
         private System.Windows.Forms.RadioButton radioButtonFemale;
         private System.Windows.Forms.RadioButton radioButtonMale;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numericUpDownToAge;
+        private System.Windows.Forms.NumericUpDown numericUpDownMaxAge;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown numericUpDownFromAge;
+        private System.Windows.Forms.NumericUpDown numericUpDownMinAge;
         private System.Windows.Forms.PictureBox pictureBoxFriendList;
         private System.Windows.Forms.ListBox listBoxFriendList;
+        private System.Windows.Forms.Button buttonFindMatch;
     }
 }
 

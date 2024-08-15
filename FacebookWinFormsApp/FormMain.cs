@@ -33,7 +33,8 @@ namespace BasicFacebookFeatures
                 textBoxAppID.Text,
                 /// requested permissions:
                 "email",
-                "public_profile"
+                "public_profile",
+                "user_friends"
                 /// add any relevant permissions
                 );
 
