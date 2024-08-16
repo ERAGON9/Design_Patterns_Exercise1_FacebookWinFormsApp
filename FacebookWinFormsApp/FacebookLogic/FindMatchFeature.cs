@@ -39,18 +39,18 @@ namespace BasicFacebookFeatures.FacebookLogic
             }
         }
 
-        private int m_AgePrefernceMax;
-        public int AgePrefernceMax
+        private int m_AgePreferenceMax;
+        public int AgePreferenceMax
         {
             get
             {
-                return m_AgePrefernceMax;
+                return m_AgePreferenceMax;
             }
             set
             {
                 if (value >= r_AgePreferenceMinRestriction && value <= r_AgePrefernceMaxRestriction)
                 {
-                    m_AgePrefernceMax = value;
+                    m_AgePreferenceMax = value;
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace BasicFacebookFeatures.FacebookLogic
         {
             GenderPreference = User.eGender.female;
             AgePreferenceMin = r_AgePreferenceMinRestriction;
-            AgePrefernceMax = r_AgePrefernceMaxRestriction; //TODO: change at the UI to 100!!!
+            AgePreferenceMax = r_AgePrefernceMaxRestriction; //TODO: change at the UI to 100!!!
         }
 
         public List<User> FindUserMatch()
@@ -152,7 +152,7 @@ namespace BasicFacebookFeatures.FacebookLogic
                     friendAge--;
                 }
 
-                inAgePreference = friendAge >= AgePreferenceMin && friendAge <= AgePrefernceMax;
+                inAgePreference = friendAge >= AgePreferenceMin && friendAge <= AgePreferenceMax;
             }
 
             return inAgePreference;

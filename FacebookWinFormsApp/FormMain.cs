@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
+using BasicFacebookFeatures.FacebookLogic;
+using static FacebookWrapper.ObjectModel.User;
 
 namespace BasicFacebookFeatures
 {
@@ -15,11 +17,13 @@ namespace BasicFacebookFeatures
     {
         private LoginResult m_LoginResult;
         private User m_LoggedInUser;
+        private FindMatchFeature m_FindMatchFeature;
 
         public FormMain()
         {
             InitializeComponent();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
+            m_FindMatchFeature = new FindMatchFeature();
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -66,6 +70,67 @@ namespace BasicFacebookFeatures
             pictureBoxProfile.ImageLocation = null;
             buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
+        }
+
+        private void buttonFindMatch_Click(object sender, EventArgs e)
+        {
+            operateAndDisplayFindMatch();
+        }
+
+        private void operateAndDisplayFindMatch()
+        {
+            try
+            {
+                listBoxMatchesList.Items.Clear();
+                listBoxMatchesList.DisplayMember = "Name";
+                m_FindMatchFeature.UserLogin = m_LoginResult.LoggedInUser;
+                m_FindMatchFeature.GenderPreference = getGenderFromForm();
+                m_FindMatchFeature.AgePreferenceMin = (int)numericUpDownMinAge.Value;
+                m_FindMatchFeature.AgePreferenceMax = (int)numericUpDownMaxAge.Value;
+                List<User> userMatches = m_FindMatchFeature.FindUserMatch();
+
+                if (userMatches.Count > 0)
+                {
+                    foreach (User match in userMatches)
+                    {
+                        listBoxMatchesList.Items.Add(match);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Find Match didn't found any matches for you, maybe try diffrent preferences!");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private eGender getGenderFromForm()
+        {
+            eGender genderPrefernce = eGender.female;
+
+            if (radioButtonMale.Checked)
+            {
+                genderPrefernce = eGender.male;
+            }
+
+            return genderPrefernce;
+        }
+
+        private void listBoxMatchesList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBoxMatchesList.SelectedItems.Count == 1)
+            {
+                User matchPicked = listBoxMatchesList.SelectedItem as User;
+                if (matchPicked != null)
+                {
+                    pictureBoxFriendList.ImageLocation = matchPicked.PictureNormalURL;
+                    // TODO: can show information on the User match!
+                }
+            }
         }
     }
 }
