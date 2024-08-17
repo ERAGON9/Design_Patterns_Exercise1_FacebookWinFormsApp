@@ -482,6 +482,7 @@
             // 
             // pictureBoxFriend
             // 
+            this.pictureBoxFriend.BackColor = System.Drawing.Color.Gainsboro;
             this.pictureBoxFriend.Location = new System.Drawing.Point(55, 93);
             this.pictureBoxFriend.Name = "pictureBoxFriend";
             this.pictureBoxFriend.Size = new System.Drawing.Size(224, 142);

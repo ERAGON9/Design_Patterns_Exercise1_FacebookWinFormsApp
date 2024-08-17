@@ -158,6 +158,10 @@ namespace BasicFacebookFeatures
                 comboBoxFriends.Items.Add("Couldn't fetch friends");
             }
         }
+        private void test()
+        {
+            //Console.WriteLine(  "fdfdfdf");
+        }
         private void buttonShowInteractionStats_Click(object sender, EventArgs e)
         {
             showFriendInteractionStats();
