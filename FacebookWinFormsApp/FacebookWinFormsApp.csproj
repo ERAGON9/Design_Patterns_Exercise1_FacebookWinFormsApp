@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FacebookLogic\FindMatchFeature.cs" />
+    <Compile Include="FacebookLogic\FriendOverViewFeature.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>

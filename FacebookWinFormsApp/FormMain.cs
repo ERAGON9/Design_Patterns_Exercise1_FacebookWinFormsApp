@@ -18,6 +18,7 @@ namespace BasicFacebookFeatures
         private LoginResult m_LoginResult;
         private User m_LoggedInUser;
         private FindMatchFeature m_FindMatchFeature;
+        private FriendOverViewFeature m_FriendConnectionOverview;
 
         public FormMain()
         {
@@ -45,6 +46,7 @@ namespace BasicFacebookFeatures
             if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage) && !string.IsNullOrEmpty(m_LoginResult.AccessToken))
             {
                 m_LoggedInUser = m_LoginResult.LoggedInUser;
+                m_FriendConnectionOverview = new FriendOverViewFeature(m_LoggedInUser);
                 buttonLogin.Text = $"Logged in";
                 labelUserName.Text = $"Hello {m_LoggedInUser.Name}";
                 labelUserName.BackColor = Color.LightGreen;
@@ -52,6 +54,7 @@ namespace BasicFacebookFeatures
                 pictureBoxProfile.ImageLocation = m_LoggedInUser.PictureLargeURL;
                 buttonLogin.Enabled = false;
                 buttonLogout.Enabled = true;
+                populateFriendsList();
             }
             else
             {
@@ -130,6 +133,134 @@ namespace BasicFacebookFeatures
                     pictureBoxFriendList.ImageLocation = matchPicked.PictureNormalURL;
                     // TODO: can show information on the User match!
                 }
+            }
+        }
+
+        private void populateFriendsList()
+        {
+            comboBoxFriends.Items.Clear();
+            comboBoxFriends.DisplayMember = "Name";
+
+            try
+            {
+                foreach (User friend in m_LoggedInUser.Friends)
+                {
+                    comboBoxFriends.Items.Add(friend);
+                }
+
+                if (comboBoxFriends.Items.Count == 0)
+                {
+                    comboBoxFriends.Items.Add("No friends available");
+                }
+            }
+            catch (Exception)
+            {
+                comboBoxFriends.Items.Add("Couldn't fetch friends");
+            }
+        }
+        private void buttonShowInteractionStats_Click(object sender, EventArgs e)
+        {
+            showFriendInteractionStats();
+        }
+
+        private void showFriendInteractionStats()
+        {
+            if (comboBoxFriends.SelectedItem != null && comboBoxFriends.SelectedItem is User selectedFriend)
+            {
+                int likesCount = m_FriendConnectionOverview.GetNumberOfLikesFromFriend(selectedFriend);
+                int commentsCount = m_FriendConnectionOverview.GetNumberOfCommentsFromFriend(selectedFriend);
+
+                // Update labels
+                LabelLikesNum.Text = likesCount >= 0 ? likesCount.ToString() : "Error";
+                LabelCommentsNum.Text = commentsCount >= 0 ? commentsCount.ToString() : "Error";
+            }
+            else
+            {
+                MessageBox.Show("Please select a friend from the list.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void buttonShowSimilarities_Click(object sender, EventArgs e)
+        {
+            showFriendSimilarities();
+        }
+
+        private void showFriendSimilarities()
+        {
+            if (comboBoxFriends.SelectedItem != null && comboBoxFriends.SelectedItem is User selectedFriend)
+            {
+                string[] similarLanguages = m_FriendConnectionOverview.GetSimilarLanguages(selectedFriend);
+                User[] mutualFriends = m_FriendConnectionOverview.GetMutualFriends(selectedFriend);
+                Page[] likedPages = m_FriendConnectionOverview.GetMutualLikedPages(selectedFriend); // Assuming you have this method
+                string[] similarSports = m_FriendConnectionOverview.GetSimilarSports(selectedFriend); // Assuming you have this method
+
+
+                listBoxLanguages.Items.Clear();
+                if (similarLanguages.Length > 0)
+                {
+                    listBoxLanguages.Items.AddRange(similarLanguages);
+                }
+                else
+                {
+                    listBoxLanguages.Items.Add("No similar languages found");
+                }
+
+                // Update ListBox for mutual friends
+                listBoxMutualFriends.Items.Clear();
+                if (mutualFriends.Length > 0)
+                {
+                    foreach (User mutualFriend in mutualFriends)
+                    {
+                        listBoxMutualFriends.Items.Add(mutualFriend.Name);
+                    }
+                }
+                else
+                {
+                    listBoxMutualFriends.Items.Add("No mutual friends found");
+                }
+
+                // Update ListBox for liked pages
+                listBoxLikedPages.Items.Clear();
+                if (likedPages.Length > 0)
+                {
+                    foreach (Page page in likedPages)
+                    {
+                        listBoxLikedPages.Items.Add(page.Name);
+                    }
+                }
+                else
+                {
+                    listBoxLikedPages.Items.Add("No mutual liked pages found");
+                }
+
+                // Update ListBox for sports
+                listBoxSports.Items.Clear();
+                if (similarSports.Length > 0)
+                {
+                    listBoxSports.Items.AddRange(similarSports);
+                }
+                else
+                {
+                    listBoxSports.Items.Add("No similar sports found");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a friend from the list.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+        private void comboBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Ensure that a friend is selected
+            if (comboBoxFriends.SelectedItem is User selectedFriend)
+            {
+
+                pictureBoxFriend.ImageLocation = selectedFriend.PictureLargeURL;
+                pictureBoxFriend.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            else
+            {
+                pictureBoxFriend.Image = null;
             }
         }
     }
