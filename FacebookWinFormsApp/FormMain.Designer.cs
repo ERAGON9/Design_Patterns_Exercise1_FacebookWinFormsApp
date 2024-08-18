@@ -54,7 +54,7 @@
             this.labelGenderPreference = new System.Windows.Forms.Label();
             this.labelTitle2 = new System.Windows.Forms.Label();
             this.labelTitle1 = new System.Windows.Forms.Label();
-            this.FriendConnectionOverViewTab = new System.Windows.Forms.TabPage();
+            this.tabPageFriendOverView = new System.Windows.Forms.TabPage();
             this.listBoxLikedPages = new System.Windows.Forms.ListBox();
             this.label13 = new System.Windows.Forms.Label();
             this.listBoxMutualFriends = new System.Windows.Forms.ListBox();
@@ -81,7 +81,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinAge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFindMatchRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFindMatchLeft)).BeginInit();
-            this.FriendConnectionOverViewTab.SuspendLayout();
+            this.tabPageFriendOverView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriend)).BeginInit();
             this.SuspendLayout();
             // 
@@ -122,7 +122,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPageHomePage);
             this.tabControl1.Controls.Add(this.tabPageFindMatch);
-            this.tabControl1.Controls.Add(this.FriendConnectionOverViewTab);
+            this.tabControl1.Controls.Add(this.tabPageFriendOverView);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -208,6 +208,7 @@
             this.buttonFindMatch.TabIndex = 16;
             this.buttonFindMatch.Text = "Lets Find Match!";
             this.buttonFindMatch.UseVisualStyleBackColor = true;
+            this.buttonFindMatch.Click += new System.EventHandler(this.buttonFindMatch_Click);
             // 
             // pictureBoxFriendList
             // 
@@ -227,6 +228,7 @@
             this.listBoxMatchesList.Name = "listBoxMatchesList";
             this.listBoxMatchesList.Size = new System.Drawing.Size(316, 154);
             this.listBoxMatchesList.TabIndex = 14;
+            this.listBoxMatchesList.SelectedIndexChanged += new System.EventHandler(this.listBoxMatchesList_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -274,7 +276,7 @@
             // 
             this.radioButtonFemale.AutoSize = true;
             this.radioButtonFemale.Checked = true;
-            this.radioButtonFemale.Location = new System.Drawing.Point(621, 188);
+            this.radioButtonFemale.Location = new System.Drawing.Point(621, 201);
             this.radioButtonFemale.Name = "radioButtonFemale";
             this.radioButtonFemale.Size = new System.Drawing.Size(95, 28);
             this.radioButtonFemale.TabIndex = 9;
@@ -285,7 +287,7 @@
             // radioButtonMale
             // 
             this.radioButtonMale.AutoSize = true;
-            this.radioButtonMale.Location = new System.Drawing.Point(522, 188);
+            this.radioButtonMale.Location = new System.Drawing.Point(522, 201);
             this.radioButtonMale.Name = "radioButtonMale";
             this.radioButtonMale.Size = new System.Drawing.Size(72, 28);
             this.radioButtonMale.TabIndex = 8;
@@ -314,9 +316,9 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(362, 464);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(460, 20);
+            this.label3.Size = new System.Drawing.Size(488, 20);
             this.label3.TabIndex = 5;
-            this.label3.Text = "(Sorted by number of shared like pages in descending order)";
+            this.label3.Text = "(Sorted by the number of shared like pages in descending order)";
             // 
             // labelFriendList
             // 
@@ -325,9 +327,9 @@
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelFriendList.Location = new System.Drawing.Point(517, 434);
             this.labelFriendList.Name = "labelFriendList";
-            this.labelFriendList.Size = new System.Drawing.Size(117, 26);
+            this.labelFriendList.Size = new System.Drawing.Size(139, 26);
             this.labelFriendList.TabIndex = 4;
-            this.labelFriendList.Text = "Friend list";
+            this.labelFriendList.Text = "Matches list";
             // 
             // labelAgePreference
             // 
@@ -345,7 +347,7 @@
             this.labelGenderPreference.AutoSize = true;
             this.labelGenderPreference.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelGenderPreference.Location = new System.Drawing.Point(513, 144);
+            this.labelGenderPreference.Location = new System.Drawing.Point(513, 157);
             this.labelGenderPreference.Name = "labelGenderPreference";
             this.labelGenderPreference.Size = new System.Drawing.Size(210, 26);
             this.labelGenderPreference.TabIndex = 2;
@@ -354,11 +356,12 @@
             // labelTitle2
             // 
             this.labelTitle2.AutoSize = true;
-            this.labelTitle2.Location = new System.Drawing.Point(358, 101);
+            this.labelTitle2.Location = new System.Drawing.Point(246, 120);
             this.labelTitle2.Name = "labelTitle2";
-            this.labelTitle2.Size = new System.Drawing.Size(549, 24);
+            this.labelTitle2.Size = new System.Drawing.Size(854, 24);
             this.labelTitle2.TabIndex = 1;
-            this.labelTitle2.Text = "Lets try find out your best next dates based on common hobbies!\r\n";
+            this.labelTitle2.Text = "Lets try find out your best next dates from your friend list based on preferences" +
+    " and common hobbies!\r\n";
             // 
             // labelTitle1
             // 
@@ -370,33 +373,33 @@
             this.labelTitle1.TabIndex = 0;
             this.labelTitle1.Text = "Welcome to Find Match!";
             // 
-            // FriendConnectionOverViewTab
+            // tabPageFriendOverView
             // 
-            this.FriendConnectionOverViewTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
-            this.FriendConnectionOverViewTab.Controls.Add(this.listBoxLikedPages);
-            this.FriendConnectionOverViewTab.Controls.Add(this.label13);
-            this.FriendConnectionOverViewTab.Controls.Add(this.listBoxMutualFriends);
-            this.FriendConnectionOverViewTab.Controls.Add(this.label12);
-            this.FriendConnectionOverViewTab.Controls.Add(this.listBoxSports);
-            this.FriendConnectionOverViewTab.Controls.Add(this.label11);
-            this.FriendConnectionOverViewTab.Controls.Add(this.listBoxLanguages);
-            this.FriendConnectionOverViewTab.Controls.Add(this.label10);
-            this.FriendConnectionOverViewTab.Controls.Add(this.buttonShowSimilarities);
-            this.FriendConnectionOverViewTab.Controls.Add(this.pictureBoxFriend);
-            this.FriendConnectionOverViewTab.Controls.Add(this.LabelCommentsNum);
-            this.FriendConnectionOverViewTab.Controls.Add(this.label8);
-            this.FriendConnectionOverViewTab.Controls.Add(this.LabelLikesNum);
-            this.FriendConnectionOverViewTab.Controls.Add(this.label6);
-            this.FriendConnectionOverViewTab.Controls.Add(this.buttonShowInteractionStats);
-            this.FriendConnectionOverViewTab.Controls.Add(this.comboBoxFriends);
-            this.FriendConnectionOverViewTab.Controls.Add(this.label2);
-            this.FriendConnectionOverViewTab.Location = new System.Drawing.Point(4, 31);
-            this.FriendConnectionOverViewTab.Name = "FriendConnectionOverViewTab";
-            this.FriendConnectionOverViewTab.Padding = new System.Windows.Forms.Padding(3);
-            this.FriendConnectionOverViewTab.Size = new System.Drawing.Size(1235, 662);
-            this.FriendConnectionOverViewTab.TabIndex = 2;
-            this.FriendConnectionOverViewTab.Text = "Friend OverView";
-            this.FriendConnectionOverViewTab.Click += new System.EventHandler(this.buttonShowInteractionStats_Click);
+            this.tabPageFriendOverView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
+            this.tabPageFriendOverView.Controls.Add(this.listBoxLikedPages);
+            this.tabPageFriendOverView.Controls.Add(this.label13);
+            this.tabPageFriendOverView.Controls.Add(this.listBoxMutualFriends);
+            this.tabPageFriendOverView.Controls.Add(this.label12);
+            this.tabPageFriendOverView.Controls.Add(this.listBoxSports);
+            this.tabPageFriendOverView.Controls.Add(this.label11);
+            this.tabPageFriendOverView.Controls.Add(this.listBoxLanguages);
+            this.tabPageFriendOverView.Controls.Add(this.label10);
+            this.tabPageFriendOverView.Controls.Add(this.buttonShowSimilarities);
+            this.tabPageFriendOverView.Controls.Add(this.pictureBoxFriend);
+            this.tabPageFriendOverView.Controls.Add(this.LabelCommentsNum);
+            this.tabPageFriendOverView.Controls.Add(this.label8);
+            this.tabPageFriendOverView.Controls.Add(this.LabelLikesNum);
+            this.tabPageFriendOverView.Controls.Add(this.label6);
+            this.tabPageFriendOverView.Controls.Add(this.buttonShowInteractionStats);
+            this.tabPageFriendOverView.Controls.Add(this.comboBoxFriends);
+            this.tabPageFriendOverView.Controls.Add(this.label2);
+            this.tabPageFriendOverView.Location = new System.Drawing.Point(4, 31);
+            this.tabPageFriendOverView.Name = "tabPageFriendOverView";
+            this.tabPageFriendOverView.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFriendOverView.Size = new System.Drawing.Size(1235, 662);
+            this.tabPageFriendOverView.TabIndex = 2;
+            this.tabPageFriendOverView.Text = "Friend OverView";
+            this.tabPageFriendOverView.Click += new System.EventHandler(this.buttonShowInteractionStats_Click);
             // 
             // listBoxLikedPages
             // 
@@ -575,8 +578,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinAge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFindMatchRight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFindMatchLeft)).EndInit();
-            this.FriendConnectionOverViewTab.ResumeLayout(false);
-            this.FriendConnectionOverViewTab.PerformLayout();
+            this.tabPageFriendOverView.ResumeLayout(false);
+            this.tabPageFriendOverView.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriend)).EndInit();
             this.ResumeLayout(false);
 
@@ -592,7 +595,7 @@
         private System.Windows.Forms.TabPage tabPageFindMatch;
         private System.Windows.Forms.TextBox textBoxAppID;
         private System.Windows.Forms.PictureBox pictureBoxProfile;
-        private System.Windows.Forms.TabPage FriendConnectionOverViewTab;
+        private System.Windows.Forms.TabPage tabPageFriendOverView;
         private System.Windows.Forms.Label labelUserName;
         private System.Windows.Forms.Label labelTitle1;
         private System.Windows.Forms.Label labelTitle2;
