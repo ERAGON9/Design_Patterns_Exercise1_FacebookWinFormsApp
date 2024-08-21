@@ -37,9 +37,20 @@ namespace BasicFacebookFeatures
             m_LoginResult = FacebookService.Login(
                 textBoxAppID.Text,
                 /// requested permissions:
-                "email",
-                "public_profile",
-                "user_friends"
+                "email", //
+                "public_profile",//
+                "user_age_range",
+                "user_birthday", //
+                "user_events",
+                "user_friends", //
+                "user_gender", //
+                "user_hometown",
+                "user_likes", //
+                "user_link",
+                "user_location",
+                "user_photos",
+                "user_posts",
+                "user_videos"
                 /// add any relevant permissions
                 );
 
@@ -158,10 +169,7 @@ namespace BasicFacebookFeatures
                 comboBoxFriends.Items.Add("Couldn't fetch friends");
             }
         }
-        private void test()
-        {
-            //Console.WriteLine(  "fdfdfdf");
-        }
+
         private void buttonShowInteractionStats_Click(object sender, EventArgs e)
         {
             showFriendInteractionStats();

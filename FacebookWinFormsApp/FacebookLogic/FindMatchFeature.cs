@@ -63,7 +63,7 @@ namespace BasicFacebookFeatures.FacebookLogic
         {
             GenderPreference = User.eGender.female;
             AgePreferenceMin = r_AgePreferenceMinRestriction;
-            AgePreferenceMax = r_AgePrefernceMaxRestriction; //TODO: change at the UI to 100!!!
+            AgePreferenceMax = r_AgePrefernceMaxRestriction;
         }
 
         public List<User> FindUserMatch()

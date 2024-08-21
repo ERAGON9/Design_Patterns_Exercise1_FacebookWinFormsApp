@@ -158,6 +158,7 @@
             // 
             // pictureBoxProfile
             // 
+            this.pictureBoxProfile.BackColor = System.Drawing.Color.Gainsboro;
             this.pictureBoxProfile.Location = new System.Drawing.Point(29, 140);
             this.pictureBoxProfile.Name = "pictureBoxProfile";
             this.pictureBoxProfile.Size = new System.Drawing.Size(200, 200);
@@ -216,6 +217,7 @@
             this.pictureBoxFriendList.Location = new System.Drawing.Point(751, 520);
             this.pictureBoxFriendList.Name = "pictureBoxFriendList";
             this.pictureBoxFriendList.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxFriendList.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxFriendList.TabIndex = 15;
             this.pictureBoxFriendList.TabStop = false;
             // 
@@ -296,17 +298,23 @@
             // 
             // pictureBoxFindMatchRight
             // 
+            this.pictureBoxFindMatchRight.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBoxFindMatchRight.Image = global::BasicFacebookFeatures.Properties.Resources.tryImage;
             this.pictureBoxFindMatchRight.Location = new System.Drawing.Point(913, 8);
             this.pictureBoxFindMatchRight.Name = "pictureBoxFindMatchRight";
             this.pictureBoxFindMatchRight.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxFindMatchRight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxFindMatchRight.TabIndex = 7;
             this.pictureBoxFindMatchRight.TabStop = false;
             // 
             // pictureBoxFindMatchLeft
             // 
+            this.pictureBoxFindMatchLeft.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBoxFindMatchLeft.Image = global::BasicFacebookFeatures.Properties.Resources.tryImage;
             this.pictureBoxFindMatchLeft.Location = new System.Drawing.Point(250, 8);
             this.pictureBoxFindMatchLeft.Name = "pictureBoxFindMatchLeft";
             this.pictureBoxFindMatchLeft.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxFindMatchLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxFindMatchLeft.TabIndex = 6;
             this.pictureBoxFindMatchLeft.TabStop = false;
             // 
