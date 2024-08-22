@@ -47,7 +47,7 @@ namespace BasicFacebookFeatures
                 "user_hometown",
                 "user_likes", //
                 "user_link",
-                "user_location",
+                "user_location", //
                 "user_photos",
                 "user_posts",
                 "user_videos"
@@ -84,6 +84,8 @@ namespace BasicFacebookFeatures
             pictureBoxProfile.ImageLocation = null;
             buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
+
+            MatchesUIClearData();
         }
 
         private void buttonFindMatch_Click(object sender, EventArgs e)
@@ -95,31 +97,36 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                listBoxMatchesList.Items.Clear();
-                listBoxMatchesList.DisplayMember = "Name";
-                m_FindMatchFeature.UserLogin = m_LoginResult.LoggedInUser;
-                m_FindMatchFeature.GenderPreference = getGenderFromForm();
-                m_FindMatchFeature.AgePreferenceMin = (int)numericUpDownMinAge.Value;
-                m_FindMatchFeature.AgePreferenceMax = (int)numericUpDownMaxAge.Value;
-                List<User> userMatches = m_FindMatchFeature.FindUserMatch();
+                MatchesUIClearData();
+                listBoxMatches.DisplayMember = "Name";
+                FindMatchFeatureInsertData();
+                List<User> usersMatches = m_FindMatchFeature.FindUserMatch();
 
-                if (userMatches.Count > 0)
+                if (usersMatches.Count > 0)
                 {
-                    foreach (User match in userMatches)
+                    foreach (User userMatch in usersMatches)
                     {
-                        listBoxMatchesList.Items.Add(match);
+                        listBoxMatches.Items.Add(userMatch);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Find Match didn't found any matches for you, maybe try diffrent preferences!");
+                    MessageBox.Show("Find Match didn't found any matches for you, maybe try diffrent preferences!", "Find Match - no matches found");
                 }
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Find Match Failed");
             }
+        }
+
+        private void FindMatchFeatureInsertData()
+        {
+            m_FindMatchFeature.UserLogin = m_LoginResult.LoggedInUser;
+            m_FindMatchFeature.GenderPreference = getGenderFromForm();
+            m_FindMatchFeature.AgePreferenceMin = (int)numericUpDownMinAge.Value;
+            m_FindMatchFeature.AgePreferenceMax = (int)numericUpDownMaxAge.Value;
         }
 
         private eGender getGenderFromForm()
@@ -134,17 +141,41 @@ namespace BasicFacebookFeatures
             return genderPrefernce;
         }
 
-        private void listBoxMatchesList_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBoxMatches_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBoxMatchesList.SelectedItems.Count == 1)
+            if (listBoxMatches.SelectedItems.Count == 1)
             {
-                User matchPicked = listBoxMatchesList.SelectedItem as User;
+                User matchPicked = listBoxMatches.SelectedItem as User;
                 if (matchPicked != null)
                 {
-                    pictureBoxFriendList.ImageLocation = matchPicked.PictureNormalURL;
-                    // TODO: can show information on the User match!
+                    MatchesUIDisplayData(matchPicked);
                 }
             }
+        }
+
+        private void MatchesUIDisplayData(User i_UserMatched)
+        {
+            pictureBoxMatches.ImageLocation = i_UserMatched.PictureNormalURL;
+            labelMatchesName.Text = i_UserMatched.Name;
+            labelMatchesBirthday.Text = ChangeBirthdayUSToILFormat(i_UserMatched.Birthday);
+            labelMatchesLocation.Text = i_UserMatched.Location.Name;
+            labelMatchesEmail.Text = i_UserMatched.Email;
+        }
+
+        private string ChangeBirthdayUSToILFormat(string i_USFormatBirthday)
+        {
+            DateTime parsedDate = DateTime.ParseExact(i_USFormatBirthday, "MM/dd/yyyy", null);
+            return parsedDate.ToString("dd/MM/yyyy");
+        }
+
+        private void MatchesUIClearData()
+        {
+            listBoxMatches.Items.Clear();
+            pictureBoxMatches.Image = null;
+            labelMatchesName.Text = "Name:";
+            labelMatchesBirthday.Text = "Birthday:";
+            labelMatchesLocation.Text = "Location:";
+            labelMatchesEmail.Text = "Email:";
         }
 
         private void populateFriendsList()

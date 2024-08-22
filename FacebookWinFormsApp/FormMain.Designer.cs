@@ -37,9 +37,13 @@
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.textBoxAppID = new System.Windows.Forms.TextBox();
             this.tabPageFindMatch = new System.Windows.Forms.TabPage();
+            this.labelMatchesEmail = new System.Windows.Forms.Label();
+            this.labelMatchesLocation = new System.Windows.Forms.Label();
+            this.labelMatchesBirthday = new System.Windows.Forms.Label();
+            this.labelMatchesName = new System.Windows.Forms.Label();
             this.buttonFindMatch = new System.Windows.Forms.Button();
-            this.pictureBoxFriendList = new System.Windows.Forms.PictureBox();
-            this.listBoxMatchesList = new System.Windows.Forms.ListBox();
+            this.pictureBoxMatches = new System.Windows.Forms.PictureBox();
+            this.listBoxMatches = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
             this.numericUpDownMaxAge = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
@@ -76,7 +80,7 @@
             this.tabPageHomePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.tabPageFindMatch.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMatches)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxAge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinAge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFindMatchRight)).BeginInit();
@@ -177,9 +181,13 @@
             // tabPageFindMatch
             // 
             this.tabPageFindMatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
+            this.tabPageFindMatch.Controls.Add(this.labelMatchesEmail);
+            this.tabPageFindMatch.Controls.Add(this.labelMatchesLocation);
+            this.tabPageFindMatch.Controls.Add(this.labelMatchesBirthday);
+            this.tabPageFindMatch.Controls.Add(this.labelMatchesName);
             this.tabPageFindMatch.Controls.Add(this.buttonFindMatch);
-            this.tabPageFindMatch.Controls.Add(this.pictureBoxFriendList);
-            this.tabPageFindMatch.Controls.Add(this.listBoxMatchesList);
+            this.tabPageFindMatch.Controls.Add(this.pictureBoxMatches);
+            this.tabPageFindMatch.Controls.Add(this.listBoxMatches);
             this.tabPageFindMatch.Controls.Add(this.label5);
             this.tabPageFindMatch.Controls.Add(this.numericUpDownMaxAge);
             this.tabPageFindMatch.Controls.Add(this.label4);
@@ -201,6 +209,42 @@
             this.tabPageFindMatch.TabIndex = 1;
             this.tabPageFindMatch.Text = "Find Match";
             // 
+            // labelMatchesEmail
+            // 
+            this.labelMatchesEmail.AutoSize = true;
+            this.labelMatchesEmail.Location = new System.Drawing.Point(913, 624);
+            this.labelMatchesEmail.Name = "labelMatchesEmail";
+            this.labelMatchesEmail.Size = new System.Drawing.Size(62, 24);
+            this.labelMatchesEmail.TabIndex = 20;
+            this.labelMatchesEmail.Text = "Email:";
+            // 
+            // labelMatchesLocation
+            // 
+            this.labelMatchesLocation.AutoSize = true;
+            this.labelMatchesLocation.Location = new System.Drawing.Point(913, 582);
+            this.labelMatchesLocation.Name = "labelMatchesLocation";
+            this.labelMatchesLocation.Size = new System.Drawing.Size(86, 24);
+            this.labelMatchesLocation.TabIndex = 19;
+            this.labelMatchesLocation.Text = "Location:";
+            // 
+            // labelMatchesBirthday
+            // 
+            this.labelMatchesBirthday.AutoSize = true;
+            this.labelMatchesBirthday.Location = new System.Drawing.Point(913, 537);
+            this.labelMatchesBirthday.Name = "labelMatchesBirthday";
+            this.labelMatchesBirthday.Size = new System.Drawing.Size(82, 24);
+            this.labelMatchesBirthday.TabIndex = 18;
+            this.labelMatchesBirthday.Text = "Birthday:";
+            // 
+            // labelMatchesName
+            // 
+            this.labelMatchesName.AutoSize = true;
+            this.labelMatchesName.Location = new System.Drawing.Point(913, 494);
+            this.labelMatchesName.Name = "labelMatchesName";
+            this.labelMatchesName.Size = new System.Drawing.Size(66, 24);
+            this.labelMatchesName.TabIndex = 17;
+            this.labelMatchesName.Text = "Name:";
+            // 
             // buttonFindMatch
             // 
             this.buttonFindMatch.Location = new System.Drawing.Point(518, 368);
@@ -211,26 +255,26 @@
             this.buttonFindMatch.UseVisualStyleBackColor = true;
             this.buttonFindMatch.Click += new System.EventHandler(this.buttonFindMatch_Click);
             // 
-            // pictureBoxFriendList
+            // pictureBoxMatches
             // 
-            this.pictureBoxFriendList.BackColor = System.Drawing.Color.Gainsboro;
-            this.pictureBoxFriendList.Location = new System.Drawing.Point(751, 520);
-            this.pictureBoxFriendList.Name = "pictureBoxFriendList";
-            this.pictureBoxFriendList.Size = new System.Drawing.Size(100, 100);
-            this.pictureBoxFriendList.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxFriendList.TabIndex = 15;
-            this.pictureBoxFriendList.TabStop = false;
+            this.pictureBoxMatches.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBoxMatches.Location = new System.Drawing.Point(757, 494);
+            this.pictureBoxMatches.Name = "pictureBoxMatches";
+            this.pictureBoxMatches.Size = new System.Drawing.Size(132, 154);
+            this.pictureBoxMatches.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxMatches.TabIndex = 15;
+            this.pictureBoxMatches.TabStop = false;
             // 
-            // listBoxMatchesList
+            // listBoxMatches
             // 
-            this.listBoxMatchesList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listBoxMatchesList.FormattingEnabled = true;
-            this.listBoxMatchesList.ItemHeight = 25;
-            this.listBoxMatchesList.Location = new System.Drawing.Point(421, 494);
-            this.listBoxMatchesList.Name = "listBoxMatchesList";
-            this.listBoxMatchesList.Size = new System.Drawing.Size(316, 154);
-            this.listBoxMatchesList.TabIndex = 14;
-            this.listBoxMatchesList.SelectedIndexChanged += new System.EventHandler(this.listBoxMatchesList_SelectedIndexChanged);
+            this.listBoxMatches.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBoxMatches.FormattingEnabled = true;
+            this.listBoxMatches.ItemHeight = 25;
+            this.listBoxMatches.Location = new System.Drawing.Point(421, 494);
+            this.listBoxMatches.Name = "listBoxMatches";
+            this.listBoxMatches.Size = new System.Drawing.Size(316, 154);
+            this.listBoxMatches.TabIndex = 14;
+            this.listBoxMatches.SelectedIndexChanged += new System.EventHandler(this.listBoxMatches_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -581,7 +625,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
             this.tabPageFindMatch.ResumeLayout(false);
             this.tabPageFindMatch.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMatches)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxAge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinAge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFindMatchRight)).EndInit();
@@ -619,8 +663,8 @@
         private System.Windows.Forms.NumericUpDown numericUpDownMaxAge;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown numericUpDownMinAge;
-        private System.Windows.Forms.PictureBox pictureBoxFriendList;
-        private System.Windows.Forms.ListBox listBoxMatchesList;
+        private System.Windows.Forms.PictureBox pictureBoxMatches;
+        private System.Windows.Forms.ListBox listBoxMatches;
         private System.Windows.Forms.Button buttonFindMatch;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label8;
@@ -639,5 +683,9 @@
         private System.Windows.Forms.Button buttonShowSimilarities;
         private System.Windows.Forms.PictureBox pictureBoxFriend;
         private System.Windows.Forms.Label LabelCommentsNum;
+        private System.Windows.Forms.Label labelMatchesName;
+        private System.Windows.Forms.Label labelMatchesEmail;
+        private System.Windows.Forms.Label labelMatchesLocation;
+        private System.Windows.Forms.Label labelMatchesBirthday;
     }
 }

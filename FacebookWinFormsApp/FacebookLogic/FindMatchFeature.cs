@@ -69,34 +69,25 @@ namespace BasicFacebookFeatures.FacebookLogic
         public List<User> FindUserMatch()
         {
             throwExceptionIfUserLoginIsNull();
-            List<User> sortedFilteredFriends = null;
-            try
+            FacebookObjectCollection<User> friends = UserLogin.Friends;
+            List<User> filteredFriends = new List<User>();
+
+            foreach (User friend in friends)
             {
-                FacebookObjectCollection<User> friends = UserLogin.Friends;
-                List<User> filteredFriends = new List<User>();
-                foreach (User friend in friends)
+                if (checkGenderPreference(friend) && checkAgePreference(friend))
                 {
-                    if (checkGenderPreference(friend) && checkAgePreference(friend))
-                    {
-                        filteredFriends.Add(friend);
-                    }
+                    filteredFriends.Add(friend);
                 }
-
-                sortedFilteredFriends = sortBySharedLikedPages(filteredFriends);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Find Match Failed");
             }
 
-            return sortedFilteredFriends;
+            return sortBySharedLikedPages(filteredFriends);
         }
 
         private void throwExceptionIfUserLoginIsNull()
         {
             if (UserLogin == null)
             {
-                throw new ArgumentNullException("UserLogin","User login is null");
+                throw new ArgumentNullException("UserLogin", "User login is null");
             }
         }
 
