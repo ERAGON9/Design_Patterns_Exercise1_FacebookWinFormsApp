@@ -30,12 +30,10 @@
         {
             this.buttonLogin = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageHomePage = new System.Windows.Forms.TabPage();
             this.labelUserName = new System.Windows.Forms.Label();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
-            this.textBoxAppID = new System.Windows.Forms.TextBox();
             this.tabPageFindMatch = new System.Windows.Forms.TabPage();
             this.labelMatchesEmail = new System.Windows.Forms.Label();
             this.labelMatchesLocation = new System.Windows.Forms.Label();
@@ -91,6 +89,7 @@
             // 
             // buttonLogin
             // 
+            this.buttonLogin.ForeColor = System.Drawing.SystemColors.Highlight;
             this.buttonLogin.Location = new System.Drawing.Point(18, 17);
             this.buttonLogin.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLogin.Name = "buttonLogin";
@@ -103,6 +102,7 @@
             // buttonLogout
             // 
             this.buttonLogout.Enabled = false;
+            this.buttonLogout.ForeColor = System.Drawing.SystemColors.Highlight;
             this.buttonLogout.Location = new System.Drawing.Point(18, 57);
             this.buttonLogout.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLogout.Name = "buttonLogout";
@@ -111,16 +111,6 @@
             this.buttonLogout.Text = "Logout";
             this.buttonLogout.UseVisualStyleBackColor = true;
             this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(314, 17);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(225, 24);
-            this.label1.TabIndex = 53;
-            this.label1.Text = "Type here AppID to test it:";
             // 
             // tabControl1
             // 
@@ -139,8 +129,6 @@
             this.tabPageHomePage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
             this.tabPageHomePage.Controls.Add(this.labelUserName);
             this.tabPageHomePage.Controls.Add(this.pictureBoxProfile);
-            this.tabPageHomePage.Controls.Add(this.textBoxAppID);
-            this.tabPageHomePage.Controls.Add(this.label1);
             this.tabPageHomePage.Controls.Add(this.buttonLogout);
             this.tabPageHomePage.Controls.Add(this.buttonLogin);
             this.tabPageHomePage.Location = new System.Drawing.Point(4, 31);
@@ -163,20 +151,12 @@
             // pictureBoxProfile
             // 
             this.pictureBoxProfile.BackColor = System.Drawing.Color.Gainsboro;
-            this.pictureBoxProfile.Location = new System.Drawing.Point(29, 140);
+            this.pictureBoxProfile.Location = new System.Drawing.Point(29, 143);
             this.pictureBoxProfile.Name = "pictureBoxProfile";
             this.pictureBoxProfile.Size = new System.Drawing.Size(200, 200);
             this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxProfile.TabIndex = 55;
             this.pictureBoxProfile.TabStop = false;
-            // 
-            // textBoxAppID
-            // 
-            this.textBoxAppID.Location = new System.Drawing.Point(317, 61);
-            this.textBoxAppID.Name = "textBoxAppID";
-            this.textBoxAppID.Size = new System.Drawing.Size(237, 28);
-            this.textBoxAppID.TabIndex = 54;
-            this.textBoxAppID.Text = "1320566432232601";
             // 
             // tabPageFindMatch
             // 
@@ -641,11 +621,9 @@
 
         private System.Windows.Forms.Button buttonLogin;
         private System.Windows.Forms.Button buttonLogout;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPageHomePage;
         private System.Windows.Forms.TabPage tabPageFindMatch;
-        private System.Windows.Forms.TextBox textBoxAppID;
         private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.TabPage tabPageFriendOverView;
         private System.Windows.Forms.Label labelUserName;

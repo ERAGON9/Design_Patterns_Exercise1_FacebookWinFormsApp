@@ -15,16 +15,16 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
-        private LoginResult m_LoginResult;
-        private User m_LoggedInUser;
-        private FindMatchFeature m_FindMatchFeature;
+        private readonly AppManager r_AppManager;
+        private readonly FindMatchFeature r_FindMatchFeature;
         private FriendOverViewFeature m_FriendConnectionOverview;
 
         public FormMain()
         {
             InitializeComponent();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
-            m_FindMatchFeature = new FindMatchFeature();
+            r_AppManager = new AppManager();
+            r_FindMatchFeature = new FindMatchFeature();
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -34,58 +34,44 @@ namespace BasicFacebookFeatures
 
         private void login()
         {
-            m_LoginResult = FacebookService.Login(
-                textBoxAppID.Text,
-                /// requested permissions:
-                "email", //
-                "public_profile",//
-                "user_age_range",
-                "user_birthday", //
-                "user_events",
-                "user_friends", //
-                "user_gender", //
-                "user_hometown",
-                "user_likes", //
-                "user_link",
-                "user_location", //
-                "user_photos",
-                "user_posts",
-                "user_videos"
-                /// add any relevant permissions
-                );
+            try
+            {
+                r_AppManager.Login();
+                m_FriendConnectionOverview = new FriendOverViewFeature(r_AppManager.LoggedInUser);
+                loginUI();
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message, "Login Failed");
+            }
+        }
 
-            if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage) && !string.IsNullOrEmpty(m_LoginResult.AccessToken))
-            {
-                m_LoggedInUser = m_LoginResult.LoggedInUser;
-                m_FriendConnectionOverview = new FriendOverViewFeature(m_LoggedInUser);
-                buttonLogin.Text = $"Logged in";
-                labelUserName.Text = $"Hello {m_LoggedInUser.Name}";
-                labelUserName.BackColor = Color.LightGreen;
-                //buttonLogin.BackColor = Color.LightGreen;
-                pictureBoxProfile.ImageLocation = m_LoggedInUser.PictureLargeURL;
-                buttonLogin.Enabled = false;
-                buttonLogout.Enabled = true;
-                populateFriendsList();
-            }
-            else
-            {
-                MessageBox.Show(m_LoginResult.ErrorMessage, "Login Failed");
-            }
+        private void loginUI()
+        {
+            buttonLogin.Text = $"Logged in";
+            labelUserName.Text = $"Hello {r_AppManager.LoggedInUser.Name}";
+            //labelUserName.BackColor = Color.LightGreen;
+            pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureLargeURL;
+            buttonLogin.Enabled = false;
+            buttonLogout.Enabled = true;
+            populateFriendsList();
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            FacebookService.LogoutWithUI();
+            r_AppManager.Logout();
+            logoutUI();
+            MatchesUIClearData();
+        }
+
+        private void logoutUI()
+        {
             buttonLogin.Text = "Login";
             labelUserName.Text = "No user logged in yet";
-            labelUserName.BackColor = buttonLogout.BackColor;
-            m_LoginResult = null;
-            m_LoggedInUser = null;
+            //labelUserName.BackColor = buttonLogout.BackColor;
             pictureBoxProfile.ImageLocation = null;
             buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
-
-            MatchesUIClearData();
         }
 
         private void buttonFindMatch_Click(object sender, EventArgs e)
@@ -100,7 +86,7 @@ namespace BasicFacebookFeatures
                 MatchesUIClearData();
                 listBoxMatches.DisplayMember = "Name";
                 FindMatchFeatureInsertData();
-                List<User> usersMatches = m_FindMatchFeature.FindUserMatch();
+                List<User> usersMatches = r_FindMatchFeature.FindUserMatch();
 
                 if (usersMatches.Count > 0)
                 {
@@ -123,10 +109,10 @@ namespace BasicFacebookFeatures
 
         private void FindMatchFeatureInsertData()
         {
-            m_FindMatchFeature.UserLogin = m_LoginResult.LoggedInUser;
-            m_FindMatchFeature.GenderPreference = getGenderFromForm();
-            m_FindMatchFeature.AgePreferenceMin = (int)numericUpDownMinAge.Value;
-            m_FindMatchFeature.AgePreferenceMax = (int)numericUpDownMaxAge.Value;
+            r_FindMatchFeature.UserLogin = r_AppManager.LoggedInUser;
+            r_FindMatchFeature.GenderPreference = getGenderFromForm();
+            r_FindMatchFeature.AgePreferenceMin = (int)numericUpDownMinAge.Value;
+            r_FindMatchFeature.AgePreferenceMax = (int)numericUpDownMaxAge.Value;
         }
 
         private eGender getGenderFromForm()
@@ -185,7 +171,7 @@ namespace BasicFacebookFeatures
 
             try
             {
-                foreach (User friend in m_LoggedInUser.Friends)
+                foreach (User friend in r_AppManager.LoggedInUser.Friends)
                 {
                     comboBoxFriends.Items.Add(friend);
                 }
