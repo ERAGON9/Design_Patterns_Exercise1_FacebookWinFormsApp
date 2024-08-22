@@ -48,13 +48,30 @@ namespace BasicFacebookFeatures
 
         private void loginUI()
         {
-            buttonLogin.Text = $"Logged in";
-            labelUserName.Text = $"Hello {r_AppManager.LoggedInUser.Name}";
-            //labelUserName.BackColor = Color.LightGreen;
-            pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureLargeURL;
-            buttonLogin.Enabled = false;
-            buttonLogout.Enabled = true;
+            fetchHomePageDataAndDisplay();
             populateFriendsList();
+        }
+
+        private void fetchHomePageDataAndDisplay()
+        {
+            buttonLogin.Text = $"Logged in";
+            buttonLogin.Enabled = false;
+            labelUserFirstName.Text = $"Hello {r_AppManager.LoggedInUser.FirstName}";
+            pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureLargeURL;
+            buttonLogout.Enabled = true;
+            fetchUserDetailsAndDisplay();
+        }
+
+        private void fetchUserDetailsAndDisplay()
+        {
+            User loggedInUser = r_AppManager.LoggedInUser;
+
+            labelUserFullName.Text = $"Full Name: {loggedInUser.Name ?? string.Empty}";
+            labelUserGender.Text = $"Gender: {loggedInUser.Gender?.ToString() ?? string.Empty}";
+            labelUserBirthdate.Text = $"Birthdate: {(loggedInUser.Birthday != null ? ChangeBirthdayUSToILFormat(loggedInUser.Birthday) : string.Empty)}";
+            labelUserHometown.Text = $"Hometown: {loggedInUser.Hometown?.Name ?? string.Empty}";
+            labelUserLocation.Text = $"Location: {loggedInUser.Location?.Name ?? string.Empty}";
+            labelUserEmail.Text = $"Email: {loggedInUser.Email ?? string.Empty}";
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
@@ -67,10 +84,9 @@ namespace BasicFacebookFeatures
         private void logoutUI()
         {
             buttonLogin.Text = "Login";
-            labelUserName.Text = "No user logged in yet";
-            //labelUserName.BackColor = buttonLogout.BackColor;
-            pictureBoxProfile.ImageLocation = null;
             buttonLogin.Enabled = true;
+            labelUserFirstName.Text = "No user logged in yet";
+            pictureBoxProfile.ImageLocation = null;
             buttonLogout.Enabled = false;
         }
 
@@ -99,7 +115,6 @@ namespace BasicFacebookFeatures
                 {
                     MessageBox.Show("Find Match didn't found any matches for you, maybe try diffrent preferences!", "Find Match - no matches found");
                 }
-
             }
             catch (Exception ex)
             {
@@ -142,10 +157,10 @@ namespace BasicFacebookFeatures
         private void MatchesUIDisplayData(User i_UserMatched)
         {
             pictureBoxMatches.ImageLocation = i_UserMatched.PictureNormalURL;
-            labelMatchesName.Text = i_UserMatched.Name;
-            labelMatchesBirthday.Text = ChangeBirthdayUSToILFormat(i_UserMatched.Birthday);
-            labelMatchesLocation.Text = i_UserMatched.Location.Name;
-            labelMatchesEmail.Text = i_UserMatched.Email;
+            labelMatchesName.Text = $"Full Name: {i_UserMatched.Name ?? string.Empty}";
+            labelMatchesBirthday.Text = $"Birthdate: {(i_UserMatched.Birthday != null ? ChangeBirthdayUSToILFormat(i_UserMatched.Birthday) : string.Empty)}";
+            labelMatchesLocation.Text = $"Location: {i_UserMatched.Location?.Name ?? string.Empty}";
+            labelMatchesEmail.Text = $"Email: {i_UserMatched.Email ?? string.Empty}";
         }
 
         private string ChangeBirthdayUSToILFormat(string i_USFormatBirthday)

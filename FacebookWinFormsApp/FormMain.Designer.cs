@@ -32,7 +32,14 @@
             this.buttonLogout = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageHomePage = new System.Windows.Forms.TabPage();
-            this.labelUserName = new System.Windows.Forms.Label();
+            this.labelUserLocation = new System.Windows.Forms.Label();
+            this.labelUserHometown = new System.Windows.Forms.Label();
+            this.labelUserGender = new System.Windows.Forms.Label();
+            this.labelUserEmail = new System.Windows.Forms.Label();
+            this.labelUserBirthdate = new System.Windows.Forms.Label();
+            this.labelUserDetails = new System.Windows.Forms.Label();
+            this.labelUserFullName = new System.Windows.Forms.Label();
+            this.labelUserFirstName = new System.Windows.Forms.Label();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.tabPageFindMatch = new System.Windows.Forms.TabPage();
             this.labelMatchesEmail = new System.Windows.Forms.Label();
@@ -127,7 +134,14 @@
             // tabPageHomePage
             // 
             this.tabPageHomePage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
-            this.tabPageHomePage.Controls.Add(this.labelUserName);
+            this.tabPageHomePage.Controls.Add(this.labelUserLocation);
+            this.tabPageHomePage.Controls.Add(this.labelUserHometown);
+            this.tabPageHomePage.Controls.Add(this.labelUserGender);
+            this.tabPageHomePage.Controls.Add(this.labelUserEmail);
+            this.tabPageHomePage.Controls.Add(this.labelUserBirthdate);
+            this.tabPageHomePage.Controls.Add(this.labelUserDetails);
+            this.tabPageHomePage.Controls.Add(this.labelUserFullName);
+            this.tabPageHomePage.Controls.Add(this.labelUserFirstName);
             this.tabPageHomePage.Controls.Add(this.pictureBoxProfile);
             this.tabPageHomePage.Controls.Add(this.buttonLogout);
             this.tabPageHomePage.Controls.Add(this.buttonLogin);
@@ -138,15 +152,85 @@
             this.tabPageHomePage.TabIndex = 0;
             this.tabPageHomePage.Text = "Home Page";
             // 
-            // labelUserName
+            // labelUserLocation
             // 
-            this.labelUserName.AutoSize = true;
-            this.labelUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelUserName.Location = new System.Drawing.Point(23, 106);
-            this.labelUserName.Name = "labelUserName";
-            this.labelUserName.Size = new System.Drawing.Size(269, 31);
-            this.labelUserName.TabIndex = 56;
-            this.labelUserName.Text = "No user logged in yet";
+            this.labelUserLocation.AutoSize = true;
+            this.labelUserLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUserLocation.Location = new System.Drawing.Point(291, 292);
+            this.labelUserLocation.Name = "labelUserLocation";
+            this.labelUserLocation.Size = new System.Drawing.Size(100, 26);
+            this.labelUserLocation.TabIndex = 63;
+            this.labelUserLocation.Text = "Location:";
+            // 
+            // labelUserHometown
+            // 
+            this.labelUserHometown.AutoSize = true;
+            this.labelUserHometown.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUserHometown.Location = new System.Drawing.Point(291, 254);
+            this.labelUserHometown.Name = "labelUserHometown";
+            this.labelUserHometown.Size = new System.Drawing.Size(123, 26);
+            this.labelUserHometown.TabIndex = 62;
+            this.labelUserHometown.Text = "Hometown:";
+            // 
+            // labelUserGender
+            // 
+            this.labelUserGender.AutoSize = true;
+            this.labelUserGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUserGender.Location = new System.Drawing.Point(291, 179);
+            this.labelUserGender.Name = "labelUserGender";
+            this.labelUserGender.Size = new System.Drawing.Size(90, 26);
+            this.labelUserGender.TabIndex = 61;
+            this.labelUserGender.Text = "Gender:";
+            // 
+            // labelUserEmail
+            // 
+            this.labelUserEmail.AutoSize = true;
+            this.labelUserEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUserEmail.Location = new System.Drawing.Point(291, 330);
+            this.labelUserEmail.Name = "labelUserEmail";
+            this.labelUserEmail.Size = new System.Drawing.Size(74, 26);
+            this.labelUserEmail.TabIndex = 60;
+            this.labelUserEmail.Text = "Email:";
+            // 
+            // labelUserBirthdate
+            // 
+            this.labelUserBirthdate.AutoSize = true;
+            this.labelUserBirthdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUserBirthdate.Location = new System.Drawing.Point(291, 217);
+            this.labelUserBirthdate.Name = "labelUserBirthdate";
+            this.labelUserBirthdate.Size = new System.Drawing.Size(105, 26);
+            this.labelUserBirthdate.TabIndex = 59;
+            this.labelUserBirthdate.Text = "Birthdate:";
+            // 
+            // labelUserDetails
+            // 
+            this.labelUserDetails.AutoSize = true;
+            this.labelUserDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUserDetails.Location = new System.Drawing.Point(348, 106);
+            this.labelUserDetails.Name = "labelUserDetails";
+            this.labelUserDetails.Size = new System.Drawing.Size(137, 26);
+            this.labelUserDetails.TabIndex = 58;
+            this.labelUserDetails.Text = "User Details:";
+            // 
+            // labelUserFullName
+            // 
+            this.labelUserFullName.AutoSize = true;
+            this.labelUserFullName.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUserFullName.Location = new System.Drawing.Point(291, 143);
+            this.labelUserFullName.Name = "labelUserFullName";
+            this.labelUserFullName.Size = new System.Drawing.Size(118, 26);
+            this.labelUserFullName.TabIndex = 57;
+            this.labelUserFullName.Text = "Full Name:";
+            // 
+            // labelUserFirstName
+            // 
+            this.labelUserFirstName.AutoSize = true;
+            this.labelUserFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUserFirstName.Location = new System.Drawing.Point(23, 106);
+            this.labelUserFirstName.Name = "labelUserFirstName";
+            this.labelUserFirstName.Size = new System.Drawing.Size(273, 29);
+            this.labelUserFirstName.TabIndex = 56;
+            this.labelUserFirstName.Text = "No user logged in yet";
             // 
             // pictureBoxProfile
             // 
@@ -221,9 +305,9 @@
             this.labelMatchesName.AutoSize = true;
             this.labelMatchesName.Location = new System.Drawing.Point(913, 494);
             this.labelMatchesName.Name = "labelMatchesName";
-            this.labelMatchesName.Size = new System.Drawing.Size(66, 24);
+            this.labelMatchesName.Size = new System.Drawing.Size(102, 24);
             this.labelMatchesName.TabIndex = 17;
-            this.labelMatchesName.Text = "Name:";
+            this.labelMatchesName.Text = "Full Name:";
             // 
             // buttonFindMatch
             // 
@@ -626,7 +710,7 @@
         private System.Windows.Forms.TabPage tabPageFindMatch;
         private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.TabPage tabPageFriendOverView;
-        private System.Windows.Forms.Label labelUserName;
+        private System.Windows.Forms.Label labelUserFirstName;
         private System.Windows.Forms.Label labelTitle1;
         private System.Windows.Forms.Label labelTitle2;
         private System.Windows.Forms.Label labelGenderPreference;
@@ -665,5 +749,12 @@
         private System.Windows.Forms.Label labelMatchesEmail;
         private System.Windows.Forms.Label labelMatchesLocation;
         private System.Windows.Forms.Label labelMatchesBirthday;
+        private System.Windows.Forms.Label labelUserGender;
+        private System.Windows.Forms.Label labelUserEmail;
+        private System.Windows.Forms.Label labelUserBirthdate;
+        private System.Windows.Forms.Label labelUserDetails;
+        private System.Windows.Forms.Label labelUserFullName;
+        private System.Windows.Forms.Label labelUserHometown;
+        private System.Windows.Forms.Label labelUserLocation;
     }
 }
