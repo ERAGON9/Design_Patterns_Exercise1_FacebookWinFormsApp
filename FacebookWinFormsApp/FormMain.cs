@@ -157,7 +157,7 @@ namespace BasicFacebookFeatures
         private void MatchesUIDisplayData(User i_UserMatched)
         {
             pictureBoxMatches.ImageLocation = i_UserMatched.PictureNormalURL;
-            labelMatchesName.Text = $"Full Name: {i_UserMatched.Name ?? string.Empty}";
+            labelMatchesFullName.Text = $"Full Name: {i_UserMatched.Name ?? string.Empty}";
             labelMatchesBirthday.Text = $"Birthdate: {(i_UserMatched.Birthday != null ? ChangeBirthdayUSToILFormat(i_UserMatched.Birthday) : string.Empty)}";
             labelMatchesLocation.Text = $"Location: {i_UserMatched.Location?.Name ?? string.Empty}";
             labelMatchesEmail.Text = $"Email: {i_UserMatched.Email ?? string.Empty}";
@@ -173,7 +173,7 @@ namespace BasicFacebookFeatures
         {
             listBoxMatches.Items.Clear();
             pictureBoxMatches.Image = null;
-            labelMatchesName.Text = "Name:";
+            labelMatchesFullName.Text = "Name:";
             labelMatchesBirthday.Text = "Birthday:";
             labelMatchesLocation.Text = "Location:";
             labelMatchesEmail.Text = "Email:";

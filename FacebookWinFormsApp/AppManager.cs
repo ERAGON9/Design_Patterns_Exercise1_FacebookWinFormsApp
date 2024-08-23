@@ -22,7 +22,7 @@ namespace BasicFacebookFeatures
             "user_events",
             "user_friends", //
             "user_gender", //
-            "user_hometown",
+            "user_hometown", //
             "user_likes", //
             "user_link",
             "user_location", //

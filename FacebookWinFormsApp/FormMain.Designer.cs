@@ -45,24 +45,24 @@
             this.labelMatchesEmail = new System.Windows.Forms.Label();
             this.labelMatchesLocation = new System.Windows.Forms.Label();
             this.labelMatchesBirthday = new System.Windows.Forms.Label();
-            this.labelMatchesName = new System.Windows.Forms.Label();
+            this.labelMatchesFullName = new System.Windows.Forms.Label();
             this.buttonFindMatch = new System.Windows.Forms.Button();
             this.pictureBoxMatches = new System.Windows.Forms.PictureBox();
             this.listBoxMatches = new System.Windows.Forms.ListBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.labelAgePreferenceMax = new System.Windows.Forms.Label();
             this.numericUpDownMaxAge = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelAgePreferenceMin = new System.Windows.Forms.Label();
             this.numericUpDownMinAge = new System.Windows.Forms.NumericUpDown();
             this.radioButtonFemale = new System.Windows.Forms.RadioButton();
             this.radioButtonMale = new System.Windows.Forms.RadioButton();
             this.pictureBoxFindMatchRight = new System.Windows.Forms.PictureBox();
             this.pictureBoxFindMatchLeft = new System.Windows.Forms.PictureBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.labelFriendList = new System.Windows.Forms.Label();
+            this.labelMatchesListInfo = new System.Windows.Forms.Label();
+            this.labelMatchesList = new System.Windows.Forms.Label();
             this.labelAgePreference = new System.Windows.Forms.Label();
             this.labelGenderPreference = new System.Windows.Forms.Label();
-            this.labelTitle2 = new System.Windows.Forms.Label();
-            this.labelTitle1 = new System.Windows.Forms.Label();
+            this.labelSubTitleFindMatch = new System.Windows.Forms.Label();
+            this.labelTitleFindMatch = new System.Windows.Forms.Label();
             this.tabPageFriendOverView = new System.Windows.Forms.TabPage();
             this.listBoxLikedPages = new System.Windows.Forms.ListBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -81,6 +81,29 @@
             this.buttonShowInteractionStats = new System.Windows.Forms.Button();
             this.comboBoxFriends = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.labelPostNewStatus = new System.Windows.Forms.Label();
+            this.textBoxPostNewStatus = new System.Windows.Forms.TextBox();
+            this.buttonPostNewStatus = new System.Windows.Forms.Button();
+            this.labelPosts = new System.Windows.Forms.Label();
+            this.listBoxPosts = new System.Windows.Forms.ListBox();
+            this.labelPostsInfo = new System.Windows.Forms.Label();
+            this.listBoxPostsComments = new System.Windows.Forms.ListBox();
+            this.labelFriends = new System.Windows.Forms.Label();
+            this.labelFriendsInfo = new System.Windows.Forms.Label();
+            this.listBoxFriends = new System.Windows.Forms.ListBox();
+            this.pictureBoxFriends = new System.Windows.Forms.PictureBox();
+            this.pictureBoxAlbums = new System.Windows.Forms.PictureBox();
+            this.listBoxAlbums = new System.Windows.Forms.ListBox();
+            this.labelAlbumsInfo = new System.Windows.Forms.Label();
+            this.labelAlbums = new System.Windows.Forms.Label();
+            this.pictureBoxLikePages = new System.Windows.Forms.PictureBox();
+            this.listBoxLikePages = new System.Windows.Forms.ListBox();
+            this.labelLikePagesInfo = new System.Windows.Forms.Label();
+            this.labelLikePages = new System.Windows.Forms.Label();
+            this.pictureBoxFavoriteTeams = new System.Windows.Forms.PictureBox();
+            this.listBoxFavoriteTeams = new System.Windows.Forms.ListBox();
+            this.labelFavoriteTeamsInfo = new System.Windows.Forms.Label();
+            this.labelFavoriteTeams = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageHomePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
@@ -92,6 +115,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFindMatchLeft)).BeginInit();
             this.tabPageFriendOverView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriend)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriends)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAlbums)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLikePages)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFavoriteTeams)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonLogin
@@ -128,12 +155,35 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1243, 697);
+            this.tabControl1.Size = new System.Drawing.Size(1282, 703);
             this.tabControl1.TabIndex = 54;
             // 
             // tabPageHomePage
             // 
             this.tabPageHomePage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
+            this.tabPageHomePage.Controls.Add(this.pictureBoxFavoriteTeams);
+            this.tabPageHomePage.Controls.Add(this.listBoxFavoriteTeams);
+            this.tabPageHomePage.Controls.Add(this.labelFavoriteTeamsInfo);
+            this.tabPageHomePage.Controls.Add(this.labelFavoriteTeams);
+            this.tabPageHomePage.Controls.Add(this.pictureBoxLikePages);
+            this.tabPageHomePage.Controls.Add(this.listBoxLikePages);
+            this.tabPageHomePage.Controls.Add(this.labelLikePagesInfo);
+            this.tabPageHomePage.Controls.Add(this.labelLikePages);
+            this.tabPageHomePage.Controls.Add(this.pictureBoxAlbums);
+            this.tabPageHomePage.Controls.Add(this.listBoxAlbums);
+            this.tabPageHomePage.Controls.Add(this.labelAlbumsInfo);
+            this.tabPageHomePage.Controls.Add(this.labelAlbums);
+            this.tabPageHomePage.Controls.Add(this.pictureBoxFriends);
+            this.tabPageHomePage.Controls.Add(this.listBoxFriends);
+            this.tabPageHomePage.Controls.Add(this.labelFriendsInfo);
+            this.tabPageHomePage.Controls.Add(this.labelFriends);
+            this.tabPageHomePage.Controls.Add(this.listBoxPostsComments);
+            this.tabPageHomePage.Controls.Add(this.labelPostsInfo);
+            this.tabPageHomePage.Controls.Add(this.listBoxPosts);
+            this.tabPageHomePage.Controls.Add(this.labelPosts);
+            this.tabPageHomePage.Controls.Add(this.buttonPostNewStatus);
+            this.tabPageHomePage.Controls.Add(this.textBoxPostNewStatus);
+            this.tabPageHomePage.Controls.Add(this.labelPostNewStatus);
             this.tabPageHomePage.Controls.Add(this.labelUserLocation);
             this.tabPageHomePage.Controls.Add(this.labelUserHometown);
             this.tabPageHomePage.Controls.Add(this.labelUserGender);
@@ -148,7 +198,7 @@
             this.tabPageHomePage.Location = new System.Drawing.Point(4, 31);
             this.tabPageHomePage.Name = "tabPageHomePage";
             this.tabPageHomePage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageHomePage.Size = new System.Drawing.Size(1235, 662);
+            this.tabPageHomePage.Size = new System.Drawing.Size(1274, 668);
             this.tabPageHomePage.TabIndex = 0;
             this.tabPageHomePage.Text = "Home Page";
             // 
@@ -225,10 +275,11 @@
             // labelUserFirstName
             // 
             this.labelUserFirstName.AutoSize = true;
-            this.labelUserFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUserFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUserFirstName.ForeColor = System.Drawing.SystemColors.ControlText;
             this.labelUserFirstName.Location = new System.Drawing.Point(23, 106);
             this.labelUserFirstName.Name = "labelUserFirstName";
-            this.labelUserFirstName.Size = new System.Drawing.Size(273, 29);
+            this.labelUserFirstName.Size = new System.Drawing.Size(263, 29);
             this.labelUserFirstName.TabIndex = 56;
             this.labelUserFirstName.Text = "No user logged in yet";
             // 
@@ -248,28 +299,28 @@
             this.tabPageFindMatch.Controls.Add(this.labelMatchesEmail);
             this.tabPageFindMatch.Controls.Add(this.labelMatchesLocation);
             this.tabPageFindMatch.Controls.Add(this.labelMatchesBirthday);
-            this.tabPageFindMatch.Controls.Add(this.labelMatchesName);
+            this.tabPageFindMatch.Controls.Add(this.labelMatchesFullName);
             this.tabPageFindMatch.Controls.Add(this.buttonFindMatch);
             this.tabPageFindMatch.Controls.Add(this.pictureBoxMatches);
             this.tabPageFindMatch.Controls.Add(this.listBoxMatches);
-            this.tabPageFindMatch.Controls.Add(this.label5);
+            this.tabPageFindMatch.Controls.Add(this.labelAgePreferenceMax);
             this.tabPageFindMatch.Controls.Add(this.numericUpDownMaxAge);
-            this.tabPageFindMatch.Controls.Add(this.label4);
+            this.tabPageFindMatch.Controls.Add(this.labelAgePreferenceMin);
             this.tabPageFindMatch.Controls.Add(this.numericUpDownMinAge);
             this.tabPageFindMatch.Controls.Add(this.radioButtonFemale);
             this.tabPageFindMatch.Controls.Add(this.radioButtonMale);
             this.tabPageFindMatch.Controls.Add(this.pictureBoxFindMatchRight);
             this.tabPageFindMatch.Controls.Add(this.pictureBoxFindMatchLeft);
-            this.tabPageFindMatch.Controls.Add(this.label3);
-            this.tabPageFindMatch.Controls.Add(this.labelFriendList);
+            this.tabPageFindMatch.Controls.Add(this.labelMatchesListInfo);
+            this.tabPageFindMatch.Controls.Add(this.labelMatchesList);
             this.tabPageFindMatch.Controls.Add(this.labelAgePreference);
             this.tabPageFindMatch.Controls.Add(this.labelGenderPreference);
-            this.tabPageFindMatch.Controls.Add(this.labelTitle2);
-            this.tabPageFindMatch.Controls.Add(this.labelTitle1);
+            this.tabPageFindMatch.Controls.Add(this.labelSubTitleFindMatch);
+            this.tabPageFindMatch.Controls.Add(this.labelTitleFindMatch);
             this.tabPageFindMatch.Location = new System.Drawing.Point(4, 31);
             this.tabPageFindMatch.Name = "tabPageFindMatch";
             this.tabPageFindMatch.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFindMatch.Size = new System.Drawing.Size(1235, 662);
+            this.tabPageFindMatch.Size = new System.Drawing.Size(1274, 668);
             this.tabPageFindMatch.TabIndex = 1;
             this.tabPageFindMatch.Text = "Find Match";
             // 
@@ -300,14 +351,14 @@
             this.labelMatchesBirthday.TabIndex = 18;
             this.labelMatchesBirthday.Text = "Birthday:";
             // 
-            // labelMatchesName
+            // labelMatchesFullName
             // 
-            this.labelMatchesName.AutoSize = true;
-            this.labelMatchesName.Location = new System.Drawing.Point(913, 494);
-            this.labelMatchesName.Name = "labelMatchesName";
-            this.labelMatchesName.Size = new System.Drawing.Size(102, 24);
-            this.labelMatchesName.TabIndex = 17;
-            this.labelMatchesName.Text = "Full Name:";
+            this.labelMatchesFullName.AutoSize = true;
+            this.labelMatchesFullName.Location = new System.Drawing.Point(913, 494);
+            this.labelMatchesFullName.Name = "labelMatchesFullName";
+            this.labelMatchesFullName.Size = new System.Drawing.Size(102, 24);
+            this.labelMatchesFullName.TabIndex = 17;
+            this.labelMatchesFullName.Text = "Full Name:";
             // 
             // buttonFindMatch
             // 
@@ -340,14 +391,14 @@
             this.listBoxMatches.TabIndex = 14;
             this.listBoxMatches.SelectedIndexChanged += new System.EventHandler(this.listBoxMatches_SelectedIndexChanged);
             // 
-            // label5
+            // labelAgePreferenceMax
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(606, 306);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 24);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "Max:";
+            this.labelAgePreferenceMax.AutoSize = true;
+            this.labelAgePreferenceMax.Location = new System.Drawing.Point(606, 306);
+            this.labelAgePreferenceMax.Name = "labelAgePreferenceMax";
+            this.labelAgePreferenceMax.Size = new System.Drawing.Size(51, 24);
+            this.labelAgePreferenceMax.TabIndex = 13;
+            this.labelAgePreferenceMax.Text = "Max:";
             // 
             // numericUpDownMaxAge
             // 
@@ -361,14 +412,14 @@
             0,
             0});
             // 
-            // label4
+            // labelAgePreferenceMin
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(474, 306);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(46, 24);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Min:";
+            this.labelAgePreferenceMin.AutoSize = true;
+            this.labelAgePreferenceMin.Location = new System.Drawing.Point(474, 306);
+            this.labelAgePreferenceMin.Name = "labelAgePreferenceMin";
+            this.labelAgePreferenceMin.Size = new System.Drawing.Size(46, 24);
+            this.labelAgePreferenceMin.TabIndex = 11;
+            this.labelAgePreferenceMin.Text = "Min:";
             // 
             // numericUpDownMinAge
             // 
@@ -426,26 +477,26 @@
             this.pictureBoxFindMatchLeft.TabIndex = 6;
             this.pictureBoxFindMatchLeft.TabStop = false;
             // 
-            // label3
+            // labelMatchesListInfo
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(362, 464);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(488, 20);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "(Sorted by the number of shared like pages in descending order)";
+            this.labelMatchesListInfo.AutoSize = true;
+            this.labelMatchesListInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMatchesListInfo.Location = new System.Drawing.Point(362, 464);
+            this.labelMatchesListInfo.Name = "labelMatchesListInfo";
+            this.labelMatchesListInfo.Size = new System.Drawing.Size(488, 20);
+            this.labelMatchesListInfo.TabIndex = 5;
+            this.labelMatchesListInfo.Text = "(Sorted by the number of shared like pages in descending order)";
             // 
-            // labelFriendList
+            // labelMatchesList
             // 
-            this.labelFriendList.AutoSize = true;
-            this.labelFriendList.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+            this.labelMatchesList.AutoSize = true;
+            this.labelMatchesList.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelFriendList.Location = new System.Drawing.Point(517, 434);
-            this.labelFriendList.Name = "labelFriendList";
-            this.labelFriendList.Size = new System.Drawing.Size(139, 26);
-            this.labelFriendList.TabIndex = 4;
-            this.labelFriendList.Text = "Matches list";
+            this.labelMatchesList.Location = new System.Drawing.Point(517, 434);
+            this.labelMatchesList.Name = "labelMatchesList";
+            this.labelMatchesList.Size = new System.Drawing.Size(139, 26);
+            this.labelMatchesList.TabIndex = 4;
+            this.labelMatchesList.Text = "Matches list";
             // 
             // labelAgePreference
             // 
@@ -469,25 +520,25 @@
             this.labelGenderPreference.TabIndex = 2;
             this.labelGenderPreference.Text = "Gender preference";
             // 
-            // labelTitle2
+            // labelSubTitleFindMatch
             // 
-            this.labelTitle2.AutoSize = true;
-            this.labelTitle2.Location = new System.Drawing.Point(246, 120);
-            this.labelTitle2.Name = "labelTitle2";
-            this.labelTitle2.Size = new System.Drawing.Size(854, 24);
-            this.labelTitle2.TabIndex = 1;
-            this.labelTitle2.Text = "Lets try find out your best next dates from your friend list based on preferences" +
+            this.labelSubTitleFindMatch.AutoSize = true;
+            this.labelSubTitleFindMatch.Location = new System.Drawing.Point(246, 120);
+            this.labelSubTitleFindMatch.Name = "labelSubTitleFindMatch";
+            this.labelSubTitleFindMatch.Size = new System.Drawing.Size(854, 24);
+            this.labelSubTitleFindMatch.TabIndex = 1;
+            this.labelSubTitleFindMatch.Text = "Lets try find out your best next dates from your friend list based on preferences" +
     " and common hobbies!\r\n";
             // 
-            // labelTitle1
+            // labelTitleFindMatch
             // 
-            this.labelTitle1.AutoSize = true;
-            this.labelTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitle1.Location = new System.Drawing.Point(374, 32);
-            this.labelTitle1.Name = "labelTitle1";
-            this.labelTitle1.Size = new System.Drawing.Size(515, 52);
-            this.labelTitle1.TabIndex = 0;
-            this.labelTitle1.Text = "Welcome to Find Match!";
+            this.labelTitleFindMatch.AutoSize = true;
+            this.labelTitleFindMatch.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTitleFindMatch.Location = new System.Drawing.Point(374, 32);
+            this.labelTitleFindMatch.Name = "labelTitleFindMatch";
+            this.labelTitleFindMatch.Size = new System.Drawing.Size(515, 52);
+            this.labelTitleFindMatch.TabIndex = 0;
+            this.labelTitleFindMatch.Text = "Welcome to Find Match!";
             // 
             // tabPageFriendOverView
             // 
@@ -512,7 +563,7 @@
             this.tabPageFriendOverView.Location = new System.Drawing.Point(4, 31);
             this.tabPageFriendOverView.Name = "tabPageFriendOverView";
             this.tabPageFriendOverView.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFriendOverView.Size = new System.Drawing.Size(1235, 662);
+            this.tabPageFriendOverView.Size = new System.Drawing.Size(1274, 668);
             this.tabPageFriendOverView.TabIndex = 2;
             this.tabPageFriendOverView.Text = "Friend OverView";
             this.tabPageFriendOverView.Click += new System.EventHandler(this.buttonShowInteractionStats_Click);
@@ -672,11 +723,222 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Select a friend:";
             // 
+            // labelPostNewStatus
+            // 
+            this.labelPostNewStatus.AutoSize = true;
+            this.labelPostNewStatus.Location = new System.Drawing.Point(625, 25);
+            this.labelPostNewStatus.Name = "labelPostNewStatus";
+            this.labelPostNewStatus.Size = new System.Drawing.Size(150, 24);
+            this.labelPostNewStatus.TabIndex = 64;
+            this.labelPostNewStatus.Text = "Post New Status:";
+            // 
+            // textBoxPostNewStatus
+            // 
+            this.textBoxPostNewStatus.Location = new System.Drawing.Point(785, 22);
+            this.textBoxPostNewStatus.Name = "textBoxPostNewStatus";
+            this.textBoxPostNewStatus.Size = new System.Drawing.Size(310, 28);
+            this.textBoxPostNewStatus.TabIndex = 65;
+            // 
+            // buttonPostNewStatus
+            // 
+            this.buttonPostNewStatus.Location = new System.Drawing.Point(1104, 20);
+            this.buttonPostNewStatus.Name = "buttonPostNewStatus";
+            this.buttonPostNewStatus.Size = new System.Drawing.Size(80, 33);
+            this.buttonPostNewStatus.TabIndex = 66;
+            this.buttonPostNewStatus.Text = "Post";
+            this.buttonPostNewStatus.UseVisualStyleBackColor = true;
+            // 
+            // labelPosts
+            // 
+            this.labelPosts.AutoSize = true;
+            this.labelPosts.Location = new System.Drawing.Point(625, 109);
+            this.labelPosts.Name = "labelPosts";
+            this.labelPosts.Size = new System.Drawing.Size(118, 24);
+            this.labelPosts.TabIndex = 67;
+            this.labelPosts.Text = "Your\'s Posts:";
+            // 
+            // listBoxPosts
+            // 
+            this.listBoxPosts.FormattingEnabled = true;
+            this.listBoxPosts.ItemHeight = 22;
+            this.listBoxPosts.Location = new System.Drawing.Point(629, 160);
+            this.listBoxPosts.Name = "listBoxPosts";
+            this.listBoxPosts.Size = new System.Drawing.Size(394, 158);
+            this.listBoxPosts.TabIndex = 68;
+            // 
+            // labelPostsInfo
+            // 
+            this.labelPostsInfo.AutoSize = true;
+            this.labelPostsInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPostsInfo.Location = new System.Drawing.Point(626, 135);
+            this.labelPostsInfo.Name = "labelPostsInfo";
+            this.labelPostsInfo.Size = new System.Drawing.Size(266, 18);
+            this.labelPostsInfo.TabIndex = 69;
+            this.labelPostsInfo.Text = "(Click on a post to view the comments)";
+            // 
+            // listBoxPostsComments
+            // 
+            this.listBoxPostsComments.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.listBoxPostsComments.FormattingEnabled = true;
+            this.listBoxPostsComments.ItemHeight = 22;
+            this.listBoxPostsComments.Location = new System.Drawing.Point(982, 215);
+            this.listBoxPostsComments.Name = "listBoxPostsComments";
+            this.listBoxPostsComments.Size = new System.Drawing.Size(210, 136);
+            this.listBoxPostsComments.TabIndex = 70;
+            // 
+            // labelFriends
+            // 
+            this.labelFriends.AutoSize = true;
+            this.labelFriends.Location = new System.Drawing.Point(25, 399);
+            this.labelFriends.Name = "labelFriends";
+            this.labelFriends.Size = new System.Drawing.Size(137, 24);
+            this.labelFriends.TabIndex = 71;
+            this.labelFriends.Text = "Your\'s Friends:";
+            // 
+            // labelFriendsInfo
+            // 
+            this.labelFriendsInfo.AutoSize = true;
+            this.labelFriendsInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFriendsInfo.Location = new System.Drawing.Point(26, 427);
+            this.labelFriendsInfo.Name = "labelFriendsInfo";
+            this.labelFriendsInfo.Size = new System.Drawing.Size(245, 18);
+            this.labelFriendsInfo.TabIndex = 72;
+            this.labelFriendsInfo.Text = "(Click on a friend to view his picture)";
+            // 
+            // listBoxFriends
+            // 
+            this.listBoxFriends.FormattingEnabled = true;
+            this.listBoxFriends.ItemHeight = 22;
+            this.listBoxFriends.Location = new System.Drawing.Point(28, 457);
+            this.listBoxFriends.Name = "listBoxFriends";
+            this.listBoxFriends.Size = new System.Drawing.Size(243, 158);
+            this.listBoxFriends.TabIndex = 73;
+            // 
+            // pictureBoxFriends
+            // 
+            this.pictureBoxFriends.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.pictureBoxFriends.Location = new System.Drawing.Point(223, 529);
+            this.pictureBoxFriends.Name = "pictureBoxFriends";
+            this.pictureBoxFriends.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxFriends.TabIndex = 74;
+            this.pictureBoxFriends.TabStop = false;
+            // 
+            // pictureBoxAlbums
+            // 
+            this.pictureBoxAlbums.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.pictureBoxAlbums.Location = new System.Drawing.Point(533, 529);
+            this.pictureBoxAlbums.Name = "pictureBoxAlbums";
+            this.pictureBoxAlbums.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxAlbums.TabIndex = 78;
+            this.pictureBoxAlbums.TabStop = false;
+            // 
+            // listBoxAlbums
+            // 
+            this.listBoxAlbums.FormattingEnabled = true;
+            this.listBoxAlbums.ItemHeight = 22;
+            this.listBoxAlbums.Location = new System.Drawing.Point(338, 457);
+            this.listBoxAlbums.Name = "listBoxAlbums";
+            this.listBoxAlbums.Size = new System.Drawing.Size(243, 158);
+            this.listBoxAlbums.TabIndex = 77;
+            // 
+            // labelAlbumsInfo
+            // 
+            this.labelAlbumsInfo.AutoSize = true;
+            this.labelAlbumsInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAlbumsInfo.Location = new System.Drawing.Point(336, 427);
+            this.labelAlbumsInfo.Name = "labelAlbumsInfo";
+            this.labelAlbumsInfo.Size = new System.Drawing.Size(297, 18);
+            this.labelAlbumsInfo.TabIndex = 76;
+            this.labelAlbumsInfo.Text = "(Click on an album to view it\'s cover picture)";
+            // 
+            // labelAlbums
+            // 
+            this.labelAlbums.AutoSize = true;
+            this.labelAlbums.Location = new System.Drawing.Point(335, 399);
+            this.labelAlbums.Name = "labelAlbums";
+            this.labelAlbums.Size = new System.Drawing.Size(137, 24);
+            this.labelAlbums.TabIndex = 75;
+            this.labelAlbums.Text = "Your\'s Albums:";
+            // 
+            // pictureBoxLikePages
+            // 
+            this.pictureBoxLikePages.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.pictureBoxLikePages.Location = new System.Drawing.Point(845, 529);
+            this.pictureBoxLikePages.Name = "pictureBoxLikePages";
+            this.pictureBoxLikePages.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxLikePages.TabIndex = 82;
+            this.pictureBoxLikePages.TabStop = false;
+            // 
+            // listBoxLikePages
+            // 
+            this.listBoxLikePages.FormattingEnabled = true;
+            this.listBoxLikePages.ItemHeight = 22;
+            this.listBoxLikePages.Location = new System.Drawing.Point(650, 457);
+            this.listBoxLikePages.Name = "listBoxLikePages";
+            this.listBoxLikePages.Size = new System.Drawing.Size(243, 158);
+            this.listBoxLikePages.TabIndex = 81;
+            // 
+            // labelLikePagesInfo
+            // 
+            this.labelLikePagesInfo.AutoSize = true;
+            this.labelLikePagesInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelLikePagesInfo.Location = new System.Drawing.Point(648, 427);
+            this.labelLikePagesInfo.Name = "labelLikePagesInfo";
+            this.labelLikePagesInfo.Size = new System.Drawing.Size(240, 18);
+            this.labelLikePagesInfo.TabIndex = 80;
+            this.labelLikePagesInfo.Text = "(Click on a page to view it\'s picture)";
+            // 
+            // labelLikePages
+            // 
+            this.labelLikePages.AutoSize = true;
+            this.labelLikePages.Location = new System.Drawing.Point(647, 399);
+            this.labelLikePages.Name = "labelLikePages";
+            this.labelLikePages.Size = new System.Drawing.Size(165, 24);
+            this.labelLikePages.TabIndex = 79;
+            this.labelLikePages.Text = "Your\'s Like Pages:";
+            // 
+            // pictureBoxFavoriteTeams
+            // 
+            this.pictureBoxFavoriteTeams.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.pictureBoxFavoriteTeams.Location = new System.Drawing.Point(1156, 529);
+            this.pictureBoxFavoriteTeams.Name = "pictureBoxFavoriteTeams";
+            this.pictureBoxFavoriteTeams.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxFavoriteTeams.TabIndex = 86;
+            this.pictureBoxFavoriteTeams.TabStop = false;
+            // 
+            // listBoxFavoriteTeams
+            // 
+            this.listBoxFavoriteTeams.FormattingEnabled = true;
+            this.listBoxFavoriteTeams.ItemHeight = 22;
+            this.listBoxFavoriteTeams.Location = new System.Drawing.Point(961, 457);
+            this.listBoxFavoriteTeams.Name = "listBoxFavoriteTeams";
+            this.listBoxFavoriteTeams.Size = new System.Drawing.Size(243, 158);
+            this.listBoxFavoriteTeams.TabIndex = 85;
+            // 
+            // labelFavoriteTeamsInfo
+            // 
+            this.labelFavoriteTeamsInfo.AutoSize = true;
+            this.labelFavoriteTeamsInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFavoriteTeamsInfo.Location = new System.Drawing.Point(959, 427);
+            this.labelFavoriteTeamsInfo.Name = "labelFavoriteTeamsInfo";
+            this.labelFavoriteTeamsInfo.Size = new System.Drawing.Size(241, 18);
+            this.labelFavoriteTeamsInfo.TabIndex = 84;
+            this.labelFavoriteTeamsInfo.Text = "(Click on a team to view it\'s picture)";
+            // 
+            // labelFavoriteTeams
+            // 
+            this.labelFavoriteTeams.AutoSize = true;
+            this.labelFavoriteTeams.Location = new System.Drawing.Point(958, 399);
+            this.labelFavoriteTeams.Name = "labelFavoriteTeams";
+            this.labelFavoriteTeams.Size = new System.Drawing.Size(203, 24);
+            this.labelFavoriteTeams.TabIndex = 83;
+            this.labelFavoriteTeams.Text = "Your\'s Favorite Teams:";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1243, 697);
+            this.ClientSize = new System.Drawing.Size(1282, 703);
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -697,6 +959,10 @@
             this.tabPageFriendOverView.ResumeLayout(false);
             this.tabPageFriendOverView.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriend)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriends)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAlbums)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLikePages)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFavoriteTeams)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -711,19 +977,19 @@
         private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.TabPage tabPageFriendOverView;
         private System.Windows.Forms.Label labelUserFirstName;
-        private System.Windows.Forms.Label labelTitle1;
-        private System.Windows.Forms.Label labelTitle2;
+        private System.Windows.Forms.Label labelTitleFindMatch;
+        private System.Windows.Forms.Label labelSubTitleFindMatch;
         private System.Windows.Forms.Label labelGenderPreference;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label labelFriendList;
+        private System.Windows.Forms.Label labelMatchesListInfo;
+        private System.Windows.Forms.Label labelMatchesList;
         private System.Windows.Forms.Label labelAgePreference;
         private System.Windows.Forms.PictureBox pictureBoxFindMatchRight;
         private System.Windows.Forms.PictureBox pictureBoxFindMatchLeft;
         private System.Windows.Forms.RadioButton radioButtonFemale;
         private System.Windows.Forms.RadioButton radioButtonMale;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelAgePreferenceMax;
         private System.Windows.Forms.NumericUpDown numericUpDownMaxAge;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelAgePreferenceMin;
         private System.Windows.Forms.NumericUpDown numericUpDownMinAge;
         private System.Windows.Forms.PictureBox pictureBoxMatches;
         private System.Windows.Forms.ListBox listBoxMatches;
@@ -745,7 +1011,7 @@
         private System.Windows.Forms.Button buttonShowSimilarities;
         private System.Windows.Forms.PictureBox pictureBoxFriend;
         private System.Windows.Forms.Label LabelCommentsNum;
-        private System.Windows.Forms.Label labelMatchesName;
+        private System.Windows.Forms.Label labelMatchesFullName;
         private System.Windows.Forms.Label labelMatchesEmail;
         private System.Windows.Forms.Label labelMatchesLocation;
         private System.Windows.Forms.Label labelMatchesBirthday;
@@ -756,5 +1022,28 @@
         private System.Windows.Forms.Label labelUserFullName;
         private System.Windows.Forms.Label labelUserHometown;
         private System.Windows.Forms.Label labelUserLocation;
+        private System.Windows.Forms.TextBox textBoxPostNewStatus;
+        private System.Windows.Forms.Label labelPostNewStatus;
+        private System.Windows.Forms.Label labelPosts;
+        private System.Windows.Forms.Button buttonPostNewStatus;
+        private System.Windows.Forms.ListBox listBoxPosts;
+        private System.Windows.Forms.Label labelPostsInfo;
+        private System.Windows.Forms.ListBox listBoxPostsComments;
+        private System.Windows.Forms.Label labelFriends;
+        private System.Windows.Forms.Label labelFriendsInfo;
+        private System.Windows.Forms.ListBox listBoxFriends;
+        private System.Windows.Forms.PictureBox pictureBoxAlbums;
+        private System.Windows.Forms.ListBox listBoxAlbums;
+        private System.Windows.Forms.Label labelAlbumsInfo;
+        private System.Windows.Forms.Label labelAlbums;
+        private System.Windows.Forms.PictureBox pictureBoxFriends;
+        private System.Windows.Forms.PictureBox pictureBoxLikePages;
+        private System.Windows.Forms.ListBox listBoxLikePages;
+        private System.Windows.Forms.Label labelLikePagesInfo;
+        private System.Windows.Forms.Label labelLikePages;
+        private System.Windows.Forms.PictureBox pictureBoxFavoriteTeams;
+        private System.Windows.Forms.ListBox listBoxFavoriteTeams;
+        private System.Windows.Forms.Label labelFavoriteTeamsInfo;
+        private System.Windows.Forms.Label labelFavoriteTeams;
     }
 }
