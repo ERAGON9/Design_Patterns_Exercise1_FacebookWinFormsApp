@@ -71,7 +71,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.buttonShowInteractionStats = new System.Windows.Forms.Button();
             this.comboBoxFriends = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lableSelcetFriend = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageHomePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
@@ -389,7 +389,7 @@
             this.FriendConnectionOverViewTab.Controls.Add(this.label6);
             this.FriendConnectionOverViewTab.Controls.Add(this.buttonShowInteractionStats);
             this.FriendConnectionOverViewTab.Controls.Add(this.comboBoxFriends);
-            this.FriendConnectionOverViewTab.Controls.Add(this.label2);
+            this.FriendConnectionOverViewTab.Controls.Add(this.lableSelcetFriend);
             this.FriendConnectionOverViewTab.Location = new System.Drawing.Point(4, 31);
             this.FriendConnectionOverViewTab.Name = "FriendConnectionOverViewTab";
             this.FriendConnectionOverViewTab.Padding = new System.Windows.Forms.Padding(3);
@@ -494,9 +494,9 @@
             this.LabelCommentsNum.AutoSize = true;
             this.LabelCommentsNum.Location = new System.Drawing.Point(675, 141);
             this.LabelCommentsNum.Name = "LabelCommentsNum";
-            this.LabelCommentsNum.Size = new System.Drawing.Size(117, 24);
+            this.LabelCommentsNum.Size = new System.Drawing.Size(206, 24);
             this.LabelCommentsNum.TabIndex = 6;
-            this.LabelCommentsNum.Text = "Not available";
+            this.LabelCommentsNum.Text = "Waiting for button press";
             // 
             // label8
             // 
@@ -512,9 +512,9 @@
             this.LabelLikesNum.AutoSize = true;
             this.LabelLikesNum.Location = new System.Drawing.Point(675, 93);
             this.LabelLikesNum.Name = "LabelLikesNum";
-            this.LabelLikesNum.Size = new System.Drawing.Size(117, 24);
+            this.LabelLikesNum.Size = new System.Drawing.Size(206, 24);
             this.LabelLikesNum.TabIndex = 4;
-            this.LabelLikesNum.Text = "Not available";
+            this.LabelLikesNum.Text = "Waiting for button press";
             // 
             // label6
             // 
@@ -544,14 +544,14 @@
             this.comboBoxFriends.TabIndex = 1;
             this.comboBoxFriends.SelectedIndexChanged += new System.EventHandler(this.comboBoxFriends_SelectedIndexChanged);
             // 
-            // label2
+            // lableSelcetFriend
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(51, 29);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(134, 24);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Select a friend:";
+            this.lableSelcetFriend.AutoSize = true;
+            this.lableSelcetFriend.Location = new System.Drawing.Point(51, 29);
+            this.lableSelcetFriend.Name = "lableSelcetFriend";
+            this.lableSelcetFriend.Size = new System.Drawing.Size(134, 24);
+            this.lableSelcetFriend.TabIndex = 0;
+            this.lableSelcetFriend.Text = "Select a friend:";
             // 
             // FormMain
             // 
@@ -611,7 +611,7 @@
         private System.Windows.Forms.PictureBox pictureBoxFriendList;
         private System.Windows.Forms.ListBox listBoxMatchesList;
         private System.Windows.Forms.Button buttonFindMatch;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lableSelcetFriend;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label LabelLikesNum;
         private System.Windows.Forms.Label label6;

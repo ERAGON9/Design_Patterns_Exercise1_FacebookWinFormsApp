@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
@@ -36,12 +32,21 @@ namespace BasicFacebookFeatures
         {
             m_LoginResult = FacebookService.Login(
                 textBoxAppID.Text,
-                /// requested permissions:
                 "email",
                 "public_profile",
-                "user_friends"
-                /// add any relevant permissions
-                );
+                "user_age_range",
+                "user_birthday",
+                "user_events",
+                "user_friends",
+                "user_gender",
+                "user_hometown",
+                "user_likes",
+                "user_link",
+                "user_location",
+                "user_photos",
+                "user_posts",
+                "user_videos"
+            );
 
             if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage) && !string.IsNullOrEmpty(m_LoginResult.AccessToken))
             {
@@ -50,7 +55,6 @@ namespace BasicFacebookFeatures
                 buttonLogin.Text = $"Logged in";
                 labelUserName.Text = $"Hello {m_LoggedInUser.Name}";
                 labelUserName.BackColor = Color.LightGreen;
-                //buttonLogin.BackColor = Color.LightGreen;
                 pictureBoxProfile.ImageLocation = m_LoggedInUser.PictureLargeURL;
                 buttonLogin.Enabled = false;
                 buttonLogout.Enabled = true;
@@ -101,9 +105,8 @@ namespace BasicFacebookFeatures
                 }
                 else
                 {
-                    MessageBox.Show("Find Match didn't found any matches for you, maybe try diffrent preferences!");
+                    MessageBox.Show("Find Match didn't find any matches for you, maybe try different preferences!");
                 }
-
             }
             catch (Exception ex)
             {
@@ -113,14 +116,14 @@ namespace BasicFacebookFeatures
 
         private eGender getGenderFromForm()
         {
-            eGender genderPrefernce = eGender.female;
+            eGender genderPreference = eGender.female;
 
             if (radioButtonMale.Checked)
             {
-                genderPrefernce = eGender.male;
+                genderPreference = eGender.male;
             }
 
-            return genderPrefernce;
+            return genderPreference;
         }
 
         private void listBoxMatchesList_SelectedIndexChanged(object sender, EventArgs e)
@@ -131,7 +134,6 @@ namespace BasicFacebookFeatures
                 if (matchPicked != null)
                 {
                     pictureBoxFriendList.ImageLocation = matchPicked.PictureNormalURL;
-                    // TODO: can show information on the User match!
                 }
             }
         }
@@ -158,29 +160,52 @@ namespace BasicFacebookFeatures
                 comboBoxFriends.Items.Add("Couldn't fetch friends");
             }
         }
-        private void test()
-        {
-            //Console.WriteLine(  "fdfdfdf");
-        }
+
         private void buttonShowInteractionStats_Click(object sender, EventArgs e)
         {
-            showFriendInteractionStats();
+            User selectedFriend = comboBoxFriends.SelectedItem as User;
+
+            if (selectedFriend != null)
+            {
+               // var friendConnectionOverview = m_FriendConnectionOverview;
+                try
+                {
+                    fetchCommentsNumberAndDisplay(selectedFriend);
+                    fetchLikesNumberAndDisplay(selectedFriend);
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception or show an error message to the user
+                    MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
-        private void showFriendInteractionStats()
+        private void fetchCommentsNumberAndDisplay(User i_SelectedFriend)
         {
-            if (comboBoxFriends.SelectedItem != null && comboBoxFriends.SelectedItem is User selectedFriend)
+            try
             {
-                int likesCount = m_FriendConnectionOverview.GetNumberOfLikesFromFriend(selectedFriend);
-                int commentsCount = m_FriendConnectionOverview.GetNumberOfCommentsFromFriend(selectedFriend);
-
-                // Update labels
-                LabelLikesNum.Text = likesCount >= 0 ? likesCount.ToString() : "Error";
-                LabelCommentsNum.Text = commentsCount >= 0 ? commentsCount.ToString() : "Error";
+                int numberOfComments = FriendOverViewFeature.GetNumberOfCommentsFromFriend(m_LoggedInUser, i_SelectedFriend);
+                LabelCommentsNum.Text = numberOfComments.ToString();
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select a friend from the list.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LabelCommentsNum.Text = "Error occured: Failed to fetch the Info";
+                MessageBox.Show($"Failed to fetch interaction stats: {ex.Message}");
+            }
+        }
+
+        private void fetchLikesNumberAndDisplay(User i_SelectedFriend)
+        {
+            try
+            {
+                int numberOfLikes = FriendOverViewFeature.GetNumberOfLikesFromFriend(m_LoggedInUser, i_SelectedFriend);
+                LabelLikesNum.Text = numberOfLikes.ToString();
+            }
+            catch (Exception ex)
+            {
+                LabelLikesNum.Text = "Error occured: Failed to fetch the Info";
+                MessageBox.Show($"Failed to fetch interaction stats: {ex.Message}");              
             }
         }
 
@@ -195,10 +220,10 @@ namespace BasicFacebookFeatures
             {
                 string[] similarLanguages = m_FriendConnectionOverview.GetSimilarLanguages(selectedFriend);
                 User[] mutualFriends = m_FriendConnectionOverview.GetMutualFriends(selectedFriend);
-                Page[] likedPages = m_FriendConnectionOverview.GetMutualLikedPages(selectedFriend); // Assuming you have this method
-                string[] similarSports = m_FriendConnectionOverview.GetSimilarSports(selectedFriend); // Assuming you have this method
+                Page[] mutualLikedPages = m_FriendConnectionOverview.GetMutualLikedPages(selectedFriend);
+                string[] similarSports = m_FriendConnectionOverview.GetSimilarSports(selectedFriend);
 
-
+                // Update ListBox for similar languages
                 listBoxLanguages.Items.Clear();
                 if (similarLanguages.Length > 0)
                 {
@@ -223,11 +248,11 @@ namespace BasicFacebookFeatures
                     listBoxMutualFriends.Items.Add("No mutual friends found");
                 }
 
-                // Update ListBox for liked pages
+                // Update ListBox for mutual liked pages
                 listBoxLikedPages.Items.Clear();
-                if (likedPages.Length > 0)
+                if (mutualLikedPages.Length > 0)
                 {
-                    foreach (Page page in likedPages)
+                    foreach (Page page in mutualLikedPages)
                     {
                         listBoxLikedPages.Items.Add(page.Name);
                     }
@@ -237,7 +262,7 @@ namespace BasicFacebookFeatures
                     listBoxLikedPages.Items.Add("No mutual liked pages found");
                 }
 
-                // Update ListBox for sports
+                
                 listBoxSports.Items.Clear();
                 if (similarSports.Length > 0)
                 {
@@ -253,18 +278,16 @@ namespace BasicFacebookFeatures
                 MessageBox.Show("Please select a friend from the list.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+       
+
         private void comboBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Ensure that a friend is selected
             if (comboBoxFriends.SelectedItem is User selectedFriend)
             {
-
+                // Set the PictureBox's ImageLocation to the friend's profile picture URL
                 pictureBoxFriend.ImageLocation = selectedFriend.PictureLargeURL;
-                pictureBoxFriend.SizeMode = PictureBoxSizeMode.StretchImage;
-            }
-            else
-            {
-                pictureBoxFriend.Image = null;
+                pictureBoxFriend.SizeMode = PictureBoxSizeMode.StretchImage; // Adjust as needed
             }
         }
     }

@@ -1,8 +1,7 @@
-﻿using Facebook;
-using FacebookWrapper;
-using FacebookWrapper.ObjectModel;
+﻿using FacebookWrapper.ObjectModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BasicFacebookFeatures.FacebookLogic
 {
@@ -15,66 +14,67 @@ namespace BasicFacebookFeatures.FacebookLogic
             r_LoggedInUser = i_LoggedInUser;
         }
 
-        public int GetNumberOfLikesFromFriend(User i_Friend)
+        public static int GetNumberOfLikesFromFriend(User user, User friend)
         {
-            int likeCount = 0;
-
-            try
+            if (user == null || friend == null)
             {
-                foreach (Post post in r_LoggedInUser.Posts)
+                throw new ArgumentNullException(user == null ? nameof(user) : nameof(friend));
+            }
+
+            int likesCount = 0;
+            foreach (Post post in user.Posts)
+            {
+                // This would require access to post.Likes or equivalent, which may not be directly available
+                if (post.LikedBy.Contains(friend))
                 {
-                    if (post.LikedBy.Contains(i_Friend))
-                    {
-                        likeCount++;
-                    }
+                    likesCount++;
                 }
             }
-            catch (Exception)
-            {
-                likeCount = -1; // Indicate an error occurred
-            }
-
-            return likeCount;
+            return likesCount;
         }
 
-        public int GetNumberOfCommentsFromFriend(User i_Friend)
+        // Method to get the number of comments from a friend on the user's posts
+        public static int GetNumberOfCommentsFromFriend(User user, User friend)
         {
-            int commentCount = 0;
-
-            try
+            if (user == null || friend == null)
             {
-                foreach (Post post in r_LoggedInUser.Posts)
+                throw new ArgumentNullException(user == null ? nameof(user) : nameof(friend));
+            }
+
+            int commentsCount = 0;
+            foreach (Post post in user.Posts)
+            {
+                if (post.Comments != null)
                 {
                     foreach (Comment comment in post.Comments)
                     {
-                        if (comment.From.Id == i_Friend.Id)
+                        if (comment.From.Id == friend.Id)
                         {
-                            commentCount++;
+                            commentsCount++;
                         }
                     }
                 }
             }
-            catch (Exception)
-            {
-                commentCount = -1; // Indicate an error occurred
-            }
-
-            return commentCount;
+            return commentsCount;
         }
+    
 
-        public string[] GetSimilarLanguages(User i_Friend)
+    public string[] GetSimilarLanguages(User i_Friend)
         {
             var similarLanguages = new List<string>();
 
             try
             {
-                foreach (Page myPage in r_LoggedInUser.LikedPages)
+                if (r_LoggedInUser.Languages != null && i_Friend.Languages != null)
                 {
-                    foreach (Page friendPage in i_Friend.Languages)
+                    foreach (Page myLanguagePage in r_LoggedInUser.Languages)
                     {
-                        if (myPage.Name == friendPage.Name)
+                        foreach (Page friendLanguagePage in i_Friend.Languages)
                         {
-                            similarLanguages.Add(myPage.Name);
+                            if (myLanguagePage.Name == friendLanguagePage.Name)
+                            {
+                                similarLanguages.Add(myLanguagePage.Name);
+                            }
                         }
                     }
                 }
@@ -86,6 +86,7 @@ namespace BasicFacebookFeatures.FacebookLogic
 
             return similarLanguages.ToArray();
         }
+
 
         public User[] GetMutualFriends(User i_Friend)
         {
@@ -109,7 +110,6 @@ namespace BasicFacebookFeatures.FacebookLogic
             return mutualFriends.ToArray();
         }
 
-        // Implementing GetMutualLikedPages method
         public Page[] GetMutualLikedPages(User i_Friend)
         {
             var mutualLikedPages = new List<Page>();
