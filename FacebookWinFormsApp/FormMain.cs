@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
@@ -11,16 +15,16 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
-        private LoginResult m_LoginResult;
-        private User m_LoggedInUser;
-        private FindMatchFeature m_FindMatchFeature;
+        private readonly AppManager r_AppManager;
+        private readonly FindMatchFeature r_FindMatchFeature;
         private FriendOverViewFeature m_FriendConnectionOverview;
 
         public FormMain()
         {
             InitializeComponent();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
-            m_FindMatchFeature = new FindMatchFeature();
+            r_AppManager = new AppManager();
+            r_FindMatchFeature = new FindMatchFeature();
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -30,52 +34,59 @@ namespace BasicFacebookFeatures
 
         private void login()
         {
-            m_LoginResult = FacebookService.Login(
-                textBoxAppID.Text,
-                "email",
-                "public_profile",
-                "user_age_range",
-                "user_birthday",
-                "user_events",
-                "user_friends",
-                "user_gender",
-                "user_hometown",
-                "user_likes",
-                "user_link",
-                "user_location",
-                "user_photos",
-                "user_posts",
-                "user_videos"
-            );
+            try
+            {
+                r_AppManager.Login();
+                m_FriendConnectionOverview = new FriendOverViewFeature(r_AppManager.LoggedInUser);
+                loginUI();
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message, "Login Failed");
+            }
+        }
 
-            if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage) && !string.IsNullOrEmpty(m_LoginResult.AccessToken))
-            {
-                m_LoggedInUser = m_LoginResult.LoggedInUser;
-                m_FriendConnectionOverview = new FriendOverViewFeature(m_LoggedInUser);
-                buttonLogin.Text = $"Logged in";
-                labelUserName.Text = $"Hello {m_LoggedInUser.Name}";
-                labelUserName.BackColor = Color.LightGreen;
-                pictureBoxProfile.ImageLocation = m_LoggedInUser.PictureLargeURL;
-                buttonLogin.Enabled = false;
-                buttonLogout.Enabled = true;
-                populateFriendsList();
-            }
-            else
-            {
-                MessageBox.Show(m_LoginResult.ErrorMessage, "Login Failed");
-            }
+        private void loginUI()
+        {
+            fetchHomePageDataAndDisplay();
+            populateFriendsList();
+        }
+
+        private void fetchHomePageDataAndDisplay()
+        {
+            buttonLogin.Text = $"Logged in";
+            buttonLogin.Enabled = false;
+            labelUserFirstName.Text = $"Hello {r_AppManager.LoggedInUser.FirstName}";
+            pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureLargeURL;
+            buttonLogout.Enabled = true;
+            fetchUserDetailsAndDisplay();
+        }
+
+        private void fetchUserDetailsAndDisplay()
+        {
+            User loggedInUser = r_AppManager.LoggedInUser;
+
+            labelUserFullName.Text = $"Full Name: {loggedInUser.Name ?? string.Empty}";
+            labelUserGender.Text = $"Gender: {loggedInUser.Gender?.ToString() ?? string.Empty}";
+            labelUserBirthdate.Text = $"Birthdate: {(loggedInUser.Birthday != null ? ChangeBirthdayUSToILFormat(loggedInUser.Birthday) : string.Empty)}";
+            labelUserHometown.Text = $"Hometown: {loggedInUser.Hometown?.Name ?? string.Empty}";
+            labelUserLocation.Text = $"Location: {loggedInUser.Location?.Name ?? string.Empty}";
+            labelUserEmail.Text = $"Email: {loggedInUser.Email ?? string.Empty}";
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            FacebookService.LogoutWithUI();
+            r_AppManager.Logout();
+            logoutUI();
+            MatchesUIClearData();
+        }
+
+        private void logoutUI()
+        {
             buttonLogin.Text = "Login";
-            labelUserName.Text = "No user logged in yet";
-            labelUserName.BackColor = buttonLogout.BackColor;
-            m_LoginResult = null;
-            m_LoggedInUser = null;
-            pictureBoxProfile.ImageLocation = null;
             buttonLogin.Enabled = true;
+            labelUserFirstName.Text = "No user logged in yet";
+            pictureBoxProfile.ImageLocation = null;
             buttonLogout.Enabled = false;
         }
 
@@ -88,30 +99,35 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                listBoxMatchesList.Items.Clear();
-                listBoxMatchesList.DisplayMember = "Name";
-                m_FindMatchFeature.UserLogin = m_LoginResult.LoggedInUser;
-                m_FindMatchFeature.GenderPreference = getGenderFromForm();
-                m_FindMatchFeature.AgePreferenceMin = (int)numericUpDownMinAge.Value;
-                m_FindMatchFeature.AgePreferenceMax = (int)numericUpDownMaxAge.Value;
-                List<User> userMatches = m_FindMatchFeature.FindUserMatch();
+                MatchesUIClearData();
+                listBoxMatches.DisplayMember = "Name";
+                FindMatchFeatureInsertData();
+                List<User> usersMatches = r_FindMatchFeature.FindUserMatch();
 
-                if (userMatches.Count > 0)
+                if (usersMatches.Count > 0)
                 {
-                    foreach (User match in userMatches)
+                    foreach (User userMatch in usersMatches)
                     {
-                        listBoxMatchesList.Items.Add(match);
+                        listBoxMatches.Items.Add(userMatch);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Find Match didn't find any matches for you, maybe try different preferences!");
+                    MessageBox.Show("Find Match didn't found any matches for you, maybe try diffrent preferences!", "Find Match - no matches found");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Find Match Failed");
             }
+        }
+
+        private void FindMatchFeatureInsertData()
+        {
+            r_FindMatchFeature.UserLogin = r_AppManager.LoggedInUser;
+            r_FindMatchFeature.GenderPreference = getGenderFromForm();
+            r_FindMatchFeature.AgePreferenceMin = (int)numericUpDownMinAge.Value;
+            r_FindMatchFeature.AgePreferenceMax = (int)numericUpDownMaxAge.Value;
         }
 
         private eGender getGenderFromForm()
@@ -126,16 +142,41 @@ namespace BasicFacebookFeatures
             return genderPreference;
         }
 
-        private void listBoxMatchesList_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBoxMatches_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBoxMatchesList.SelectedItems.Count == 1)
+            if (listBoxMatches.SelectedItems.Count == 1)
             {
-                User matchPicked = listBoxMatchesList.SelectedItem as User;
+                User matchPicked = listBoxMatches.SelectedItem as User;
                 if (matchPicked != null)
                 {
-                    pictureBoxFriendList.ImageLocation = matchPicked.PictureNormalURL;
+                    MatchesUIDisplayData(matchPicked);
                 }
             }
+        }
+
+        private void MatchesUIDisplayData(User i_UserMatched)
+        {
+            pictureBoxMatches.ImageLocation = i_UserMatched.PictureNormalURL;
+            labelMatchesFullName.Text = $"Full Name: {i_UserMatched.Name ?? string.Empty}";
+            labelMatchesBirthday.Text = $"Birthdate: {(i_UserMatched.Birthday != null ? ChangeBirthdayUSToILFormat(i_UserMatched.Birthday) : string.Empty)}";
+            labelMatchesLocation.Text = $"Location: {i_UserMatched.Location?.Name ?? string.Empty}";
+            labelMatchesEmail.Text = $"Email: {i_UserMatched.Email ?? string.Empty}";
+        }
+
+        private string ChangeBirthdayUSToILFormat(string i_USFormatBirthday)
+        {
+            DateTime parsedDate = DateTime.ParseExact(i_USFormatBirthday, "MM/dd/yyyy", null);
+            return parsedDate.ToString("dd/MM/yyyy");
+        }
+
+        private void MatchesUIClearData()
+        {
+            listBoxMatches.Items.Clear();
+            pictureBoxMatches.Image = null;
+            labelMatchesFullName.Text = "Name:";
+            labelMatchesBirthday.Text = "Birthday:";
+            labelMatchesLocation.Text = "Location:";
+            labelMatchesEmail.Text = "Email:";
         }
 
         private void populateFriendsList()
@@ -145,7 +186,7 @@ namespace BasicFacebookFeatures
 
             try
             {
-                foreach (User friend in m_LoggedInUser.Friends)
+                foreach (User friend in r_AppManager.LoggedInUser.Friends)
                 {
                     comboBoxFriends.Items.Add(friend);
                 }
@@ -185,7 +226,7 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                int numberOfComments = FriendOverViewFeature.GetNumberOfCommentsFromFriend(m_LoggedInUser, i_SelectedFriend);
+                int numberOfComments = FriendOverViewFeature.GetNumberOfCommentsFromFriend(r_AppManager.LoggedInUser, i_SelectedFriend);
                 LabelCommentsNum.Text = numberOfComments.ToString();
             }
             catch (Exception ex)
@@ -199,7 +240,7 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                int numberOfLikes = FriendOverViewFeature.GetNumberOfLikesFromFriend(m_LoggedInUser, i_SelectedFriend);
+                int numberOfLikes = FriendOverViewFeature.GetNumberOfLikesFromFriend(r_AppManager.LoggedInUser, i_SelectedFriend);
                 LabelLikesNum.Text = numberOfLikes.ToString();
             }
             catch (Exception ex)
