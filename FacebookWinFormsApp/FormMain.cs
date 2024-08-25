@@ -239,8 +239,7 @@ namespace BasicFacebookFeatures
             r_AppManager.Logout();
             homePageUIResetData();
             findMatchUIResetData();
-            friendOverviewUIResetData();
-            //friendOverviewUIResetData();
+            friendOverviewUIResetData();           
         }
 
         private void homePageUIResetData()
