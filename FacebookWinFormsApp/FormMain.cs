@@ -239,7 +239,8 @@ namespace BasicFacebookFeatures
             r_AppManager.Logout();
             homePageUIResetData();
             findMatchUIResetData();
-
+            friendOverviewUIResetData();
+            //friendOverviewUIResetData();
         }
 
         private void homePageUIResetData()
@@ -341,6 +342,35 @@ namespace BasicFacebookFeatures
             labelMatchesBirthday.Text = "Birthday:";
             labelMatchesLocation.Text = "Location:";
             labelMatchesEmail.Text = "Email:";
+        }
+       private void friendOverviewUIResetData()
+        {
+            friendOverviewUIResetComboBox();
+            friendOverviewUIResetPictureBox();
+            friendOverviewUIResetListBoxes();
+            friendOverviewUIResetLables();                                              
+        }
+        private void friendOverviewUIResetComboBox()
+        {
+            comboBoxFriends.SelectedIndex = -1;
+            comboBoxFriends.Items.Clear();
+           
+        }
+        private void friendOverviewUIResetPictureBox()
+        {
+            pictureBoxFriend.Image = null;
+        }
+        private void friendOverviewUIResetListBoxes()
+        {
+            listBoxLanguages.Items.Clear();
+            listBoxSports.Items.Clear();
+            listBoxMutualFriends.Items.Clear();
+            listBoxLikedPages.Items.Clear();
+        }
+        private void friendOverviewUIResetLables()
+        {
+            LabelLikesNum.Text = "Waiting for button press";
+            LabelCommentsNum.Text = "Waiting for button press";
         }
 
         private void buttonFindMatch_Click(object sender, EventArgs e)
