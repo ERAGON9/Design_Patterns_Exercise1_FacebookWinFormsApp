@@ -309,7 +309,6 @@ namespace BasicFacebookFeatures
             findMatchUIResetnumericUpDowns();
             findMatchUIResetListBox();
             findMatchUIResetPictureBox();
-            findMatchUIResetnumericUpDowns();
             findMatchUIResetLabels();
         }
 
@@ -352,7 +351,6 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                findMatchUIResetData();
                 listBoxMatches.DisplayMember = "Name";
                 findMatchFeatureInsertData();
                 List<User> usersMatches = r_FindMatchFeature.FindUserMatch();
