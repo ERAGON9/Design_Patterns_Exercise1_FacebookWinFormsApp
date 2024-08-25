@@ -385,7 +385,7 @@ namespace BasicFacebookFeatures
                 findMatchUIClearMatchFound();
                 listBoxMatches.DisplayMember = "Name";
                 findMatchFeatureInsertData();
-                List<User> usersMatches = r_FindMatchFeature.FindUserMatch();
+                List<User> usersMatches = r_FindMatchFeature.FindUserMatches();
 
                 if (usersMatches.Count > 0)
                 {

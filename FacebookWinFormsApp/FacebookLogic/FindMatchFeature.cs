@@ -66,21 +66,21 @@ namespace BasicFacebookFeatures.FacebookLogic
             AgePreferenceMax = r_AgePrefernceMaxRestriction;
         }
 
-        public List<User> FindUserMatch()
+        public List<User> FindUserMatches()
         {
             throwExceptionIfUserLoginIsNull();
             FacebookObjectCollection<User> friends = UserLogin.Friends;
-            List<User> filteredFriends = new List<User>();
+            List<User> potentialMatches = new List<User>();
 
             foreach (User friend in friends)
             {
                 if (checkGenderPreference(friend) && checkAgePreference(friend))
                 {
-                    filteredFriends.Add(friend);
+                    potentialMatches.Add(friend);
                 }
             }
 
-            return sortBySharedLikedPages(filteredFriends);
+            return sortBySharedLikedPages(potentialMatches);
         }
 
         private void throwExceptionIfUserLoginIsNull()
@@ -91,22 +91,22 @@ namespace BasicFacebookFeatures.FacebookLogic
             }
         }
 
-        private List<User> sortBySharedLikedPages(List<User> i_FilteredFriends)
+        private List<User> sortBySharedLikedPages(List<User> i_PotentialMatches)
         {
-            List<User> sortedFilteredFriends = i_FilteredFriends.OrderByDescending(friend => sharedLikedPagesCount(friend)).ToList();
+            List<User> sortedPotentialMatches = i_PotentialMatches.OrderByDescending(match => sharedLikedPagesCount(match)).ToList();
 
-            return sortedFilteredFriends;
+            return sortedPotentialMatches;
         }
 
-        private int sharedLikedPagesCount(User i_Friend)
+        private int sharedLikedPagesCount(User i_Match)
         {
             int countSharePages = 0;
 
-            foreach (Page friendPage in i_Friend.LikedPages)
+            foreach (Page matchLikePage in i_Match.LikedPages)
             {
-                foreach (Page userPage in UserLogin.LikedPages)
+                foreach (Page userLikePage in UserLogin.LikedPages)
                 {
-                    if (friendPage.Id == userPage.Id)
+                    if (matchLikePage.Id == userLikePage.Id)
                     {
                         countSharePages++;
                         break;
