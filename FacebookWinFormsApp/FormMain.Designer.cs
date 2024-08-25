@@ -87,6 +87,7 @@
             this.labelSubTitleFindMatch = new System.Windows.Forms.Label();
             this.labelTitleFindMatch = new System.Windows.Forms.Label();
             this.tabPageFriendOverView = new System.Windows.Forms.TabPage();
+            this.labelTitleFriendOverView = new System.Windows.Forms.Label();
             this.labelChooseFriend = new System.Windows.Forms.Label();
             this.listBoxLikedPages = new System.Windows.Forms.ListBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -105,7 +106,7 @@
             this.buttonShowInteractionStats = new System.Windows.Forms.Button();
             this.comboBoxFriends = new System.Windows.Forms.ComboBox();
             this.lableSelcetFriend = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageHomePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFavoriteTeams)).BeginInit();
@@ -365,9 +366,9 @@
             this.listBoxPostsComments.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.listBoxPostsComments.FormattingEnabled = true;
             this.listBoxPostsComments.ItemHeight = 22;
-            this.listBoxPostsComments.Location = new System.Drawing.Point(982, 215);
+            this.listBoxPostsComments.Location = new System.Drawing.Point(1002, 215);
             this.listBoxPostsComments.Name = "listBoxPostsComments";
-            this.listBoxPostsComments.Size = new System.Drawing.Size(210, 136);
+            this.listBoxPostsComments.Size = new System.Drawing.Size(254, 136);
             this.listBoxPostsComments.TabIndex = 70;
             // 
             // labelPostsInfo
@@ -386,7 +387,7 @@
             this.listBoxPosts.ItemHeight = 22;
             this.listBoxPosts.Location = new System.Drawing.Point(629, 160);
             this.listBoxPosts.Name = "listBoxPosts";
-            this.listBoxPosts.Size = new System.Drawing.Size(394, 158);
+            this.listBoxPosts.Size = new System.Drawing.Size(406, 158);
             this.listBoxPosts.TabIndex = 68;
             this.listBoxPosts.SelectedIndexChanged += new System.EventHandler(this.listBoxPosts_SelectedIndexChanged);
             // 
@@ -680,7 +681,7 @@
             // 
             // pictureBoxFindMatchRight
             // 
-            this.pictureBoxFindMatchRight.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBoxFindMatchRight.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.pictureBoxFindMatchRight.Image = global::BasicFacebookFeatures.Properties.Resources.tryImage;
             this.pictureBoxFindMatchRight.Location = new System.Drawing.Point(913, 8);
             this.pictureBoxFindMatchRight.Name = "pictureBoxFindMatchRight";
@@ -691,7 +692,7 @@
             // 
             // pictureBoxFindMatchLeft
             // 
-            this.pictureBoxFindMatchLeft.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBoxFindMatchLeft.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.pictureBoxFindMatchLeft.Image = global::BasicFacebookFeatures.Properties.Resources.tryImage;
             this.pictureBoxFindMatchLeft.Location = new System.Drawing.Point(250, 8);
             this.pictureBoxFindMatchLeft.Name = "pictureBoxFindMatchLeft";
@@ -704,7 +705,7 @@
             // 
             this.labelMatchesListInfo.AutoSize = true;
             this.labelMatchesListInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMatchesListInfo.Location = new System.Drawing.Point(362, 464);
+            this.labelMatchesListInfo.Location = new System.Drawing.Point(393, 460);
             this.labelMatchesListInfo.Name = "labelMatchesListInfo";
             this.labelMatchesListInfo.Size = new System.Drawing.Size(488, 20);
             this.labelMatchesListInfo.TabIndex = 5;
@@ -715,7 +716,7 @@
             this.labelMatchesList.AutoSize = true;
             this.labelMatchesList.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMatchesList.Location = new System.Drawing.Point(517, 434);
+            this.labelMatchesList.Location = new System.Drawing.Point(548, 430);
             this.labelMatchesList.Name = "labelMatchesList";
             this.labelMatchesList.Size = new System.Drawing.Size(139, 26);
             this.labelMatchesList.TabIndex = 4;
@@ -746,12 +747,12 @@
             // labelSubTitleFindMatch
             // 
             this.labelSubTitleFindMatch.AutoSize = true;
-            this.labelSubTitleFindMatch.Location = new System.Drawing.Point(246, 120);
+            this.labelSubTitleFindMatch.Location = new System.Drawing.Point(246, 119);
             this.labelSubTitleFindMatch.Name = "labelSubTitleFindMatch";
-            this.labelSubTitleFindMatch.Size = new System.Drawing.Size(854, 24);
+            this.labelSubTitleFindMatch.Size = new System.Drawing.Size(859, 24);
             this.labelSubTitleFindMatch.TabIndex = 1;
-            this.labelSubTitleFindMatch.Text = "Lets try find out your best next dates from your friend list based on preferences" +
-    " and common hobbies!\r\n";
+            this.labelSubTitleFindMatch.Text = "Lets try find out your best next dates from your friend list, based on preference" +
+    "s and common hobbies!\r\n";
             // 
             // labelTitleFindMatch
             // 
@@ -766,7 +767,8 @@
             // tabPageFriendOverView
             // 
             this.tabPageFriendOverView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
-            this.tabPageFriendOverView.Controls.Add(this.label1);
+            this.tabPageFriendOverView.Controls.Add(this.label2);
+            this.tabPageFriendOverView.Controls.Add(this.labelTitleFriendOverView);
             this.tabPageFriendOverView.Controls.Add(this.labelChooseFriend);
             this.tabPageFriendOverView.Controls.Add(this.listBoxLikedPages);
             this.tabPageFriendOverView.Controls.Add(this.label13);
@@ -790,16 +792,25 @@
             this.tabPageFriendOverView.Size = new System.Drawing.Size(1274, 668);
             this.tabPageFriendOverView.TabIndex = 2;
             this.tabPageFriendOverView.Text = "Friend OverView";
-            this.tabPageFriendOverView.Click += new System.EventHandler(this.buttonShowInteractionStats_Click);
+            // 
+            // labelTitleFriendOverView
+            // 
+            this.labelTitleFriendOverView.AutoSize = true;
+            this.labelTitleFriendOverView.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTitleFriendOverView.Location = new System.Drawing.Point(432, 25);
+            this.labelTitleFriendOverView.Name = "labelTitleFriendOverView";
+            this.labelTitleFriendOverView.Size = new System.Drawing.Size(376, 52);
+            this.labelTitleFriendOverView.TabIndex = 18;
+            this.labelTitleFriendOverView.Text = "Friend OverView!";
             // 
             // labelChooseFriend
             // 
             this.labelChooseFriend.AutoSize = true;
-            this.labelChooseFriend.Location = new System.Drawing.Point(275, 144);
+            this.labelChooseFriend.Location = new System.Drawing.Point(334, 153);
             this.labelChooseFriend.Name = "labelChooseFriend";
-            this.labelChooseFriend.Size = new System.Drawing.Size(203, 24);
+            this.labelChooseFriend.Size = new System.Drawing.Size(218, 24);
             this.labelChooseFriend.TabIndex = 17;
-            this.labelChooseFriend.Text = "Please Choose Friend:";
+            this.labelChooseFriend.Text = "Please Choose a Friend:";
             // 
             // listBoxLikedPages
             // 
@@ -831,7 +842,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(420, 386);
+            this.label12.Location = new System.Drawing.Point(419, 386);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(132, 24);
             this.label12.TabIndex = 13;
@@ -841,7 +852,7 @@
             // 
             this.listBoxSports.FormattingEnabled = true;
             this.listBoxSports.ItemHeight = 22;
-            this.listBoxSports.Location = new System.Drawing.Point(148, 516);
+            this.listBoxSports.Location = new System.Drawing.Point(138, 516);
             this.listBoxSports.Name = "listBoxSports";
             this.listBoxSports.Size = new System.Drawing.Size(248, 114);
             this.listBoxSports.TabIndex = 12;
@@ -849,7 +860,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(33, 516);
+            this.label11.Location = new System.Drawing.Point(21, 516);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(68, 24);
             this.label11.TabIndex = 11;
@@ -859,7 +870,7 @@
             // 
             this.listBoxLanguages.FormattingEnabled = true;
             this.listBoxLanguages.ItemHeight = 22;
-            this.listBoxLanguages.Location = new System.Drawing.Point(148, 386);
+            this.listBoxLanguages.Location = new System.Drawing.Point(138, 386);
             this.listBoxLanguages.Name = "listBoxLanguages";
             this.listBoxLanguages.Size = new System.Drawing.Size(248, 114);
             this.listBoxLanguages.TabIndex = 10;
@@ -867,7 +878,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(20, 386);
+            this.label10.Location = new System.Drawing.Point(21, 386);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(109, 24);
             this.label10.TabIndex = 9;
@@ -875,7 +886,7 @@
             // 
             // buttonShowSimilarities
             // 
-            this.buttonShowSimilarities.Location = new System.Drawing.Point(307, 331);
+            this.buttonShowSimilarities.Location = new System.Drawing.Point(304, 331);
             this.buttonShowSimilarities.Name = "buttonShowSimilarities";
             this.buttonShowSimilarities.Size = new System.Drawing.Size(320, 30);
             this.buttonShowSimilarities.TabIndex = 8;
@@ -885,8 +896,8 @@
             // 
             // pictureBoxFriend
             // 
-            this.pictureBoxFriend.BackColor = System.Drawing.Color.Gainsboro;
-            this.pictureBoxFriend.Location = new System.Drawing.Point(839, 141);
+            this.pictureBoxFriend.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.pictureBoxFriend.Location = new System.Drawing.Point(839, 153);
             this.pictureBoxFriend.Name = "pictureBoxFriend";
             this.pictureBoxFriend.Size = new System.Drawing.Size(220, 140);
             this.pictureBoxFriend.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -942,9 +953,9 @@
             // comboBoxFriends
             // 
             this.comboBoxFriends.FormattingEnabled = true;
-            this.comboBoxFriends.Location = new System.Drawing.Point(553, 141);
+            this.comboBoxFriends.Location = new System.Drawing.Point(576, 150);
             this.comboBoxFriends.Name = "comboBoxFriends";
-            this.comboBoxFriends.Size = new System.Drawing.Size(147, 30);
+            this.comboBoxFriends.Size = new System.Drawing.Size(164, 30);
             this.comboBoxFriends.TabIndex = 1;
             this.comboBoxFriends.SelectedIndexChanged += new System.EventHandler(this.comboBoxFriends_SelectedIndexChanged);
             // 
@@ -957,15 +968,15 @@
             this.lableSelcetFriend.TabIndex = 0;
             this.lableSelcetFriend.Text = "Select a friend:";
             // 
-            // label1
+            // label2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(400, 63);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(369, 52);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "Friend Overview!";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(240, 88);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(819, 24);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "Lets find out how a friend interacts with your posts and our similarities, by sel" +
+    "ecting a friend below.";
             // 
             // FormMain
             // 
@@ -1079,6 +1090,7 @@
         private System.Windows.Forms.Label labelFavoriteTeamsInfo;
         private System.Windows.Forms.Label labelFavoriteTeams;
         private System.Windows.Forms.Label labelChooseFriend;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelTitleFriendOverView;
+        private System.Windows.Forms.Label label2;
     }
 }

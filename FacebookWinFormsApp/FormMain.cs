@@ -72,6 +72,32 @@ namespace BasicFacebookFeatures
 
         }
 
+        private void fetchUserDetailsAndDisplay()
+        {
+            User loggedInUser = r_AppManager.LoggedInUser;
+
+            labelUserFullName.Text = $"Full Name: {loggedInUser.Name ?? string.Empty}";
+            labelUserGender.Text = $"Gender: {loggedInUser.Gender?.ToString() ?? string.Empty}";
+            labelUserBirthdate.Text = $"Birthdate: {(loggedInUser.Birthday != null ? changeBirthdayUSToILFormat(loggedInUser.Birthday) : string.Empty)}";
+            labelUserHometown.Text = $"Hometown: {loggedInUser.Hometown?.Name ?? string.Empty}";
+            labelUserLocation.Text = $"Location: {loggedInUser.Location?.Name ?? string.Empty}";
+            labelUserEmail.Text = $"Email: {loggedInUser.Email ?? string.Empty}";
+        }
+
+        private void fetchPostNewStatusAndPopulateTextBox()
+        {
+            User loggedInUser = r_AppManager.LoggedInUser;
+
+            if (loggedInUser.Posts != null && loggedInUser.Posts.Count > 0 && loggedInUser.Posts[0].Message != null)
+            {
+                textBoxPostNewStatus.Text = loggedInUser.Posts[0].Message;
+            }
+            else
+            {
+                textBoxPostNewStatus.Text = "This is my first status!";
+            }
+        }
+
         private void fetchYourPostsAndPopulateListBox()
         {
             listBoxPosts.Items.Clear();
@@ -208,32 +234,6 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void fetchPostNewStatusAndPopulateTextBox()
-        {
-            User loggedInUser = r_AppManager.LoggedInUser;
-
-            if (loggedInUser.Posts != null && loggedInUser.Posts.Count > 0 && loggedInUser.Posts[0].Message != null)
-            {
-                textBoxPostNewStatus.Text = loggedInUser.Posts[0].Message;
-            }
-            else
-            {
-                textBoxPostNewStatus.Text = "This is my first status!";
-            }
-        }
-
-        private void fetchUserDetailsAndDisplay()
-        {
-            User loggedInUser = r_AppManager.LoggedInUser;
-
-            labelUserFullName.Text = $"Full Name: {loggedInUser.Name ?? string.Empty}";
-            labelUserGender.Text = $"Gender: {loggedInUser.Gender?.ToString() ?? string.Empty}";
-            labelUserBirthdate.Text = $"Birthdate: {(loggedInUser.Birthday != null ? changeBirthdayUSToILFormat(loggedInUser.Birthday) : string.Empty)}";
-            labelUserHometown.Text = $"Hometown: {loggedInUser.Hometown?.Name ?? string.Empty}";
-            labelUserLocation.Text = $"Location: {loggedInUser.Location?.Name ?? string.Empty}";
-            labelUserEmail.Text = $"Email: {loggedInUser.Email ?? string.Empty}";
-        }
-
         private void buttonLogout_Click(object sender, EventArgs e)
         {
             r_AppManager.Logout();
@@ -341,12 +341,13 @@ namespace BasicFacebookFeatures
             labelMatchesLocation.Text = "Location:";
             labelMatchesEmail.Text = "Email:";
         }
-       private void friendOverviewUIResetData()
+
+        private void friendOverviewUIResetData()
         {
             friendOverviewUIResetComboBox();
             friendOverviewUIResetPictureBox();
             friendOverviewUIResetListBoxes();
-            friendOverviewUIResetLables();                                              
+            friendOverviewUIResetLables();
         }
         private void friendOverviewUIResetComboBox()
         {
@@ -380,6 +381,8 @@ namespace BasicFacebookFeatures
         {
             try
             {
+                findMatchUIResetListBox();
+                findMatchUIClearMatchFound();
                 listBoxMatches.DisplayMember = "Name";
                 findMatchFeatureInsertData();
                 List<User> usersMatches = r_FindMatchFeature.FindUserMatch();
@@ -400,6 +403,12 @@ namespace BasicFacebookFeatures
             {
                 MessageBox.Show(ex.Message, "Find Match Failed");
             }
+        }
+
+        private void findMatchUIClearMatchFound()
+        {
+            findMatchUIResetPictureBox();
+            findMatchUIResetLabels();
         }
 
         private void findMatchFeatureInsertData()
@@ -492,6 +501,10 @@ namespace BasicFacebookFeatures
                 {
                     MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please select a friend from the list.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -621,11 +634,10 @@ namespace BasicFacebookFeatures
                 {
                     throw new Exception("You have to login first!");
                 }
-
             }
             catch (FacebookOAuthException)
             {
-                MessageBox.Show("Wasn't abale to reach the Facebook server.", "Facebook server error");
+                MessageBox.Show("Wasn't able to reach the Facebook server.", "Facebook server error");
             }
             catch (Exception ex)
             {
@@ -655,7 +667,7 @@ namespace BasicFacebookFeatures
                     }
                     else
                     {
-                        listBoxPostsComments.Items.Add("No comments available on this post.");
+                        listBoxPostsComments.Items.Add("No comments available.");
                     }
                 }
                 else
