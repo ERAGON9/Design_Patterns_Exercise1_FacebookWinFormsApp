@@ -545,65 +545,83 @@ namespace BasicFacebookFeatures
         {
             if (comboBoxFriends.SelectedItem != null && comboBoxFriends.SelectedItem is User selectedFriend)
             {
-                string[] similarLanguages = m_FriendConnectionOverview.GetSimilarLanguages(selectedFriend);
-                User[] mutualFriends = m_FriendConnectionOverview.GetMutualFriends(selectedFriend);
-                Page[] mutualLikedPages = m_FriendConnectionOverview.GetMutualLikedPages(selectedFriend);
-                string[] similarSports = m_FriendConnectionOverview.GetSimilarSports(selectedFriend);
-
-                listBoxLanguages.Items.Clear();
-                if (similarLanguages.Length > 0)
-                {
-                    listBoxLanguages.Items.AddRange(similarLanguages);
-                }
-                else
-                {
-                    listBoxLanguages.Items.Add("No similar languages found");
-                }
-
-                listBoxMutualFriends.Items.Clear();
-                if (mutualFriends.Length > 0)
-                {
-                    foreach (User mutualFriend in mutualFriends)
-                    {
-                        listBoxMutualFriends.Items.Add(mutualFriend.Name);
-                    }
-                }
-                else
-                {
-                    listBoxMutualFriends.Items.Add("No mutual friends found");
-                }
-
-                listBoxLikedPages.Items.Clear();
-                if (mutualLikedPages.Length > 0)
-                {
-                    foreach (Page page in mutualLikedPages)
-                    {
-                        listBoxLikedPages.Items.Add(page.Name);
-                    }
-                }
-                else
-                {
-                    listBoxLikedPages.Items.Add("No mutual liked pages found");
-                }
-
-                
-                listBoxSports.Items.Clear();
-                if (similarSports.Length > 0)
-                {
-                    listBoxSports.Items.AddRange(similarSports);
-                }
-                else
-                {
-                    listBoxSports.Items.Add("No similar sports found");
-                }
+                showSimilarLanguages(selectedFriend);
+                showMutualFriends(selectedFriend);
+                showMutualLikedPages(selectedFriend);
+                showSimilarSports(selectedFriend);
             }
             else
             {
                 MessageBox.Show("Please select a friend from the list.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+        private void showSimilarLanguages(User selectedFriend)
+        {
+            string[] similarLanguages = m_FriendConnectionOverview.GetSimilarLanguages(selectedFriend);
 
-       
+            listBoxLanguages.Items.Clear();
+            if (similarLanguages.Length > 0)
+            {
+                listBoxLanguages.Items.AddRange(similarLanguages);
+            }
+            else
+            {
+                listBoxLanguages.Items.Add("No similar languages found");
+            }
+        }
+
+        private void showMutualFriends(User selectedFriend)
+        {
+            User[] mutualFriends = m_FriendConnectionOverview.GetMutualFriends(selectedFriend);
+
+            listBoxMutualFriends.Items.Clear();
+            if (mutualFriends.Length > 0)
+            {
+                foreach (User mutualFriend in mutualFriends)
+                {
+                    listBoxMutualFriends.Items.Add(mutualFriend.Name);
+                }
+            }
+            else
+            {
+                listBoxMutualFriends.Items.Add("No mutual friends found");
+            }
+        }
+
+        private void showMutualLikedPages(User selectedFriend)
+        {
+            Page[] mutualLikedPages = m_FriendConnectionOverview.GetMutualLikedPages(selectedFriend);
+
+            listBoxLikedPages.Items.Clear();
+            if (mutualLikedPages.Length > 0)
+            {
+                foreach (Page page in mutualLikedPages)
+                {
+                    listBoxLikedPages.Items.Add(page.Name);
+                }
+            }
+            else
+            {
+                listBoxLikedPages.Items.Add("No mutual liked pages found");
+            }
+        }
+
+        private void showSimilarSports(User selectedFriend)
+        {
+            string[] similarSports = m_FriendConnectionOverview.GetSimilarSports(selectedFriend);
+
+            listBoxSports.Items.Clear();
+            if (similarSports.Length > 0)
+            {
+                listBoxSports.Items.AddRange(similarSports);
+            }
+            else
+            {
+                listBoxSports.Items.Add("No similar sports found");
+            }
+        }
+
+
 
         private void comboBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
         {

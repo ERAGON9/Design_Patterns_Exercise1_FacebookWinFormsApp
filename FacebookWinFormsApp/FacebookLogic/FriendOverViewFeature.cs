@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace BasicFacebookFeatures.FacebookLogic
 {
@@ -23,8 +24,7 @@ namespace BasicFacebookFeatures.FacebookLogic
 
             int likesCount = 0;
             foreach (Post post in user.Posts)
-            {
-                // This would require access to post.Likes or equivalent, which may not be directly available
+            {               
                 if (post.LikedBy.Contains(friend))
                 {
                     likesCount++;
@@ -33,7 +33,7 @@ namespace BasicFacebookFeatures.FacebookLogic
             return likesCount;
         }
 
-        // Method to get the number of comments from a friend on the user's posts
+        
         public static int GetNumberOfCommentsFromFriend(User user, User friend)
         {
             if (user == null || friend == null)
@@ -104,7 +104,7 @@ namespace BasicFacebookFeatures.FacebookLogic
             }
             catch (Exception)
             {
-                // Handle error or return empty list
+                MessageBox.Show("An error occurred while retrieving mutual friends. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return mutualFriends.ToArray();
@@ -129,7 +129,7 @@ namespace BasicFacebookFeatures.FacebookLogic
             }
             catch (Exception)
             {
-                // Handle error or return an empty array
+                MessageBox.Show("An error occurred while retrieving mutual liked pages. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return mutualLikedPages.ToArray();
