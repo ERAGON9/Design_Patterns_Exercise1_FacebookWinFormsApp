@@ -8,24 +8,27 @@ namespace BasicFacebookFeatures.FacebookLogic
 {
     public class FriendOverViewFeature
     {
-        private readonly User r_LoggedInUser;
+        public User UserLogin { get; set; }
 
-        public FriendOverViewFeature(User i_LoggedInUser)
+        private void throwExceptionIfUserLoginOrFriendAreNull(User i_UserFriend)
         {
-            r_LoggedInUser = i_LoggedInUser;
+            if (UserLogin == null)
+            {
+                throw new ArgumentNullException("UserLogin", "User login is null");
+            }
+            else if (i_UserFriend == null)
+            {
+                throw new ArgumentNullException("UserFriend", "User friend is null");
+            }
         }
 
-        public int GetNumberOfLikesFromFriend(User user, User friend)
+        public int GetNumberOfLikesFromFriend(User i_UserFriend)
         {
-            if (user == null || friend == null)
-            {
-                throw new ArgumentNullException(user == null ? nameof(user) : nameof(friend));
-            }
-
+            throwExceptionIfUserLoginOrFriendAreNull(i_UserFriend);           
             int likesCount = 0;
-            foreach (Post post in user.Posts)
+            foreach (Post post in UserLogin.Posts)
             {
-                if (post.LikedBy.Contains(friend))
+                if (post.LikedBy.Contains(i_UserFriend))
                 {
                     likesCount++;
                 }
@@ -34,22 +37,17 @@ namespace BasicFacebookFeatures.FacebookLogic
             return likesCount;
         }
 
-
-        public int GetNumberOfCommentsFromFriend(User user, User friend)
+        public int GetNumberOfCommentsFromFriend(User i_UserFriend)
         {
-            if (user == null || friend == null)
-            {
-                throw new ArgumentNullException(user == null ? nameof(user) : nameof(friend));
-            }
-
+            throwExceptionIfUserLoginOrFriendAreNull(i_UserFriend);          
             int commentsCount = 0;
-            foreach (Post post in user.Posts)
+            foreach (Post post in UserLogin.Posts)
             {
                 if (post.Comments != null)
                 {
                     foreach (Comment comment in post.Comments)
                     {
-                        if (comment.From.Id == friend.Id)
+                        if (comment.From.Id == i_UserFriend.Id)
                         {
                             commentsCount++;
                         }
@@ -61,15 +59,16 @@ namespace BasicFacebookFeatures.FacebookLogic
         }
 
 
-        public Page[] GetSimilarLanguages(User i_Friend)
+        public Page[] GetSimilarLanguages(User i_UserFriend)
         {
+            throwExceptionIfUserLoginOrFriendAreNull(i_UserFriend);
             List<Page> similarLanguages = new List<Page>();
 
-            if (r_LoggedInUser.Languages != null && i_Friend.Languages != null)
+            if (UserLogin.Languages != null && i_UserFriend.Languages != null)
             {
-                foreach (Page myLanguagePage in r_LoggedInUser.Languages)
+                foreach (Page myLanguagePage in UserLogin.Languages)
                 {
-                    foreach (Page friendLanguagePage in i_Friend.Languages)
+                    foreach (Page friendLanguagePage in i_UserFriend.Languages)
                     {
                         if (myLanguagePage.Name == friendLanguagePage.Name)
                         {
@@ -82,13 +81,14 @@ namespace BasicFacebookFeatures.FacebookLogic
             return similarLanguages.ToArray();
         }
 
-        public User[] GetMutualFriends(User i_Friend)
+        public User[] GetMutualFriends(User i_UserFriend)
         {
+            throwExceptionIfUserLoginOrFriendAreNull(i_UserFriend);
             List<User> mutualFriends = new List<User>();
 
-            foreach (User friend in r_LoggedInUser.Friends)
+            foreach (User friend in UserLogin.Friends)
             {
-                if (i_Friend.Friends.Contains(friend))
+                if (i_UserFriend.Friends.Contains(friend))
                 {
                     mutualFriends.Add(friend);
                 }
@@ -97,13 +97,14 @@ namespace BasicFacebookFeatures.FacebookLogic
             return mutualFriends.ToArray();
         }
 
-        public Page[] GetMutualLikedPages(User i_Friend)
+        public Page[] GetMutualLikedPages(User i_UserFriend)
         {
+            throwExceptionIfUserLoginOrFriendAreNull(i_UserFriend);
             List<Page> mutualLikedPages = new List<Page>();
 
-            foreach (Page myPage in r_LoggedInUser.LikedPages)
+            foreach (Page myPage in UserLogin.LikedPages)
             {
-                foreach (Page friendPage in i_Friend.LikedPages)
+                foreach (Page friendPage in i_UserFriend.LikedPages)
                 {
                     if (myPage.Id == friendPage.Id)
                     {
@@ -115,15 +116,16 @@ namespace BasicFacebookFeatures.FacebookLogic
             return mutualLikedPages.ToArray();
         }
 
-        public Page[] GetSimilarSports(User i_Friend)
+        public Page[] GetSimilarSports(User i_UserFriend)
         {
+            throwExceptionIfUserLoginOrFriendAreNull(i_UserFriend);
             List<Page> similarSports = new List<Page>();
 
-            foreach (Page myPage in r_LoggedInUser.LikedPages)
+            foreach (Page myPage in UserLogin.LikedPages)
             {
                 if (myPage.Category == "Sports Team" || myPage.Category == "Athlete")
                 {
-                    foreach (Page friendPage in i_Friend.LikedPages)
+                    foreach (Page friendPage in i_UserFriend.LikedPages)
                     {
                         if (friendPage.Id == myPage.Id)
                         {

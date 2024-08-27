@@ -20,7 +20,7 @@ namespace BasicFacebookFeatures
     {
         private readonly AppManager r_AppManager;
         private readonly FindMatchFeature r_FindMatchFeature;
-        private FriendOverViewFeature m_FriendConnectionOverview;
+        private readonly FriendOverViewFeature r_FriendConnectionOverview;
 
         public FormMain()
         {
@@ -28,6 +28,7 @@ namespace BasicFacebookFeatures
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
             r_AppManager = new AppManager();
             r_FindMatchFeature = new FindMatchFeature();
+            r_FriendConnectionOverview = new FriendOverViewFeature();
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -40,7 +41,7 @@ namespace BasicFacebookFeatures
             try
             {
                 r_AppManager.Login();
-                m_FriendConnectionOverview = new FriendOverViewFeature(r_AppManager.LoggedInUser);
+                r_FriendConnectionOverview.UserLogin = r_AppManager.LoggedInUser;
                 loginUI();
             }
             catch (Exception ex) 
@@ -512,7 +513,7 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                int numberOfComments = m_FriendConnectionOverview.GetNumberOfCommentsFromFriend(r_AppManager.LoggedInUser, i_SelectedFriend);
+                int numberOfComments = r_FriendConnectionOverview.GetNumberOfCommentsFromFriend(i_SelectedFriend);
                 LabelCommentsNum.Text = numberOfComments.ToString();
             }
             catch (Exception ex)
@@ -526,7 +527,7 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                int numberOfLikes = m_FriendConnectionOverview.GetNumberOfLikesFromFriend(r_AppManager.LoggedInUser, i_SelectedFriend);
+                int numberOfLikes = r_FriendConnectionOverview.GetNumberOfLikesFromFriend(i_SelectedFriend);
                 LabelLikesNum.Text = numberOfLikes.ToString();
             }
             catch (Exception ex)
@@ -561,7 +562,7 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                Page[] similarLanguages = m_FriendConnectionOverview.GetSimilarLanguages(selectedFriend);
+                Page[] similarLanguages = r_FriendConnectionOverview.GetSimilarLanguages(selectedFriend);
                 listBoxLanguages.DisplayMember = "Name";
                 listBoxLanguages.Items.Clear();
                 if (similarLanguages.Length > 0)
@@ -583,7 +584,7 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                User[] mutualFriends = m_FriendConnectionOverview.GetMutualFriends(selectedFriend);
+                User[] mutualFriends = r_FriendConnectionOverview.GetMutualFriends(selectedFriend);
                 listBoxMutualFriends.DisplayMember = "Name";
                 listBoxMutualFriends.Items.Clear();
                 if (mutualFriends.Length > 0)
@@ -608,7 +609,7 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                Page[] mutualLikedPages = m_FriendConnectionOverview.GetMutualLikedPages(selectedFriend);
+                Page[] mutualLikedPages = r_FriendConnectionOverview.GetMutualLikedPages(selectedFriend);
                 listBoxLikedPages.DisplayMember = "Name";
                 listBoxLikedPages.Items.Clear();
                 if (mutualLikedPages.Length > 0)
@@ -633,7 +634,7 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                Page[] similarSports = m_FriendConnectionOverview.GetSimilarSports(selectedFriend);
+                Page[] similarSports = r_FriendConnectionOverview.GetSimilarSports(selectedFriend);
                 listBoxSports.DisplayMember = "Name";
                 listBoxSports.Items.Clear();
                 if (similarSports.Length > 0)
