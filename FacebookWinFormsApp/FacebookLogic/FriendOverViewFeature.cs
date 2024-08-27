@@ -15,7 +15,7 @@ namespace BasicFacebookFeatures.FacebookLogic
             r_LoggedInUser = i_LoggedInUser;
         }
 
-        public static int GetNumberOfLikesFromFriend(User user, User friend)
+        public int GetNumberOfLikesFromFriend(User user, User friend)
         {
             if (user == null || friend == null)
             {
@@ -24,17 +24,18 @@ namespace BasicFacebookFeatures.FacebookLogic
 
             int likesCount = 0;
             foreach (Post post in user.Posts)
-            {               
+            {
                 if (post.LikedBy.Contains(friend))
                 {
                     likesCount++;
                 }
             }
+
             return likesCount;
         }
 
-        
-        public static int GetNumberOfCommentsFromFriend(User user, User friend)
+
+        public int GetNumberOfCommentsFromFriend(User user, User friend)
         {
             if (user == null || friend == null)
             {
@@ -55,56 +56,42 @@ namespace BasicFacebookFeatures.FacebookLogic
                     }
                 }
             }
+
             return commentsCount;
         }
-    
 
-    public string[] GetSimilarLanguages(User i_Friend)
+
+        public Page[] GetSimilarLanguages(User i_Friend)
         {
-            var similarLanguages = new List<string>();
+            List<Page> similarLanguages = new List<Page>();
 
-            try
+            if (r_LoggedInUser.Languages != null && i_Friend.Languages != null)
             {
-                if (r_LoggedInUser.Languages != null && i_Friend.Languages != null)
+                foreach (Page myLanguagePage in r_LoggedInUser.Languages)
                 {
-                    foreach (Page myLanguagePage in r_LoggedInUser.Languages)
+                    foreach (Page friendLanguagePage in i_Friend.Languages)
                     {
-                        foreach (Page friendLanguagePage in i_Friend.Languages)
+                        if (myLanguagePage.Name == friendLanguagePage.Name)
                         {
-                            if (myLanguagePage.Name == friendLanguagePage.Name)
-                            {
-                                similarLanguages.Add(myLanguagePage.Name);
-                            }
+                            similarLanguages.Add(myLanguagePage);
                         }
                     }
                 }
-            }
-            catch (Exception)
-            {
-                similarLanguages.Add("Error fetching languages");
             }
 
             return similarLanguages.ToArray();
         }
 
-
         public User[] GetMutualFriends(User i_Friend)
         {
-            var mutualFriends = new List<User>();
+            List<User> mutualFriends = new List<User>();
 
-            try
+            foreach (User friend in r_LoggedInUser.Friends)
             {
-                foreach (User friend in r_LoggedInUser.Friends)
+                if (i_Friend.Friends.Contains(friend))
                 {
-                    if (i_Friend.Friends.Contains(friend))
-                    {
-                        mutualFriends.Add(friend);
-                    }
+                    mutualFriends.Add(friend);
                 }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("An error occurred while retrieving mutual friends. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return mutualFriends.ToArray();
@@ -112,52 +99,38 @@ namespace BasicFacebookFeatures.FacebookLogic
 
         public Page[] GetMutualLikedPages(User i_Friend)
         {
-            var mutualLikedPages = new List<Page>();
+            List<Page> mutualLikedPages = new List<Page>();
 
-            try
+            foreach (Page myPage in r_LoggedInUser.LikedPages)
             {
-                foreach (Page myPage in r_LoggedInUser.LikedPages)
+                foreach (Page friendPage in i_Friend.LikedPages)
                 {
-                    foreach (Page friendPage in i_Friend.LikedPages)
+                    if (myPage.Id == friendPage.Id)
                     {
-                        if (myPage.Id == friendPage.Id)
-                        {
-                            mutualLikedPages.Add(myPage);
-                        }
+                        mutualLikedPages.Add(myPage);
                     }
                 }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("An error occurred while retrieving mutual liked pages. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return mutualLikedPages.ToArray();
         }
 
-        public string[] GetSimilarSports(User i_Friend)
+        public Page[] GetSimilarSports(User i_Friend)
         {
-            var similarSports = new List<string>();
+            List<Page> similarSports = new List<Page>();
 
-            try
+            foreach (Page myPage in r_LoggedInUser.LikedPages)
             {
-                foreach (Page myPage in r_LoggedInUser.LikedPages)
+                if (myPage.Category == "Sports Team" || myPage.Category == "Athlete")
                 {
-                    if (myPage.Category == "Sports Team" || myPage.Category == "Athlete")
+                    foreach (Page friendPage in i_Friend.LikedPages)
                     {
-                        foreach (Page friendPage in i_Friend.LikedPages)
+                        if (friendPage.Id == myPage.Id)
                         {
-                            if (friendPage.Id == myPage.Id)
-                            {
-                                similarSports.Add(myPage.Name);
-                            }
+                            similarSports.Add(myPage);
                         }
                     }
                 }
-            }
-            catch (Exception)
-            {
-                similarSports.Add("Error fetching sports");
             }
 
             return similarSports.ToArray();

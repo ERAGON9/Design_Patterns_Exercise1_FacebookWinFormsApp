@@ -512,12 +512,12 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                int numberOfComments = FriendOverViewFeature.GetNumberOfCommentsFromFriend(r_AppManager.LoggedInUser, i_SelectedFriend);
+                int numberOfComments = m_FriendConnectionOverview.GetNumberOfCommentsFromFriend(r_AppManager.LoggedInUser, i_SelectedFriend);
                 LabelCommentsNum.Text = numberOfComments.ToString();
             }
             catch (Exception ex)
             {
-                LabelCommentsNum.Text = "Error occured: Failed to fetch the Info";
+                LabelCommentsNum.Text = "Error occured: Failed to fetch the number of comments";
                 MessageBox.Show($"Failed to fetch interaction stats: {ex.Message}");
             }
         }
@@ -526,12 +526,12 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                int numberOfLikes = FriendOverViewFeature.GetNumberOfLikesFromFriend(r_AppManager.LoggedInUser, i_SelectedFriend);
+                int numberOfLikes = m_FriendConnectionOverview.GetNumberOfLikesFromFriend(r_AppManager.LoggedInUser, i_SelectedFriend);
                 LabelLikesNum.Text = numberOfLikes.ToString();
             }
             catch (Exception ex)
             {
-                LabelLikesNum.Text = "Error occured: Failed to fetch the Info";
+                LabelLikesNum.Text = "Error occured: Failed to fetch the number of likes";
                 MessageBox.Show($"Failed to fetch interaction stats: {ex.Message}");              
             }
         }
@@ -543,7 +543,9 @@ namespace BasicFacebookFeatures
 
         private void showFriendSimilarities()
         {
-            if (comboBoxFriends.SelectedItem != null && comboBoxFriends.SelectedItem is User selectedFriend)
+            User selectedFriend = comboBoxFriends.SelectedItem as User;
+
+            if (selectedFriend != null)
             {
                 showSimilarLanguages(selectedFriend);
                 showMutualFriends(selectedFriend);
@@ -557,71 +559,97 @@ namespace BasicFacebookFeatures
         }
         private void showSimilarLanguages(User selectedFriend)
         {
-            string[] similarLanguages = m_FriendConnectionOverview.GetSimilarLanguages(selectedFriend);
-
-            listBoxLanguages.Items.Clear();
-            if (similarLanguages.Length > 0)
+            try
             {
-                listBoxLanguages.Items.AddRange(similarLanguages);
+                Page[] similarLanguages = m_FriendConnectionOverview.GetSimilarLanguages(selectedFriend);
+                listBoxLanguages.DisplayMember = "Name";
+                listBoxLanguages.Items.Clear();
+                if (similarLanguages.Length > 0)
+                {
+                    listBoxLanguages.Items.AddRange(similarLanguages);
+                }
+                else
+                {
+                    listBoxLanguages.Items.Add("No similar languages found");
+                }
             }
-            else
+            catch (Exception)
             {
-                listBoxLanguages.Items.Add("No similar languages found");
+                MessageBox.Show("An error occurred while retrieving similar languages. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void showMutualFriends(User selectedFriend)
         {
-            User[] mutualFriends = m_FriendConnectionOverview.GetMutualFriends(selectedFriend);
-
-            listBoxMutualFriends.Items.Clear();
-            if (mutualFriends.Length > 0)
+            try
             {
-                foreach (User mutualFriend in mutualFriends)
+                User[] mutualFriends = m_FriendConnectionOverview.GetMutualFriends(selectedFriend);
+                listBoxMutualFriends.DisplayMember = "Name";
+                listBoxMutualFriends.Items.Clear();
+                if (mutualFriends.Length > 0)
                 {
-                    listBoxMutualFriends.Items.Add(mutualFriend.Name);
+                    foreach (User mutualFriend in mutualFriends)
+                    {
+                        listBoxMutualFriends.Items.Add(mutualFriend);
+                    }
+                }
+                else
+                {
+                    listBoxMutualFriends.Items.Add("No mutual friends found");
                 }
             }
-            else
+            catch (Exception)
             {
-                listBoxMutualFriends.Items.Add("No mutual friends found");
+                MessageBox.Show("An error occurred while retrieving mutual friends. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void showMutualLikedPages(User selectedFriend)
         {
-            Page[] mutualLikedPages = m_FriendConnectionOverview.GetMutualLikedPages(selectedFriend);
-
-            listBoxLikedPages.Items.Clear();
-            if (mutualLikedPages.Length > 0)
+            try
             {
-                foreach (Page page in mutualLikedPages)
+                Page[] mutualLikedPages = m_FriendConnectionOverview.GetMutualLikedPages(selectedFriend);
+                listBoxLikedPages.DisplayMember = "Name";
+                listBoxLikedPages.Items.Clear();
+                if (mutualLikedPages.Length > 0)
                 {
-                    listBoxLikedPages.Items.Add(page.Name);
+                    foreach (Page page in mutualLikedPages)
+                    {
+                        listBoxLikedPages.Items.Add(page);
+                    }
+                }
+                else
+                {
+                    listBoxLikedPages.Items.Add("No mutual liked pages found");
                 }
             }
-            else
+            catch (Exception)
             {
-                listBoxLikedPages.Items.Add("No mutual liked pages found");
+                MessageBox.Show("An error occurred while retrieving mutual liked pages. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void showSimilarSports(User selectedFriend)
         {
-            string[] similarSports = m_FriendConnectionOverview.GetSimilarSports(selectedFriend);
-
-            listBoxSports.Items.Clear();
-            if (similarSports.Length > 0)
+            try
             {
-                listBoxSports.Items.AddRange(similarSports);
+                Page[] similarSports = m_FriendConnectionOverview.GetSimilarSports(selectedFriend);
+                listBoxSports.DisplayMember = "Name";
+                listBoxSports.Items.Clear();
+                if (similarSports.Length > 0)
+                {
+                    listBoxSports.Items.AddRange(similarSports);
+                }
+                else
+                {
+                    listBoxSports.Items.Add("No similar sports found");
+                }
             }
-            else
+            catch (Exception)
             {
-                listBoxSports.Items.Add("No similar sports found");
+                MessageBox.Show("An error occurred while retrieving similar sport. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
 
         private void comboBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
         {
