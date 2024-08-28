@@ -12,23 +12,20 @@ namespace BasicFacebookFeatures
 {
     internal class AppManager
     {
-        public const string k_AppID = "1320566432232601";
-        public readonly string[] r_Permissions = new string[]
+        private const string k_AppID = "1320566432232601";
+        private readonly string[] r_Permissions = new string[]
         {
-            "email", //
-            "public_profile",//
-            "user_age_range",
-            "user_birthday", //
-            "user_events",
-            "user_friends", //
-            "user_gender", //
-            "user_hometown", //
-            "user_likes", //
+            "email",
+            "public_profile",
+            "user_birthday",
+            "user_friends",
+            "user_gender",
+            "user_hometown",
+            "user_likes",
             "user_link",
-            "user_location", //
+            "user_location",
             "user_photos",
             "user_posts",
-            "user_videos"
         };
 
         private LoginResult m_LoginResult;

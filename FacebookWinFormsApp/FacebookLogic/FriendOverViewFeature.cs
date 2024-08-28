@@ -26,6 +26,7 @@ namespace BasicFacebookFeatures.FacebookLogic
         {
             throwExceptionIfUserLoginOrFriendAreNull(i_UserFriend);           
             int likesCount = 0;
+
             foreach (Post post in UserLogin.Posts)
             {
                 if (post.LikedBy.Contains(i_UserFriend))
@@ -41,6 +42,7 @@ namespace BasicFacebookFeatures.FacebookLogic
         {
             throwExceptionIfUserLoginOrFriendAreNull(i_UserFriend);          
             int commentsCount = 0;
+
             foreach (Post post in UserLogin.Posts)
             {
                 if (post.Comments != null)
@@ -57,7 +59,6 @@ namespace BasicFacebookFeatures.FacebookLogic
 
             return commentsCount;
         }
-
 
         public Page[] GetSimilarLanguages(User i_UserFriend)
         {

@@ -63,9 +63,9 @@ namespace BasicFacebookFeatures.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tryImage {
+        internal static System.Drawing.Bitmap FindMatchIcon {
             get {
-                object obj = ResourceManager.GetObject("tryImage", resourceCulture);
+                object obj = ResourceManager.GetObject("FindMatchIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

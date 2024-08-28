@@ -14,11 +14,8 @@ namespace BasicFacebookFeatures.FacebookLogic
     {
         private readonly int r_AgePreferenceMinRestriction = 18;
         private readonly int r_AgePrefernceMaxRestriction = 100;
-
         public User UserLogin { get; set; }
-
         public User.eGender GenderPreference { get; set; }
-
         private int m_AgePreferenceMin;
         public int AgePreferenceMin 
         {
@@ -137,7 +134,6 @@ namespace BasicFacebookFeatures.FacebookLogic
             {
                 DateTime friendBirthDate = DateTime.ParseExact(i_Friend.Birthday, "MM/dd/yyyy", CultureInfo.InvariantCulture);
                 int friendAge = DateTime.Today.Year - friendBirthDate.Year;
-
                 if (DateTime.Today < friendBirthDate.AddYears(friendAge))
                 {
                     friendAge--;
@@ -148,6 +144,5 @@ namespace BasicFacebookFeatures.FacebookLogic
 
             return inAgePreference;
         }
-
     }
 }
