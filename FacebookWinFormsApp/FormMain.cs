@@ -342,7 +342,7 @@ namespace BasicFacebookFeatures
 
         private void findMatchUIResetLabels()
         {
-            labelMatchesFullName.Text = "Name:";
+            labelMatchesFullName.Text = "Full Name:";
             labelMatchesBirthday.Text = "Birthday:";
             labelMatchesLocation.Text = "Location:";
             labelMatchesEmail.Text = "Email:";
