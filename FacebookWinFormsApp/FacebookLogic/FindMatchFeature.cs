@@ -17,7 +17,7 @@ namespace BasicFacebookFeatures.FacebookLogic
         public User UserLogin { get; set; }
         public User.eGender GenderPreference { get; set; }
         private int m_AgePreferenceMin;
-        public int AgePreferenceMin 
+        public int AgePreferenceMin
         {
             get
             {
