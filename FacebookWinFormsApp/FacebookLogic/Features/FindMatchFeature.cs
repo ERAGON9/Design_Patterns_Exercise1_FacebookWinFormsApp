@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BasicFacebookFeatures.FacebookLogic
+namespace BasicFacebookFeatures.FacebookLogic.Features
 {
     public class FindMatchFeature
     {

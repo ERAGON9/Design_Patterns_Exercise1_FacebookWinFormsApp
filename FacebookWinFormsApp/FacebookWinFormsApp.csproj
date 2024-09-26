@@ -89,18 +89,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FacebookLogic\FindMatchFeature.cs" />
-    <Compile Include="FacebookLogic\FriendOverViewFeature.cs" />
-    <Compile Include="FormMain.cs">
+    <Compile Include="FacebookLogic\Factory\FormFactory.cs" />
+    <Compile Include="FacebookLogic\Features\FindMatchFeature.cs" />
+    <Compile Include="FacebookLogic\Features\FriendOverViewFeature.cs" />
+    <Compile Include="Forms\FormFindMatch.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
+    <Compile Include="Forms\FormFindMatch.Designer.cs">
+      <DependentUpon>FormFindMatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormFriendOverView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFriendOverView.Designer.cs">
+      <DependentUpon>FormFriendOverView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FacebookLogic\UserManager.cs" />
-    <EmbeddedResource Include="FormMain.resx">
+    <Compile Include="FacebookLogic\Singleton\UserManager.cs" />
+    <EmbeddedResource Include="Forms\FormFindMatch.resx">
+      <DependentUpon>FormFindMatch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFriendOverView.resx">
+      <DependentUpon>FormFriendOverView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

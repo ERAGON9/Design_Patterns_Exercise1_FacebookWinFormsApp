@@ -14,22 +14,21 @@ using System.Windows.Forms.VisualStyles;
 using Facebook;
 using System.Reflection.Emit;
 using System.Text.RegularExpressions;
+using BasicFacebookFeatures.FacebookLogic.Features;
+using BasicFacebookFeatures.Singleton;
+using BasicFacebookFeatures.FacebookLogic.Factory;
 
-namespace BasicFacebookFeatures
+namespace BasicFacebookFeatures.Forms
 {
     public partial class FormMain : Form
     {
         private const string k_DefaultListBoxDisplayMember = "Name";
-        private readonly FindMatchFeature r_FindMatchFeature;
-        private readonly FriendOverViewFeature r_FriendConnectionOverview;
         private User m_LoggedInUser;
 
         public FormMain()
         {
             InitializeComponent();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
-            r_FindMatchFeature = new FindMatchFeature();
-            r_FriendConnectionOverview = new FriendOverViewFeature();
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -43,7 +42,6 @@ namespace BasicFacebookFeatures
             {
                 UserManager.Instance.UserLogin();
                 m_LoggedInUser = UserManager.Instance.LoggedInUser;
-                r_FriendConnectionOverview.UserLogin = m_LoggedInUser;
                 loginUI();
             }
             catch (Exception ex) 
@@ -55,7 +53,6 @@ namespace BasicFacebookFeatures
         private void loginUI()
         {
             fetchHomePageDataAndDisplay();
-            populateFriendsList();
         }
 
         private void fetchHomePageDataAndDisplay()
@@ -77,6 +74,8 @@ namespace BasicFacebookFeatures
             labelUserFirstName.Text = $"Hello {m_LoggedInUser.FirstName}";
             pictureBoxProfile.ImageLocation = m_LoggedInUser.PictureLargeURL;
             buttonLogout.Enabled = true;
+            buttonFindMatch.Enabled = true;
+            buttonFriendOverView.Enabled = true;
         }
 
         private void fetchUserDetailsAndDisplay()
@@ -87,6 +86,13 @@ namespace BasicFacebookFeatures
             labelUserHometown.Text = $"Hometown: {m_LoggedInUser.Hometown?.Name ?? string.Empty}";
             labelUserLocation.Text = $"Location: {m_LoggedInUser.Location?.Name ?? string.Empty}";
             labelUserEmail.Text = $"Email: {m_LoggedInUser.Email ?? string.Empty}";
+        }
+
+        private string changeBirthdayUSToILFormat(string i_USFormatBirthday) // TODO: Move to a static class. (Duplication)
+        {
+            DateTime parsedDate = DateTime.ParseExact(i_USFormatBirthday, "MM/dd/yyyy", null);
+
+            return parsedDate.ToString("dd/MM/yyyy");
         }
 
         private void fetchPostNewStatusAndPopulateTextBox()
@@ -246,10 +252,7 @@ namespace BasicFacebookFeatures
         {
             UserManager.Instance.UserLogout();
             m_LoggedInUser = null;
-            r_FriendConnectionOverview.UserLogin = m_LoggedInUser;
             homePageUIResetData();
-            findMatchUIResetData();
-            friendOverviewUIResetData();
         }
 
         private void homePageUIResetData()
@@ -268,6 +271,8 @@ namespace BasicFacebookFeatures
             buttonLogin.Text = "Login";
             buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
+            buttonFindMatch.Enabled = false;
+            buttonFriendOverView.Enabled = false;
         }
 
         private void resetUserLoginLabel()
@@ -313,375 +318,21 @@ namespace BasicFacebookFeatures
             pictureBoxFavoriteTeams.Image = null;
         }
 
-        private void findMatchUIResetData()
-        {
-            findMatchUIResetRadioButtons();
-            findMatchUIResetnumericUpDowns();
-            findMatchUIResetListBox();
-            findMatchUIResetPictureBox();
-            findMatchUIResetLabels();
-        }
-
-        private void findMatchUIResetRadioButtons()
-        {
-            radioButtonFemale.Checked = true;
-            radioButtonMale.Checked = false;
-        }
-
-        private void findMatchUIResetnumericUpDowns()
-        {
-            numericUpDownMinAge.Value = 18;
-            numericUpDownMaxAge.Value = 100;
-        }
-
-        private void findMatchUIResetListBox()
-        {
-            listBoxMatches.Items.Clear();
-        }
-
-        private void findMatchUIResetPictureBox()
-        {
-            pictureBoxMatches.Image = null;
-        }
-
-        private void findMatchUIResetLabels()
-        {
-            labelMatchesFullName.Text = "Full Name:";
-            labelMatchesBirthday.Text = "Birthday:";
-            labelMatchesLocation.Text = "Location:";
-            labelMatchesEmail.Text = "Email:";
-        }
-
-        private void friendOverviewUIResetData()
-        {
-            friendOverviewUIResetComboBox();
-            friendOverviewUIResetPictureBox();
-            friendOverviewUIResetListBoxes();
-            friendOverviewUIResetLables();
-        }
-
-        private void friendOverviewUIResetComboBox()
-        {
-            comboBoxFriends.SelectedIndex = -1;
-            comboBoxFriends.Items.Clear();
-        }
-
-        private void friendOverviewUIResetPictureBox()
-        {
-            pictureBoxFriend.Image = null;
-        }
-
-        private void friendOverviewUIResetListBoxes()
-        {
-            listBoxLanguages.Items.Clear();
-            listBoxSports.Items.Clear();
-            listBoxMutualFriends.Items.Clear();
-            listBoxLikedPages.Items.Clear();
-        }
-
-        private void friendOverviewUIResetLables()
-        {
-            LabelLikesNum.Text = "Waiting for button press";
-            LabelCommentsNum.Text = "Waiting for button press";
-        }
-
         private void buttonFindMatch_Click(object sender, EventArgs e)
         {
-            operateAndDisplayFindMatch();
+            applyFindMatchForm();
         }
 
-        private void operateAndDisplayFindMatch()
+        private void applyFindMatchForm()
         {
-            listBoxMatches.DisplayMember = k_DefaultListBoxDisplayMember;
-            try
-            {
-                findMatchUIResetListBox();
-                findMatchUIClearMatchFound();
-                findMatchFeatureInsertData();
-                List<User> usersMatches = r_FindMatchFeature.FindUserMatches();
-
-                if (usersMatches.Count > 0)
-                {
-                    foreach (User userMatch in usersMatches)
-                    {
-                        listBoxMatches.Items.Add(userMatch);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Find Match didn't found any matches for you, maybe try diffrent preferences!",
-                        "Find Match - no matches found", MessageBoxButtons.OK);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Find Match Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Form formFindMatch = FormFactory.CreateForm(FormFactory.eFormType.FormFindMatch);
+            formFindMatch.ShowDialog();
         }
 
-        private void findMatchUIClearMatchFound()
+        private void buttonFriendOverView_Click(object sender, EventArgs e)
         {
-            findMatchUIResetPictureBox();
-            findMatchUIResetLabels();
-        }
-
-        private void findMatchFeatureInsertData()
-        {
-            r_FindMatchFeature.UserLogin = m_LoggedInUser;
-            r_FindMatchFeature.GenderPreference = getGenderFromForm();
-            r_FindMatchFeature.AgePreferenceMin = (int)numericUpDownMinAge.Value;
-            r_FindMatchFeature.AgePreferenceMax = (int)numericUpDownMaxAge.Value;
-        }
-
-        private eGender getGenderFromForm()
-        {
-            eGender genderPreference = eGender.female;
-
-            if (radioButtonMale.Checked)
-            {
-                genderPreference = eGender.male;
-            }
-
-            return genderPreference;
-        }
-
-        private void listBoxMatches_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listBoxMatches.SelectedItems.Count == 1)
-            {
-                User matchPicked = listBoxMatches.SelectedItem as User;
-                if (matchPicked != null)
-                {
-                    findMatchUIDisplayData(matchPicked);
-                }
-            }
-        }
-
-        private void findMatchUIDisplayData(User i_UserMatched)
-        {
-            pictureBoxMatches.ImageLocation = i_UserMatched.PictureNormalURL;
-            labelMatchesFullName.Text = $"Full Name: {i_UserMatched.Name ?? string.Empty}";
-            labelMatchesBirthday.Text = $"Birthdate: {(i_UserMatched.Birthday != null ? changeBirthdayUSToILFormat(i_UserMatched.Birthday) : string.Empty)}";
-            labelMatchesLocation.Text = $"Location: {i_UserMatched.Location?.Name ?? string.Empty}";
-            labelMatchesEmail.Text = $"Email: {i_UserMatched.Email ?? string.Empty}";
-        }
-
-        private string changeBirthdayUSToILFormat(string i_USFormatBirthday)
-        {
-            DateTime parsedDate = DateTime.ParseExact(i_USFormatBirthday, "MM/dd/yyyy", null);
-
-            return parsedDate.ToString("dd/MM/yyyy");
-        }
-
-        private void populateFriendsList()
-        {
-            comboBoxFriends.Items.Clear();
-            comboBoxFriends.DisplayMember = k_DefaultListBoxDisplayMember;
-            try
-            {
-                foreach (User friend in m_LoggedInUser.Friends)
-                {
-                    comboBoxFriends.Items.Add(friend);
-                }
-
-                if (comboBoxFriends.Items.Count == 0)
-                {
-                    comboBoxFriends.Items.Add("No friends available");
-                }
-            }
-            catch (Exception)
-            {
-                comboBoxFriends.Items.Add("Couldn't fetch friends");
-            }
-        }
-
-        private void buttonShowInteractionStats_Click(object sender, EventArgs e)
-        {
-            showFriendInteractionStats();
-        }
-
-        private void showFriendInteractionStats()
-        {
-            User selectedFriend = comboBoxFriends.SelectedItem as User;
-
-            if (selectedFriend != null)
-            {
-                try
-                {
-                    fetchCommentsNumberAndDisplay(selectedFriend);
-                    fetchLikesNumberAndDisplay(selectedFriend);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select a friend from the list.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private void fetchCommentsNumberAndDisplay(User i_SelectedFriend)
-        {
-            try
-            {
-                int numberOfComments = r_FriendConnectionOverview.GetNumberOfCommentsFromFriend(i_SelectedFriend);
-                LabelCommentsNum.Text = numberOfComments.ToString();
-            }
-            catch (Exception ex)
-            {
-                LabelCommentsNum.Text = "Can't fetch the number of comments";
-                MessageBox.Show(ex.Message, "Failed to fetch comments number", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void fetchLikesNumberAndDisplay(User i_SelectedFriend)
-        {
-            try
-            {
-                int numberOfLikes = r_FriendConnectionOverview.GetNumberOfLikesFromFriend(i_SelectedFriend);
-                LabelLikesNum.Text = numberOfLikes.ToString();
-            }
-            catch (Exception ex)
-            {
-                LabelLikesNum.Text = "Can't fetch the number of likes";
-                MessageBox.Show(ex.Message, "Failed to fetch likes number", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void buttonShowSimilarities_Click(object sender, EventArgs e)
-        {
-            showFriendSimilarities();
-        }
-
-        private void showFriendSimilarities()
-        {
-            User selectedFriend = comboBoxFriends.SelectedItem as User;
-
-            if (selectedFriend != null)
-            {
-                showSimilarLanguages(selectedFriend);
-                showMutualFriends(selectedFriend);
-                showMutualLikedPages(selectedFriend);
-                showSimilarSports(selectedFriend);
-            }
-            else
-            {
-                MessageBox.Show("Please select a friend from the list.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private void showSimilarLanguages(User i_SelectedFriend)
-        {
-            listBoxLanguages.DisplayMember = k_DefaultListBoxDisplayMember;
-            listBoxLanguages.Items.Clear();
-            try
-            {
-                Page[] similarLanguages = r_FriendConnectionOverview.GetSimilarLanguages(i_SelectedFriend);
-
-                if (similarLanguages.Length > 0)
-                {
-                    listBoxLanguages.Items.AddRange(similarLanguages);
-                }
-                else
-                {
-                    listBoxLanguages.Items.Add("No similar languages found");
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("An error occurred while retrieving similar languages. Please try again.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void showMutualFriends(User i_SelectedFriend)
-        {
-            listBoxMutualFriends.DisplayMember = k_DefaultListBoxDisplayMember;
-            listBoxMutualFriends.Items.Clear();
-            try
-            {
-                User[] mutualFriends = r_FriendConnectionOverview.GetMutualFriends(i_SelectedFriend);
-
-                if (mutualFriends.Length > 0)
-                {
-                    foreach (User mutualFriend in mutualFriends)
-                    {
-                        listBoxMutualFriends.Items.Add(mutualFriend);
-                    }
-                }
-                else
-                {
-                    listBoxMutualFriends.Items.Add("No mutual friends found");
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("An error occurred while retrieving mutual friends. Please try again.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void showMutualLikedPages(User i_SelectedFriend)
-        {
-            listBoxLikedPages.DisplayMember = k_DefaultListBoxDisplayMember;
-            listBoxLikedPages.Items.Clear();
-            try
-            {
-                Page[] mutualLikedPages = r_FriendConnectionOverview.GetMutualLikedPages(i_SelectedFriend);
-
-                if (mutualLikedPages.Length > 0)
-                {
-                    foreach (Page page in mutualLikedPages)
-                    {
-                        listBoxLikedPages.Items.Add(page);
-                    }
-                }
-                else
-                {
-                    listBoxLikedPages.Items.Add("No mutual liked pages found");
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("An error occurred while retrieving mutual liked pages. Please try again.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void showSimilarSports(User i_SelectedFriend)
-        {
-            listBoxSports.DisplayMember = k_DefaultListBoxDisplayMember;
-            listBoxSports.Items.Clear();
-            try
-            {
-                Page[] similarSports = r_FriendConnectionOverview.GetSimilarSports(i_SelectedFriend);
-
-                if (similarSports.Length > 0)
-                {
-                    listBoxSports.Items.AddRange(similarSports);
-                }
-                else
-                {
-                    listBoxSports.Items.Add("No similar sports found");
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("An error occurred while retrieving similar sport. Please try again.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void comboBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            User selectedFriend = comboBoxFriends.SelectedItem as User;
-
-            if (selectedFriend != null)
-            {
-                pictureBoxFriend.ImageLocation = selectedFriend.PictureLargeURL;
-            }
+            Form formFriendOverVie = FormFactory.CreateForm(FormFactory.eFormType.FormFriendOverView);
+            formFriendOverVie.ShowDialog();
         }
 
         private void buttonPostNewStatus_Click(object sender, EventArgs e)
@@ -765,7 +416,7 @@ namespace BasicFacebookFeatures
                 }
                 else
                 {
-                    pictureBoxFriends.Image = pictureBoxFriend.ErrorImage;
+                    pictureBoxFriends.Image = pictureBoxFriends.ErrorImage;
                 }
             }
         }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace BasicFacebookFeatures.FacebookLogic
+namespace BasicFacebookFeatures.FacebookLogic.Features
 {
     public class FriendOverViewFeature
     {

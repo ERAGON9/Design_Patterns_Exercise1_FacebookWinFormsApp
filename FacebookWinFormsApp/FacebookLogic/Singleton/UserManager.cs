@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using BasicFacebookFeatures.FacebookLogic;
 using System.Windows.Forms;
 
-namespace BasicFacebookFeatures
+namespace BasicFacebookFeatures.Singleton
 {
     public sealed class UserManager
     {
