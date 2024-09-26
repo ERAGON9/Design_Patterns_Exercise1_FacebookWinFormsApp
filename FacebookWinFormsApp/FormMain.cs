@@ -13,21 +13,21 @@ using static FacebookWrapper.ObjectModel.User;
 using System.Windows.Forms.VisualStyles;
 using Facebook;
 using System.Reflection.Emit;
+using System.Text.RegularExpressions;
 
 namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
         private const string k_DefaultListBoxDisplayMember = "Name";
-        private readonly AppManager r_AppManager;
         private readonly FindMatchFeature r_FindMatchFeature;
         private readonly FriendOverViewFeature r_FriendConnectionOverview;
+        private User m_LoggedInUser;
 
         public FormMain()
         {
             InitializeComponent();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
-            r_AppManager = new AppManager();
             r_FindMatchFeature = new FindMatchFeature();
             r_FriendConnectionOverview = new FriendOverViewFeature();
         }
@@ -41,13 +41,14 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                r_AppManager.Login();
-                r_FriendConnectionOverview.UserLogin = r_AppManager.LoggedInUser;
+                UserManager.Instance.UserLogin();
+                m_LoggedInUser = UserManager.Instance.LoggedInUser;
+                r_FriendConnectionOverview.UserLogin = m_LoggedInUser;
                 loginUI();
             }
             catch (Exception ex) 
             {
-                MessageBox.Show(ex.Message, "Login Failed");
+                MessageBox.Show($"Login failed, try again. {ex.Message}", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -73,30 +74,26 @@ namespace BasicFacebookFeatures
         {
             buttonLogin.Text = $"Logged in";
             buttonLogin.Enabled = false;
-            labelUserFirstName.Text = $"Hello {r_AppManager.LoggedInUser.FirstName}";
-            pictureBoxProfile.ImageLocation = r_AppManager.LoggedInUser.PictureLargeURL;
+            labelUserFirstName.Text = $"Hello {m_LoggedInUser.FirstName}";
+            pictureBoxProfile.ImageLocation = m_LoggedInUser.PictureLargeURL;
             buttonLogout.Enabled = true;
         }
 
         private void fetchUserDetailsAndDisplay()
         {
-            User loggedInUser = r_AppManager.LoggedInUser;
-
-            labelUserFullName.Text = $"Full Name: {loggedInUser.Name ?? string.Empty}";
-            labelUserGender.Text = $"Gender: {loggedInUser.Gender?.ToString() ?? string.Empty}";
-            labelUserBirthdate.Text = $"Birthdate: {(loggedInUser.Birthday != null ? changeBirthdayUSToILFormat(loggedInUser.Birthday) : string.Empty)}";
-            labelUserHometown.Text = $"Hometown: {loggedInUser.Hometown?.Name ?? string.Empty}";
-            labelUserLocation.Text = $"Location: {loggedInUser.Location?.Name ?? string.Empty}";
-            labelUserEmail.Text = $"Email: {loggedInUser.Email ?? string.Empty}";
+            labelUserFullName.Text = $"Full Name: {m_LoggedInUser.Name ?? string.Empty}";
+            labelUserGender.Text = $"Gender: {m_LoggedInUser.Gender?.ToString() ?? string.Empty}";
+            labelUserBirthdate.Text = $"Birthdate: {(m_LoggedInUser.Birthday != null ? changeBirthdayUSToILFormat(m_LoggedInUser.Birthday) : string.Empty)}";
+            labelUserHometown.Text = $"Hometown: {m_LoggedInUser.Hometown?.Name ?? string.Empty}";
+            labelUserLocation.Text = $"Location: {m_LoggedInUser.Location?.Name ?? string.Empty}";
+            labelUserEmail.Text = $"Email: {m_LoggedInUser.Email ?? string.Empty}";
         }
 
         private void fetchPostNewStatusAndPopulateTextBox()
         {
-            User loggedInUser = r_AppManager.LoggedInUser;
-
-            if (loggedInUser.Posts != null && loggedInUser.Posts.Count > 0 && loggedInUser.Posts[0].Message != null)
+            if (m_LoggedInUser.Posts != null && m_LoggedInUser.Posts.Count > 0 && m_LoggedInUser.Posts[0].Message != null)
             {
-                textBoxPostNewStatus.Text = loggedInUser.Posts[0].Message;
+                textBoxPostNewStatus.Text = m_LoggedInUser.Posts[0].Message;
             }
             else
             {
@@ -110,9 +107,9 @@ namespace BasicFacebookFeatures
             listBoxPosts.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
-                if (r_AppManager.LoggedInUser.Posts != null)
+                if (m_LoggedInUser.Posts != null)
                 {
-                    foreach (Post post in r_AppManager.LoggedInUser.Posts)
+                    foreach (Post post in m_LoggedInUser.Posts)
                     {
                         if (post.Message != null)
                         {
@@ -146,9 +143,9 @@ namespace BasicFacebookFeatures
             listBoxFriends.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
-                if (r_AppManager.LoggedInUser.Friends != null)
+                if (m_LoggedInUser.Friends != null)
                 {
-                    foreach (User friend in r_AppManager.LoggedInUser.Friends)
+                    foreach (User friend in m_LoggedInUser.Friends)
                     {
                         listBoxFriends.Items.Add(friend);
                     }
@@ -171,9 +168,9 @@ namespace BasicFacebookFeatures
             listBoxAlbums.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
-                if (r_AppManager.LoggedInUser.Albums != null)
+                if (m_LoggedInUser.Albums != null)
                 {
-                    foreach (Album album in r_AppManager.LoggedInUser.Albums)
+                    foreach (Album album in m_LoggedInUser.Albums)
                     {
                         listBoxAlbums.Items.Add(album);
                     }
@@ -196,9 +193,9 @@ namespace BasicFacebookFeatures
             listBoxLikePages.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
-                if (r_AppManager.LoggedInUser.LikedPages != null)
+                if (m_LoggedInUser.LikedPages != null)
                 {
-                    foreach (Page page in r_AppManager.LoggedInUser.LikedPages)
+                    foreach (Page page in m_LoggedInUser.LikedPages)
                     {
                         listBoxLikePages.Items.Add(page);
                     }
@@ -221,9 +218,9 @@ namespace BasicFacebookFeatures
             listBoxFavoriteTeams.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
-                if (r_AppManager.LoggedInUser.FavofriteTeams != null)
+                if (m_LoggedInUser.FavofriteTeams != null)
                 {
-                    foreach (Page team in r_AppManager.LoggedInUser.FavofriteTeams)
+                    foreach (Page team in m_LoggedInUser.FavofriteTeams)
                     {
                         listBoxFavoriteTeams.Items.Add(team);
                     }
@@ -242,19 +239,26 @@ namespace BasicFacebookFeatures
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            r_AppManager.Logout();
+            logout();
+        }
+
+        private void logout()
+        {
+            UserManager.Instance.UserLogout();
+            m_LoggedInUser = null;
+            r_FriendConnectionOverview.UserLogin = m_LoggedInUser;
             homePageUIResetData();
             findMatchUIResetData();
-            friendOverviewUIResetData();           
+            friendOverviewUIResetData();
         }
 
         private void homePageUIResetData()
         {
             resetButtons();
-            resetLabel();
-            resetPictureBox();
+            resetUserLoginLabel();
+            resetUserPictureBox();
             resetUserDeatils();
-            resetTextBox();
+            resetPostStatusTextBox();
             clearListBoxes();
             resetPictureBoxes();
         }
@@ -266,17 +270,17 @@ namespace BasicFacebookFeatures
             buttonLogout.Enabled = false;
         }
 
-        private void resetLabel()
+        private void resetUserLoginLabel()
         {
             labelUserFirstName.Text = "No user logged in yet";
         }
 
-        private void resetPictureBox()
+        private void resetUserPictureBox()
         {
             pictureBoxProfile.ImageLocation = null;
         }
 
-        private void resetTextBox()
+        private void resetPostStatusTextBox()
         {
             textBoxPostNewStatus.Text = string.Empty;
         }
@@ -395,6 +399,7 @@ namespace BasicFacebookFeatures
                 findMatchUIClearMatchFound();
                 findMatchFeatureInsertData();
                 List<User> usersMatches = r_FindMatchFeature.FindUserMatches();
+
                 if (usersMatches.Count > 0)
                 {
                     foreach (User userMatch in usersMatches)
@@ -404,12 +409,13 @@ namespace BasicFacebookFeatures
                 }
                 else
                 {
-                    MessageBox.Show("Find Match didn't found any matches for you, maybe try diffrent preferences!", "Find Match - no matches found");
+                    MessageBox.Show("Find Match didn't found any matches for you, maybe try diffrent preferences!",
+                        "Find Match - no matches found", MessageBoxButtons.OK);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Find Match Failed");
+                MessageBox.Show(ex.Message, "Find Match Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -421,7 +427,7 @@ namespace BasicFacebookFeatures
 
         private void findMatchFeatureInsertData()
         {
-            r_FindMatchFeature.UserLogin = r_AppManager.LoggedInUser;
+            r_FindMatchFeature.UserLogin = m_LoggedInUser;
             r_FindMatchFeature.GenderPreference = getGenderFromForm();
             r_FindMatchFeature.AgePreferenceMin = (int)numericUpDownMinAge.Value;
             r_FindMatchFeature.AgePreferenceMax = (int)numericUpDownMaxAge.Value;
@@ -473,7 +479,7 @@ namespace BasicFacebookFeatures
             comboBoxFriends.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
-                foreach (User friend in r_AppManager.LoggedInUser.Friends)
+                foreach (User friend in m_LoggedInUser.Friends)
                 {
                     comboBoxFriends.Items.Add(friend);
                 }
@@ -526,7 +532,7 @@ namespace BasicFacebookFeatures
             catch (Exception ex)
             {
                 LabelCommentsNum.Text = "Can't fetch the number of comments";
-                MessageBox.Show($"Failed to fetch interaction stats: {ex.Message}");
+                MessageBox.Show(ex.Message, "Failed to fetch comments number", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -540,7 +546,7 @@ namespace BasicFacebookFeatures
             catch (Exception ex)
             {
                 LabelLikesNum.Text = "Can't fetch the number of likes";
-                MessageBox.Show($"Failed to fetch interaction stats: {ex.Message}");              
+                MessageBox.Show(ex.Message, "Failed to fetch likes number", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -573,6 +579,7 @@ namespace BasicFacebookFeatures
             try
             {
                 Page[] similarLanguages = r_FriendConnectionOverview.GetSimilarLanguages(i_SelectedFriend);
+
                 if (similarLanguages.Length > 0)
                 {
                     listBoxLanguages.Items.AddRange(similarLanguages);
@@ -584,17 +591,19 @@ namespace BasicFacebookFeatures
             }
             catch (Exception)
             {
-                MessageBox.Show("An error occurred while retrieving similar languages. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("An error occurred while retrieving similar languages. Please try again.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void showMutualFriends(User i_SelectedFriend)
         {
+            listBoxMutualFriends.DisplayMember = k_DefaultListBoxDisplayMember;
+            listBoxMutualFriends.Items.Clear();
             try
             {
                 User[] mutualFriends = r_FriendConnectionOverview.GetMutualFriends(i_SelectedFriend);
-                listBoxMutualFriends.DisplayMember = k_DefaultListBoxDisplayMember;
-                listBoxMutualFriends.Items.Clear();
+
                 if (mutualFriends.Length > 0)
                 {
                     foreach (User mutualFriend in mutualFriends)
@@ -609,7 +618,8 @@ namespace BasicFacebookFeatures
             }
             catch (Exception)
             {
-                MessageBox.Show("An error occurred while retrieving mutual friends. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("An error occurred while retrieving mutual friends. Please try again.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -620,6 +630,7 @@ namespace BasicFacebookFeatures
             try
             {
                 Page[] mutualLikedPages = r_FriendConnectionOverview.GetMutualLikedPages(i_SelectedFriend);
+
                 if (mutualLikedPages.Length > 0)
                 {
                     foreach (Page page in mutualLikedPages)
@@ -634,7 +645,8 @@ namespace BasicFacebookFeatures
             }
             catch (Exception)
             {
-                MessageBox.Show("An error occurred while retrieving mutual liked pages. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("An error occurred while retrieving mutual liked pages. Please try again.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -645,6 +657,7 @@ namespace BasicFacebookFeatures
             try
             {
                 Page[] similarSports = r_FriendConnectionOverview.GetSimilarSports(i_SelectedFriend);
+
                 if (similarSports.Length > 0)
                 {
                     listBoxSports.Items.AddRange(similarSports);
@@ -656,7 +669,8 @@ namespace BasicFacebookFeatures
             }
             catch (Exception)
             {
-                MessageBox.Show("An error occurred while retrieving similar sport. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("An error occurred while retrieving similar sport. Please try again.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -679,41 +693,41 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                if (r_AppManager.LoggedInUser != null)
+                if (m_LoggedInUser != null)
                 {
-                    r_AppManager.LoggedInUser.PostStatus(textBoxPostNewStatus.Text);
+                    m_LoggedInUser.PostStatus(textBoxPostNewStatus.Text);
                     MessageBox.Show("The status was Posted!", "New Status Posted");
                     fetchYourPostsAndPopulateListBox();
                 }
                 else
                 {
-                    throw new Exception("You have to login first!");
+                    MessageBox.Show("You have to login first!");
                 }
             }
             catch (FacebookOAuthException)
             {
-                MessageBox.Show("Wasn't able to reach the Facebook server.", "Facebook server error");
+                MessageBox.Show("Wasn't able to reach the Facebook server.", "Facebook server error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void listBoxPosts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            fetchPostCommentsAndListBox();
+            fetchPostCommentsAndPopulateListBox();
         }
 
-        private void fetchPostCommentsAndListBox()
+        private void fetchPostCommentsAndPopulateListBox()
         {
             listBoxPostsComments.Items.Clear();
             listBoxPostsComments.DisplayMember = "Message";
             try
             {
-                if (r_AppManager.LoggedInUser.Posts != null)
+                if (m_LoggedInUser.Posts != null)
                 {
-                    Post selectedPost = r_AppManager.LoggedInUser.Posts[listBoxPosts.SelectedIndex];
+                    Post selectedPost = m_LoggedInUser.Posts[listBoxPosts.SelectedIndex];
                     FacebookObjectCollection<Comment> postComments = selectedPost.Comments;
                     if (postComments.Count > 0)
                     {
