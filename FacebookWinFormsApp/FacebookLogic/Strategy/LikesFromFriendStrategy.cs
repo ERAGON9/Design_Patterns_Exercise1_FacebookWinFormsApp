@@ -20,11 +20,11 @@ namespace BasicFacebookFeatures.FacebookLogic.Strategy
             {
                 if (post.LikedBy.Contains(i_userFriend))
                 {
-                    likesCount++;  // Increment the count for each like
+                    likesCount++;  
                 }
             }
 
-            return likesCount;  // Return the total number of likes
+            return likesCount;  
         }
     }
 }
