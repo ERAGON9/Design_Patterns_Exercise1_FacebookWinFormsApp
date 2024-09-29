@@ -16,13 +16,14 @@ using System.Reflection.Emit;
 using System.Text.RegularExpressions;
 using BasicFacebookFeatures.FacebookLogic.Features;
 using BasicFacebookFeatures.Singleton;
+using BasicFacebookFeatures.FacebookLogic.Proxy;
 
 namespace BasicFacebookFeatures.Forms
 {
     public partial class FormFindMatch : Form
     {
         private const string k_DefaultListBoxDisplayMember = "Name";
-        private readonly FindMatchFeature r_FindMatchFeature = new FindMatchFeature();
+        private readonly IFindMatchFeature r_FindMatchFeature = new FindMatchFeatureCacheProxy();
 
         public FormFindMatch()
         {

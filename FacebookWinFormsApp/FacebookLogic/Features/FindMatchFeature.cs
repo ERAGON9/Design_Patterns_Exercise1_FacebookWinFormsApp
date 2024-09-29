@@ -71,13 +71,13 @@ namespace BasicFacebookFeatures.FacebookLogic.Features
 
             foreach (User friend in friends)
             {
-                if (checkGenderPreference(friend) && checkAgePreference(friend))
+                if (CheckIfPotentialMatch(friend))
                 {
                     potentialMatches.Add(friend);
                 }
             }
 
-            return sortBySharedLikedPages(potentialMatches);
+            return SortBySharedLikedPages(potentialMatches);
         }
 
         private void throwExceptionIfUserLoginIsNull()
@@ -88,7 +88,44 @@ namespace BasicFacebookFeatures.FacebookLogic.Features
             }
         }
 
-        private List<User> sortBySharedLikedPages(List<User> i_PotentialMatches)
+        public bool CheckIfPotentialMatch(User i_Friend)
+        {
+            return checkGenderPreference(i_Friend) && checkAgePreference(i_Friend);
+        }
+
+        private bool checkGenderPreference(User i_Friend)
+        {
+            bool inGenderPrefernce = false;
+
+            if (i_Friend.Gender != null)
+            {
+                inGenderPrefernce = i_Friend.Gender.Equals(GenderPreference);
+            }
+
+            return inGenderPrefernce;
+        }
+
+        private bool checkAgePreference(User i_Friend)
+        {
+            bool inAgePreference = false;
+            string friendBirthDateStr = i_Friend.Birthday;
+
+            if (friendBirthDateStr != null)
+            {
+                DateTime friendBirthDate = DateTime.ParseExact(friendBirthDateStr, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                int friendAge = DateTime.Today.Year - friendBirthDate.Year;
+                if (DateTime.Today < friendBirthDate.AddYears(friendAge))
+                {
+                    friendAge--;
+                }
+
+                inAgePreference = friendAge >= AgePreferenceMin && friendAge <= AgePreferenceMax;
+            }
+
+            return inAgePreference;
+        }
+
+        public List<User> SortBySharedLikedPages(List<User> i_PotentialMatches)
         {
             List<User> sortedPotentialMatches = i_PotentialMatches.OrderByDescending(match => sharedLikedPagesCount(match)).ToList();
 
@@ -112,37 +149,6 @@ namespace BasicFacebookFeatures.FacebookLogic.Features
             }
 
             return countSharePages;
-        }
-
-        private bool checkGenderPreference(User i_Friend)
-        {
-            bool inGenderPrefernce = false;
-
-            if (i_Friend.Gender != null)
-            {
-                inGenderPrefernce = i_Friend.Gender.Equals(GenderPreference);
-            }
-
-            return inGenderPrefernce;
-        }
-
-        private bool checkAgePreference(User i_Friend)
-        {
-            bool inAgePreference = false;
-
-            if (i_Friend.Birthday != null)
-            {
-                DateTime friendBirthDate = DateTime.ParseExact(i_Friend.Birthday, "MM/dd/yyyy", CultureInfo.InvariantCulture);
-                int friendAge = DateTime.Today.Year - friendBirthDate.Year;
-                if (DateTime.Today < friendBirthDate.AddYears(friendAge))
-                {
-                    friendAge--;
-                }
-
-                inAgePreference = friendAge >= AgePreferenceMin && friendAge <= AgePreferenceMax;
-            }
-
-            return inAgePreference;
         }
     }
 }
