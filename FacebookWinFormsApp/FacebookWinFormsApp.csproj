@@ -97,6 +97,10 @@
     <Compile Include="FacebookLogic\Strategy\CommentsFromFriendStrategy.cs" />
     <Compile Include="FacebookLogic\Strategy\IFriendInteractionStrategy.cs" />
     <Compile Include="FacebookLogic\Strategy\LikesFromFriendStrategy.cs" />
+    <Compile Include="FacebookLogic\Strategy\MutualFriendsStrategy .cs" />
+    <Compile Include="FacebookLogic\Strategy\MutualLikedPagesStrategy.cs" />
+    <Compile Include="FacebookLogic\Strategy\SimilarLanguagesStrategy.cs" />
+    <Compile Include="FacebookLogic\Strategy\SimilarSportsStrategy.cs" />
     <Compile Include="Forms\FormFindMatch.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -2,13 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BasicFacebookFeatures.FacebookLogic.Strategy
+
+namespace BasicFacebookFeatures.FacebookLogic.Features
 {
-    public interface IFriendInteractionStrategy
+    public interface IFriendInteractionStrategy<T>
     {
-        int GetInteractionCount(User userLogin, User userFriend);
+        T GetInteractionData(User i_loggedInUser, User i_selectedFriend);
     }
 }

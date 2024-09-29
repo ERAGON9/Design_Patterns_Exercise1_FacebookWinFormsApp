@@ -4,23 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-
+using BasicFacebookFeatures.FacebookLogic.Features;
 namespace BasicFacebookFeatures.FacebookLogic.Features
 {
-    public class FriendOverViewFeature
+    public class FriendOverViewFeature<T>
     {
         public User LoggedInUser { get; set; }
-        public User SelectedFriend { get; set; }
-        public IFriendInteractionStrategy InteractionStrategy { get; set; }
-        
-        public int GetInteractionData()
+        public IFriendInteractionStrategy<T> InteractionStrategy { get; set; }
+
+        public T GetInteractionData(User i_selectedFriend)
         {
-            if (LoggedInUser == null || SelectedFriend == null)
+            if (LoggedInUser == null || i_selectedFriend == null)
             {
-                throw new ArgumentNullException("LoggedInUser or SelectedFriend", "User login or friend is null");
+                throw new ArgumentNullException("LoggedInUser or selectedFriend", "User login or friend is null");
             }
 
-            return InteractionStrategy.GetInteractionCount(LoggedInUser, SelectedFriend);
+            return InteractionStrategy.GetInteractionData(LoggedInUser, i_selectedFriend);
         }
     }
 }

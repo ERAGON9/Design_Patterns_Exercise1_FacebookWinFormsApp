@@ -1,27 +1,30 @@
-﻿using FacebookWrapper.ObjectModel;
+﻿using FacebookWrapper.ObjectModel;  
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BasicFacebookFeatures.FacebookLogic.Features;  
 
 namespace BasicFacebookFeatures.FacebookLogic.Strategy
 {
-    public class LikesFromFriendStrategy : IFriendInteractionStrategy
+    
+    public class LikesFromFriendStrategy : IFriendInteractionStrategy<int>
     {
-        public int GetInteractionCount(User i_UserLogin, User i_UserFriend)
+        public int GetInteractionData(User i_userLogin, User i_userFriend)
         {
+            if (i_userLogin == null || i_userFriend == null)
+            {
+                throw new ArgumentNullException("userLogin or userFriend", "User login or friend is null");
+            }
+
             int likesCount = 0;
 
-            foreach (Post post in i_UserLogin.Posts)
+            foreach (Post post in i_userFriend.Posts)
             {
-                if (post.LikedBy.Contains(i_UserFriend))
+                if (post.LikedBy.Contains(i_userFriend))
                 {
-                    likesCount++;
+                    likesCount++;  // Increment the count for each like
                 }
             }
 
-            return likesCount;
+            return likesCount;  // Return the total number of likes
         }
     }
 }

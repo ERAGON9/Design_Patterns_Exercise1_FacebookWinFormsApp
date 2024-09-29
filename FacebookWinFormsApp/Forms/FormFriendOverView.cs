@@ -9,20 +9,19 @@ using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
 using BasicFacebookFeatures.FacebookLogic;
-using static FacebookWrapper.ObjectModel.User;
-using System.Windows.Forms.VisualStyles;
-using Facebook;
-using System.Reflection.Emit;
-using System.Text.RegularExpressions;
 using BasicFacebookFeatures.FacebookLogic.Features;
 using BasicFacebookFeatures.Singleton;
+using BasicFacebookFeatures.FacebookLogic.Strategy;
 
 namespace BasicFacebookFeatures.Forms
 {
     public partial class FormFriendOverView : Form
     {
         private const string k_DefaultListBoxDisplayMember = "Name";
-        private readonly FriendOverViewFeature r_FriendConnectionOverview = new FriendOverViewFeature();
+        private FriendOverViewFeature<int> r_InteractionOverviewFeature;  
+        private FriendOverViewFeature<Page[]> r_SimilaritiesOverviewFeature;
+        private FriendOverViewFeature<User[]> r_MutualFriendsOverviewFeature;  
+                                                                               
         private User m_LoggedInUser;
 
         public FormFriendOverView()
@@ -30,7 +29,6 @@ namespace BasicFacebookFeatures.Forms
             InitializeComponent();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
             m_LoggedInUser = UserManager.Instance.LoggedInUser;
-            r_FriendConnectionOverview.UserLogin = m_LoggedInUser;
             populateFriendsList();
         }
 
@@ -83,11 +81,19 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void fetchCommentsNumberAndDisplay(User i_SelectedFriend)
+        private void fetchCommentsNumberAndDisplay(User i_selectedFriend)
         {
             try
             {
-                int numberOfComments = r_FriendConnectionOverview.GetNumberOfCommentsFromFriend(i_SelectedFriend);
+                
+                r_InteractionOverviewFeature = new FriendOverViewFeature<int>
+                {
+                    LoggedInUser = m_LoggedInUser,
+                    InteractionStrategy = new CommentsFromFriendStrategy()
+                };
+
+                // Fetch and display the number of comments
+                int numberOfComments = r_InteractionOverviewFeature.GetInteractionData(i_selectedFriend);
                 LabelCommentsNum.Text = numberOfComments.ToString();
             }
             catch (Exception ex)
@@ -97,11 +103,19 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void fetchLikesNumberAndDisplay(User i_SelectedFriend)
+        private void fetchLikesNumberAndDisplay(User i_selectedFriend)
         {
             try
             {
-                int numberOfLikes = r_FriendConnectionOverview.GetNumberOfLikesFromFriend(i_SelectedFriend);
+               
+                r_InteractionOverviewFeature = new FriendOverViewFeature<int>
+                {
+                    LoggedInUser = m_LoggedInUser,
+                    InteractionStrategy = new LikesFromFriendStrategy()
+                };
+
+                
+                int numberOfLikes = r_InteractionOverviewFeature.GetInteractionData(i_selectedFriend);
                 LabelLikesNum.Text = numberOfLikes.ToString();
             }
             catch (Exception ex)
@@ -133,13 +147,19 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void showSimilarLanguages(User i_SelectedFriend)
+        private void showSimilarLanguages(User i_selectedFriend)
         {
             listBoxLanguages.DisplayMember = k_DefaultListBoxDisplayMember;
             listBoxLanguages.Items.Clear();
             try
             {
-                Page[] similarLanguages = r_FriendConnectionOverview.GetSimilarLanguages(i_SelectedFriend);
+                r_SimilaritiesOverviewFeature = new FriendOverViewFeature<Page[]>
+                {
+                    LoggedInUser = m_LoggedInUser,
+                    InteractionStrategy = new SimilarLanguagesStrategy()
+                };
+
+                Page[] similarLanguages = r_SimilaritiesOverviewFeature.GetInteractionData(i_selectedFriend);
 
                 if (similarLanguages.Length > 0)
                 {
@@ -156,13 +176,20 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void showMutualFriends(User i_SelectedFriend)
+        private void showMutualFriends(User selectedFriend)
         {
             listBoxMutualFriends.DisplayMember = k_DefaultListBoxDisplayMember;
             listBoxMutualFriends.Items.Clear();
             try
             {
-                User[] mutualFriends = r_FriendConnectionOverview.GetMutualFriends(i_SelectedFriend);
+                
+                r_MutualFriendsOverviewFeature = new FriendOverViewFeature<User[]>
+                {
+                    LoggedInUser = m_LoggedInUser,
+                    InteractionStrategy = new MutualFriendsStrategy()
+                };
+
+                User[] mutualFriends = r_MutualFriendsOverviewFeature.GetInteractionData(selectedFriend);
 
                 if (mutualFriends.Length > 0)
                 {
@@ -182,13 +209,20 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void showMutualLikedPages(User i_SelectedFriend)
+
+        private void showMutualLikedPages(User i_selectedFriend)
         {
             listBoxLikedPages.DisplayMember = k_DefaultListBoxDisplayMember;
             listBoxLikedPages.Items.Clear();
             try
             {
-                Page[] mutualLikedPages = r_FriendConnectionOverview.GetMutualLikedPages(i_SelectedFriend);
+                r_SimilaritiesOverviewFeature = new FriendOverViewFeature<Page[]>
+                {
+                    LoggedInUser = m_LoggedInUser,
+                    InteractionStrategy = new MutualLikedPagesStrategy()  
+                };
+
+                Page[] mutualLikedPages = r_SimilaritiesOverviewFeature.GetInteractionData(i_selectedFriend);
 
                 if (mutualLikedPages.Length > 0)
                 {
@@ -208,13 +242,19 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void showSimilarSports(User i_SelectedFriend)
+        private void showSimilarSports(User i_selectedFriend)
         {
             listBoxSports.DisplayMember = k_DefaultListBoxDisplayMember;
             listBoxSports.Items.Clear();
             try
             {
-                Page[] similarSports = r_FriendConnectionOverview.GetSimilarSports(i_SelectedFriend);
+                r_SimilaritiesOverviewFeature = new FriendOverViewFeature<Page[]>
+                {
+                    LoggedInUser = m_LoggedInUser,
+                    InteractionStrategy = new SimilarSportsStrategy()
+                };
+
+                Page[] similarSports = r_SimilaritiesOverviewFeature.GetInteractionData(i_selectedFriend);
 
                 if (similarSports.Length > 0)
                 {
@@ -227,7 +267,7 @@ namespace BasicFacebookFeatures.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Failed to fetch similar sport", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Failed to fetch similar sports", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
