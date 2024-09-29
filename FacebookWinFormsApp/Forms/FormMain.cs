@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 using BasicFacebookFeatures.FacebookLogic.Features;
 using BasicFacebookFeatures.Singleton;
 using BasicFacebookFeatures.FacebookLogic.Factory;
+using System.Threading;
 
 namespace BasicFacebookFeatures.Forms
 {
@@ -58,9 +59,10 @@ namespace BasicFacebookFeatures.Forms
         private void fetchHomePageDataAndDisplay()
         {
             fetchLoginUI();
-            fetchUserDetailsAndDisplay();
-            fetchPostNewStatusAndPopulateTextBox();
-            fetchYourPostsAndPopulateListBox();
+            new Thread(fetchUserDataLoginUI).Start();
+            new Thread(fetchUserDetailsAndDisplay).Start();
+            new Thread(fetchPostNewStatusAndPopulateTextBox).Start();
+            new Thread(fetchYourPostsAndPopulateListBox).Start();
             fetchYourFriendsAndPopulateListBox();
             fetchYourAlbumsAndPopulateListBox();
             fetchYourLikePagesAndPopulateListBox();
@@ -71,21 +73,33 @@ namespace BasicFacebookFeatures.Forms
         {
             buttonLogin.Text = $"Logged in";
             buttonLogin.Enabled = false;
-            labelUserFirstName.Text = $"Hello {m_LoggedInUser.FirstName}";
-            pictureBoxProfile.ImageLocation = m_LoggedInUser.PictureLargeURL;
             buttonLogout.Enabled = true;
             buttonFindMatch.Enabled = true;
             buttonFriendOverView.Enabled = true;
         }
 
+        private void fetchUserDataLoginUI()
+        {
+            string userFirstName = m_LoggedInUser.FirstName;
+            labelUserFirstName.Invoke(new Action(() => labelUserFirstName.Text = $"Hello {userFirstName}"));
+            string userPictureLargeURL = m_LoggedInUser.PictureLargeURL;
+            pictureBoxProfile.Invoke(new Action(() => pictureBoxProfile.ImageLocation = userPictureLargeURL));
+        }
+
         private void fetchUserDetailsAndDisplay()
         {
-            labelUserFullName.Text = $"Full Name: {m_LoggedInUser.Name ?? string.Empty}";
-            labelUserGender.Text = $"Gender: {m_LoggedInUser.Gender?.ToString() ?? string.Empty}";
-            labelUserBirthdate.Text = $"Birthdate: {(m_LoggedInUser.Birthday != null ? changeBirthdayUSToILFormat(m_LoggedInUser.Birthday) : string.Empty)}";
-            labelUserHometown.Text = $"Hometown: {m_LoggedInUser.Hometown?.Name ?? string.Empty}";
-            labelUserLocation.Text = $"Location: {m_LoggedInUser.Location?.Name ?? string.Empty}";
-            labelUserEmail.Text = $"Email: {m_LoggedInUser.Email ?? string.Empty}";
+            string userName = m_LoggedInUser.Name;
+            labelUserFullName.Invoke(new Action(() => labelUserFullName.Text = $"Full Name: {userName ?? string.Empty}"));
+            string userGender = m_LoggedInUser.Gender?.ToString();
+            labelUserGender.Invoke(new Action(() => labelUserGender.Text = $"Gender: {userGender ?? string.Empty}"));
+            string userBirthdate = m_LoggedInUser.Birthday;
+            labelUserBirthdate.Invoke(new Action(() => labelUserBirthdate.Text = $"Birthdate: {(userBirthdate != null ? changeBirthdayUSToILFormat(userBirthdate) : string.Empty)}"));
+            string userHometown = m_LoggedInUser.Hometown?.Name;
+            labelUserHometown.Invoke(new Action(() => labelUserHometown.Text = $"Hometown: {userHometown ?? string.Empty}"));
+            string userLocation = m_LoggedInUser.Location?.Name;
+            labelUserLocation.Invoke(new Action(() => labelUserLocation.Text = $"Location: {userLocation ?? string.Empty}"));
+            string userEmail = m_LoggedInUser.Email;
+            labelUserEmail.Invoke(new Action(() => labelUserEmail.Text = $"Email: {userEmail ?? string.Empty}"));
         }
 
         private string changeBirthdayUSToILFormat(string i_USFormatBirthday) // TODO: Move to a static class. (Duplication)
@@ -99,11 +113,12 @@ namespace BasicFacebookFeatures.Forms
         {
             if (m_LoggedInUser.Posts != null && m_LoggedInUser.Posts.Count > 0 && m_LoggedInUser.Posts[0].Message != null)
             {
-                textBoxPostNewStatus.Text = m_LoggedInUser.Posts[0].Message;
+                string firstPostMessage = m_LoggedInUser.Posts[0].Message;
+                textBoxPostNewStatus.Invoke(new Action(() => textBoxPostNewStatus.Text = firstPostMessage));
             }
             else
             {
-                textBoxPostNewStatus.Text = "This is my first status!";
+                textBoxPostNewStatus.Invoke(new Action(() => textBoxPostNewStatus.Text = "This is my first status!"));
             }
         }
 
