@@ -64,7 +64,7 @@ namespace BasicFacebookFeatures.Forms
             new Thread(fetchUserDetailsAndDisplay).Start();
             new Thread(fetchPostNewStatusAndPopulateTextBox).Start();
             new Thread(fetchYourPostsAndPopulateListBox).Start();
-            new Thread (fetchYourFriendsAndPopulateListBox).Start();
+            new Thread(fetchYourFriendsAndPopulateListBox).Start();
             new Thread(fetchYourAlbumsAndPopulateListBox).Start();
             new Thread(fetchYourLikePagesAndPopulateListBox).Start();
             new Thread(fetchYourFavoriteTeamsAndPopulateListBox).Start();
@@ -125,7 +125,7 @@ namespace BasicFacebookFeatures.Forms
 
         private void fetchYourPostsAndPopulateListBox()
         {
-            listBoxPosts.Items.Clear();
+            listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Clear()));
             listBoxPosts.DisplayMember = "Message";
             try
             {
@@ -155,7 +155,7 @@ namespace BasicFacebookFeatures.Forms
 
         private void fetchYourFriendsAndPopulateListBox()
         {
-            listBoxFriends.Items.Clear();
+            listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Clear()));
             listBoxFriends.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
@@ -183,7 +183,7 @@ namespace BasicFacebookFeatures.Forms
         }
         private void fetchYourAlbumsAndPopulateListBox()
         {
-            listBoxAlbums.Items.Clear();
+            listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Clear()));
             listBoxAlbums.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
@@ -210,7 +210,7 @@ namespace BasicFacebookFeatures.Forms
 
         private void fetchYourLikePagesAndPopulateListBox()
         {
-            listBoxLikePages.Items.Clear();
+            listBoxLikePages.Invoke(new Action(() => listBoxLikePages.Items.Clear()));
             listBoxLikePages.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
@@ -236,7 +236,7 @@ namespace BasicFacebookFeatures.Forms
 
         private void fetchYourFavoriteTeamsAndPopulateListBox()
         {
-            listBoxFavoriteTeams.Items.Clear();
+            listBoxFavoriteTeams.Invoke(new Action(() => listBoxFavoriteTeams.Items.Clear()));
             listBoxFavoriteTeams.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
