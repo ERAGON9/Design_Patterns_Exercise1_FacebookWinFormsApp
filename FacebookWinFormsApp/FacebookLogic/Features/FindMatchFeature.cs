@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace BasicFacebookFeatures.FacebookLogic.Features
 {
-    public class FindMatchFeature
+    public class FindMatchFeature : IFindMatchFeature
     {
         private readonly int r_AgePreferenceMinRestriction = 18;
         private readonly int r_AgePrefernceMaxRestriction = 100;

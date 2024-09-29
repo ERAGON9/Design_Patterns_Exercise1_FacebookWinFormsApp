@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BasicFacebookFeatures.FacebookLogic.Factory;
+using BasicFacebookFeatures.FacebookLogic.Strategy;
 
 namespace BasicFacebookFeatures.FacebookLogic.Factory
 {
-    public static class FormFactory
+    public static class FormsFactory
     {
         public enum eFormType
         {
@@ -19,24 +21,23 @@ namespace BasicFacebookFeatures.FacebookLogic.Factory
 
         public static Form CreateForm(eFormType i_FormType)
         {
-            Form createdForm = null;
-
+            IFormStrategy formStrategy;
             switch (i_FormType)
             {
                 case eFormType.FormMain:
-                    createdForm = new FormMain();
+                    formStrategy = new MainFormStrategy();
                     break;
                 case eFormType.FormFindMatch:
-                    createdForm = new FormFindMatch();
+                    formStrategy = new FindMatchFormStrategy();
                     break;
                 case eFormType.FormFriendOverView:
-                    createdForm = new FormFriendOverView();
+                    formStrategy = new FriendsOverViewFormStrategy();
                     break;
                 default:
-                    throw new ArgumentException($"Invalid form type: {i_FormType}");
+                    throw new ArgumentOutOfRangeException(nameof(i_FormType), i_FormType, "Unsupported form type");
             }
 
-            return createdForm;
+            return formStrategy.CreateForm();
         }
     }
 }

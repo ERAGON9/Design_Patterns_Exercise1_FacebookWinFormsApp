@@ -89,9 +89,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FacebookLogic\Factory\FormFactory.cs" />
+    <Compile Include="FacebookLogic\Factory\FormsFactory.cs" />
     <Compile Include="FacebookLogic\Features\FindMatchFeature.cs" />
     <Compile Include="FacebookLogic\Features\FriendOverViewFeature.cs" />
+    <Compile Include="FacebookLogic\Features\IFindMatchFeature.cs" />
+    <Compile Include="FacebookLogic\Features\IFormStrategy.cs" />
+    <Compile Include="FacebookLogic\Proxy\FindMatchFeatureProxy.cs" />
+    <Compile Include="FacebookLogic\Strategy\FindMatchFormStrategy.cs" />
+    <Compile Include="FacebookLogic\Strategy\FriendsOverViewFormStrategy.cs" />
+    <Compile Include="FacebookLogic\Strategy\MainFormStrategy.cs" />
     <Compile Include="Forms\FormFindMatch.cs">
       <SubType>Form</SubType>
     </Compile>

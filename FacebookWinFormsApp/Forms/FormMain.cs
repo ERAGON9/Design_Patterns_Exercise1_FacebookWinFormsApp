@@ -325,13 +325,13 @@ namespace BasicFacebookFeatures.Forms
 
         private void applyFindMatchForm()
         {
-            Form formFindMatch = FormFactory.CreateForm(FormFactory.eFormType.FormFindMatch);
+            Form formFindMatch = FormsFactory.CreateForm(FormsFactory.eFormType.FormFindMatch);
             formFindMatch.ShowDialog();
         }
 
         private void buttonFriendOverView_Click(object sender, EventArgs e)
         {
-            Form formFriendOverVie = FormFactory.CreateForm(FormFactory.eFormType.FormFriendOverView);
+            Form formFriendOverVie = FormsFactory.CreateForm(FormsFactory.eFormType.FormFriendOverView);
             formFriendOverVie.ShowDialog();
         }
 
