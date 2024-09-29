@@ -126,7 +126,7 @@ namespace BasicFacebookFeatures.Forms
         private void fetchYourPostsAndPopulateListBox()
         {
             listBoxPosts.Items.Clear();
-            listBoxPosts.DisplayMember = k_DefaultListBoxDisplayMember;
+            listBoxPosts.DisplayMember = "Message";
             try
             {
                 if (m_LoggedInUser.Posts != null)
@@ -135,15 +135,7 @@ namespace BasicFacebookFeatures.Forms
                     {
                         if (post.Message != null)
                         {
-                            listBoxPosts.Invoke(new Action(()=>listBoxPosts.Items.Add(post.Message)));
-                        }
-                        else if (post.Caption != null)
-                        {
-                            listBoxPosts.Invoke(new Action(()=>listBoxPosts.Items.Add(post.Caption)));
-                        }
-                        else
-                        {
-                            listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add($"[{post.Type}]")));
+                            listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add(post)));
                         }
                     }
                 }
@@ -199,7 +191,7 @@ namespace BasicFacebookFeatures.Forms
                 {
                     foreach (Album album in m_LoggedInUser.Albums)
                     {
-                        listBoxAlbums.Invoke(new Action(()=> listBoxAlbums.Items.Add(album)));
+                        listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Add(album)));
                     }
                 }
 
@@ -226,7 +218,7 @@ namespace BasicFacebookFeatures.Forms
                 {
                     foreach (Page page in m_LoggedInUser.LikedPages)
                     {
-                        listBoxLikePages.Invoke(new Action(() =>listBoxLikePages.Items.Add(page)));
+                        listBoxLikePages.Invoke(new Action(() => listBoxLikePages.Items.Add(page)));
                         
                     }
                 }
