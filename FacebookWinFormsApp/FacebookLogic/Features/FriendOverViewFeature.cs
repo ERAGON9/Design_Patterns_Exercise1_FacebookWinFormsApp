@@ -10,16 +10,13 @@ namespace BasicFacebookFeatures.FacebookLogic.Features
     public class FriendOverViewFeature<T>
     {
         public User LoggedInUser { get; set; }
-        public IFriendInteractionStrategy<T> InteractionStrategy { get; set; }
+        public IFriendOverViewStrategy<T> OverViewStrategy { get; set; }
 
-        public T GetInteractionData(User i_selectedFriend)
+        public T GetData(User i_SelectedFriend)
         {
-            if (LoggedInUser == null || i_selectedFriend == null)
-            {
-                throw new ArgumentNullException("LoggedInUser or selectedFriend", "User login or friend is null");
-            }
+            ReusableExceptionsChecks.throwExceptionIfLoggedInUserOrSelectedFriendAreNull(LoggedInUser, i_SelectedFriend);
 
-            return InteractionStrategy.GetInteractionData(LoggedInUser, i_selectedFriend);
+            return OverViewStrategy.GetOverViewData(LoggedInUser, i_SelectedFriend);
         }
     }
 }

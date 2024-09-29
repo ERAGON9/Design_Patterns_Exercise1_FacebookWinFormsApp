@@ -5,21 +5,15 @@ using BasicFacebookFeatures.FacebookLogic.Features;
 
 namespace BasicFacebookFeatures.FacebookLogic.Strategy
 {
-   
-    public class MutualFriendsStrategy : IFriendInteractionStrategy<User[]>
+    public class MutualFriendsStrategy : IFriendOverViewStrategy<User[]>
     {
-        public User[] GetInteractionData(User i_loggedInUser, User i_selectedFriend)
+        public User[] GetOverViewData(User i_LoggedInUser, User i_SelectedFriend)
         {
-            if (i_loggedInUser == null || i_selectedFriend == null)
-            {
-                throw new ArgumentNullException("loggedInUser or selectedFriend", "User login or friend is null");
-            }
-
             List<User> mutualFriends = new List<User>();
 
-            foreach (User friend in i_loggedInUser.Friends)
+            foreach (User friend in i_LoggedInUser.Friends)
             {
-                if (i_selectedFriend.Friends.Contains(friend))
+                if (i_SelectedFriend.Friends.Contains(friend))
                 {
                     mutualFriends.Add(friend);
                 }

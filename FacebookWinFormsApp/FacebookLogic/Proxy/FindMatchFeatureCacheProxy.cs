@@ -69,7 +69,7 @@ namespace BasicFacebookFeatures.FacebookLogic.Proxy
 
         public List<User> FindUserMatches()
         {
-            throwExceptionIfUserLoginIsNull();
+            ReusableExceptionsChecks.throwExceptionIfUserLoginIsNull(UserLogin);
             FacebookObjectCollection<User> friends = getFriendsFromCacheOrFromFacebokDB();
             List<User> potentialMatches = new List<User>();
 
@@ -82,14 +82,6 @@ namespace BasicFacebookFeatures.FacebookLogic.Proxy
             }
 
             return SortBySharedLikedPages(potentialMatches);
-        }
-
-        private void throwExceptionIfUserLoginIsNull()
-        {
-            if (UserLogin == null)
-            {
-                throw new ArgumentNullException("UserLogin", "User login is null");
-            }
         }
 
         private FacebookObjectCollection<User> getFriendsFromCacheOrFromFacebokDB()

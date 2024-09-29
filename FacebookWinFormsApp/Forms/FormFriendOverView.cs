@@ -18,10 +18,9 @@ namespace BasicFacebookFeatures.Forms
     public partial class FormFriendOverView : Form
     {
         private const string k_DefaultListBoxDisplayMember = "Name";
-        private FriendOverViewFeature<int> r_InteractionOverviewFeature;  
-        private FriendOverViewFeature<Page[]> r_SimilaritiesOverviewFeature;
-        private FriendOverViewFeature<User[]> r_MutualFriendsOverviewFeature;  
-                                                                               
+        private FriendOverViewFeature<int> m_InteractionOverviewFeature;  
+        private FriendOverViewFeature<Page[]> m_SimilaritiesOverviewFeature;
+        private FriendOverViewFeature<User[]> m_MutualFriendsOverviewFeature;                                     
         private User m_LoggedInUser;
 
         public FormFriendOverView()
@@ -29,6 +28,9 @@ namespace BasicFacebookFeatures.Forms
             InitializeComponent();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
             m_LoggedInUser = UserManager.Instance.LoggedInUser;
+            m_InteractionOverviewFeature = new FriendOverViewFeature<int>() { LoggedInUser = m_LoggedInUser };
+            m_SimilaritiesOverviewFeature = new FriendOverViewFeature<Page[]>() { LoggedInUser = m_LoggedInUser };
+            m_MutualFriendsOverviewFeature = new FriendOverViewFeature<User[]>() { LoggedInUser = m_LoggedInUser };
             populateFriendsList();
         }
 
@@ -85,15 +87,8 @@ namespace BasicFacebookFeatures.Forms
         {
             try
             {
-                
-                r_InteractionOverviewFeature = new FriendOverViewFeature<int>
-                {
-                    LoggedInUser = m_LoggedInUser,
-                    InteractionStrategy = new CommentsFromFriendStrategy()
-                };
-
-                // Fetch and display the number of comments
-                int numberOfComments = r_InteractionOverviewFeature.GetInteractionData(i_selectedFriend);
+                m_InteractionOverviewFeature.OverViewStrategy = new CommentsFromFriendStrategy();
+                int numberOfComments = m_InteractionOverviewFeature.GetData(i_selectedFriend);
                 LabelCommentsNum.Text = numberOfComments.ToString();
             }
             catch (Exception ex)
@@ -107,15 +102,8 @@ namespace BasicFacebookFeatures.Forms
         {
             try
             {
-               
-                r_InteractionOverviewFeature = new FriendOverViewFeature<int>
-                {
-                    LoggedInUser = m_LoggedInUser,
-                    InteractionStrategy = new LikesFromFriendStrategy()
-                };
-
-                
-                int numberOfLikes = r_InteractionOverviewFeature.GetInteractionData(i_selectedFriend);
+                m_InteractionOverviewFeature.OverViewStrategy = new LikesFromFriendStrategy();
+                int numberOfLikes = m_InteractionOverviewFeature.GetData(i_selectedFriend);
                 LabelLikesNum.Text = numberOfLikes.ToString();
             }
             catch (Exception ex)
@@ -153,13 +141,8 @@ namespace BasicFacebookFeatures.Forms
             listBoxLanguages.Items.Clear();
             try
             {
-                r_SimilaritiesOverviewFeature = new FriendOverViewFeature<Page[]>
-                {
-                    LoggedInUser = m_LoggedInUser,
-                    InteractionStrategy = new SimilarLanguagesStrategy()
-                };
-
-                Page[] similarLanguages = r_SimilaritiesOverviewFeature.GetInteractionData(i_selectedFriend);
+                m_SimilaritiesOverviewFeature.OverViewStrategy = new SimilarLanguagesStrategy();
+                Page[] similarLanguages = m_SimilaritiesOverviewFeature.GetData(i_selectedFriend);
 
                 if (similarLanguages.Length > 0)
                 {
@@ -182,14 +165,8 @@ namespace BasicFacebookFeatures.Forms
             listBoxMutualFriends.Items.Clear();
             try
             {
-                
-                r_MutualFriendsOverviewFeature = new FriendOverViewFeature<User[]>
-                {
-                    LoggedInUser = m_LoggedInUser,
-                    InteractionStrategy = new MutualFriendsStrategy()
-                };
-
-                User[] mutualFriends = r_MutualFriendsOverviewFeature.GetInteractionData(selectedFriend);
+                m_MutualFriendsOverviewFeature.OverViewStrategy = new MutualFriendsStrategy();
+                User[] mutualFriends = m_MutualFriendsOverviewFeature.GetData(selectedFriend);
 
                 if (mutualFriends.Length > 0)
                 {
@@ -209,20 +186,14 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-
         private void showMutualLikedPages(User i_selectedFriend)
         {
             listBoxLikedPages.DisplayMember = k_DefaultListBoxDisplayMember;
             listBoxLikedPages.Items.Clear();
             try
             {
-                r_SimilaritiesOverviewFeature = new FriendOverViewFeature<Page[]>
-                {
-                    LoggedInUser = m_LoggedInUser,
-                    InteractionStrategy = new MutualLikedPagesStrategy()  
-                };
-
-                Page[] mutualLikedPages = r_SimilaritiesOverviewFeature.GetInteractionData(i_selectedFriend);
+                m_SimilaritiesOverviewFeature.OverViewStrategy = new MutualLikedPagesStrategy();
+                Page[] mutualLikedPages = m_SimilaritiesOverviewFeature.GetData(i_selectedFriend);
 
                 if (mutualLikedPages.Length > 0)
                 {
@@ -248,13 +219,8 @@ namespace BasicFacebookFeatures.Forms
             listBoxSports.Items.Clear();
             try
             {
-                r_SimilaritiesOverviewFeature = new FriendOverViewFeature<Page[]>
-                {
-                    LoggedInUser = m_LoggedInUser,
-                    InteractionStrategy = new SimilarSportsStrategy()
-                };
-
-                Page[] similarSports = r_SimilaritiesOverviewFeature.GetInteractionData(i_selectedFriend);
+                m_SimilaritiesOverviewFeature.OverViewStrategy = new SimilarSportsStrategy();
+                Page[] similarSports = m_SimilaritiesOverviewFeature.GetData(i_selectedFriend);
 
                 if (similarSports.Length > 0)
                 {

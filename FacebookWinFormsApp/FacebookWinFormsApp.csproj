@@ -94,8 +94,9 @@
     <Compile Include="FacebookLogic\Features\FriendOverViewFeature.cs" />
     <Compile Include="FacebookLogic\Features\IFindMatchFeature.cs" />
     <Compile Include="FacebookLogic\Proxy\FindMatchFeatureCacheProxy.cs" />
+    <Compile Include="FacebookLogic\ReusableExceptionsChecks.cs" />
     <Compile Include="FacebookLogic\Strategy\CommentsFromFriendStrategy.cs" />
-    <Compile Include="FacebookLogic\Strategy\IFriendInteractionStrategy.cs" />
+    <Compile Include="FacebookLogic\Strategy\IFriendOverViewStrategy.cs" />
     <Compile Include="FacebookLogic\Strategy\LikesFromFriendStrategy.cs" />
     <Compile Include="FacebookLogic\Strategy\MutualFriendsStrategy .cs" />
     <Compile Include="FacebookLogic\Strategy\MutualLikedPagesStrategy.cs" />

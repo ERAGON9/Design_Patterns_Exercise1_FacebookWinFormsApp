@@ -64,7 +64,7 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void findMatchUIResetData() //Maybe not necessary anymore!
+        private void findMatchUIResetData()
         {
             findMatchUIResetListBox();
             findMatchUIResetPictureBox();

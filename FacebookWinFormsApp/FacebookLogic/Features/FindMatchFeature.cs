@@ -65,7 +65,7 @@ namespace BasicFacebookFeatures.FacebookLogic.Features
 
         public List<User> FindUserMatches()
         {
-            throwExceptionIfUserLoginIsNull();
+            ReusableExceptionsChecks.throwExceptionIfUserLoginIsNull(UserLogin);
             FacebookObjectCollection<User> friends = UserLogin.Friends;
             List<User> potentialMatches = new List<User>();
 
@@ -78,14 +78,6 @@ namespace BasicFacebookFeatures.FacebookLogic.Features
             }
 
             return SortBySharedLikedPages(potentialMatches);
-        }
-
-        private void throwExceptionIfUserLoginIsNull()
-        {
-            if (UserLogin == null)
-            {
-                throw new ArgumentNullException("UserLogin", "User login is null");
-            }
         }
 
         public bool CheckIfPotentialMatch(User i_Friend)
