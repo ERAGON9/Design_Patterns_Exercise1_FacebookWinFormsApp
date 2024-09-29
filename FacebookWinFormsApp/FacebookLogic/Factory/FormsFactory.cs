@@ -21,23 +21,24 @@ namespace BasicFacebookFeatures.FacebookLogic.Factory
 
         public static Form CreateForm(eFormType i_FormType)
         {
-            IFormStrategy formStrategy;
+            Form createdForm;
+
             switch (i_FormType)
             {
                 case eFormType.FormMain:
-                    formStrategy = new MainFormStrategy();
+                    createdForm = new FormMain();
                     break;
                 case eFormType.FormFindMatch:
-                    formStrategy = new FindMatchFormStrategy();
+                    createdForm = new FormFindMatch();
                     break;
                 case eFormType.FormFriendOverView:
-                    formStrategy = new FriendsOverViewFormStrategy();
+                    createdForm = new FormFriendOverView();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(i_FormType), i_FormType, "Unsupported form type");
             }
 
-            return formStrategy.CreateForm();
+            return createdForm;
         }
     }
 }

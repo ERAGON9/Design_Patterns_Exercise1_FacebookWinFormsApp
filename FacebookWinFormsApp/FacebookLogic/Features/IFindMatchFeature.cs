@@ -10,5 +10,7 @@ namespace BasicFacebookFeatures.FacebookLogic.Features
         int AgePreferenceMin { get; set; }
         int AgePreferenceMax { get; set; }
         List<User> FindUserMatches();
+        bool CheckIfPotentialMatch(User i_Friend);
+        List<User> SortBySharedLikedPages(List<User> i_PotentialMatches);
     }
 }

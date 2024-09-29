@@ -6,8 +6,8 @@ using System.Linq;
 
 namespace BasicFacebookFeatures.FacebookLogic.Features
 {
-    public interface IFriendInteractionStrategy<T>
+    public interface IFriendOverViewStrategy<T>
     {
-        T GetInteractionData(User i_loggedInUser, User i_selectedFriend);
+        T GetOverViewData(User i_LoggedInUser, User i_SelectedFriend);
     }
 }

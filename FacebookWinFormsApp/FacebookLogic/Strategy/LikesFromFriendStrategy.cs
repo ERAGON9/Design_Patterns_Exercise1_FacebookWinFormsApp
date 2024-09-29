@@ -4,27 +4,21 @@ using BasicFacebookFeatures.FacebookLogic.Features;
 
 namespace BasicFacebookFeatures.FacebookLogic.Strategy
 {
-    
-    public class LikesFromFriendStrategy : IFriendInteractionStrategy<int>
+    public class LikesFromFriendStrategy : IFriendOverViewStrategy<int>
     {
-        public int GetInteractionData(User i_userLogin, User i_userFriend)
+        public int GetOverViewData(User i_LoggedInUser, User i_SelectedFriend)
         {
-            if (i_userLogin == null || i_userFriend == null)
-            {
-                throw new ArgumentNullException("userLogin or userFriend", "User login or friend is null");
-            }
-
             int likesCount = 0;
 
-            foreach (Post post in i_userFriend.Posts)
+            foreach (Post post in i_LoggedInUser.Posts)
             {
-                if (post.LikedBy.Contains(i_userFriend))
+                if (post.LikedBy.Contains(i_SelectedFriend))
                 {
-                    likesCount++;  
+                    likesCount++;
                 }
             }
 
-            return likesCount;  
+            return likesCount;
         }
     }
 }

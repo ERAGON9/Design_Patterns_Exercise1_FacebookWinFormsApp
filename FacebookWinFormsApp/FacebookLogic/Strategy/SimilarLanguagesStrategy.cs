@@ -5,26 +5,22 @@ using BasicFacebookFeatures.FacebookLogic.Features;
 
 namespace BasicFacebookFeatures.FacebookLogic.Strategy
 {
-    public class SimilarLanguagesStrategy : IFriendInteractionStrategy<Page[]>
+    public class SimilarLanguagesStrategy : IFriendOverViewStrategy<Page[]>
     {
-        public Page[] GetInteractionData(User i_loggedInUser, User i_selectedFriend)
+        public Page[] GetOverViewData(User i_LoggedInUser, User i_SelectedFriend)
         {
-            if (i_loggedInUser == null || i_selectedFriend == null)
-            {
-                throw new ArgumentNullException("loggedInUser or selectedFriend", "User login or friend is null");
-            }
-
             List<Page> similarLanguages = new List<Page>();
 
-            if (i_loggedInUser.Languages != null && i_selectedFriend.Languages != null)
+            if (i_LoggedInUser.Languages != null && i_SelectedFriend.Languages != null)
             {
-                foreach (Page myLanguage in i_loggedInUser.Languages)
+                foreach (Page myLanguage in i_LoggedInUser.Languages)
                 {
-                    foreach (Page friendLanguage in i_selectedFriend.Languages)
+                    foreach (Page friendLanguage in i_SelectedFriend.Languages)
                     {
                         if (myLanguage.Name == friendLanguage.Name)
                         {
                             similarLanguages.Add(myLanguage);
+                            break;
                         }
                     }
                 }
