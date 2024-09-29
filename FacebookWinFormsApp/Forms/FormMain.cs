@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Threading;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -61,10 +62,10 @@ namespace BasicFacebookFeatures.Forms
             fetchUserDetailsAndDisplay();
             fetchPostNewStatusAndPopulateTextBox();
             fetchYourPostsAndPopulateListBox();
-            fetchYourFriendsAndPopulateListBox();
-            fetchYourAlbumsAndPopulateListBox();
-            fetchYourLikePagesAndPopulateListBox();
-            fetchYourFavoriteTeamsAndPopulateListBox();
+            new Thread (fetchYourFriendsAndPopulateListBox).Start();
+            new Thread(fetchYourAlbumsAndPopulateListBox).Start();
+            new Thread(fetchYourLikePagesAndPopulateListBox).Start();
+            new Thread(fetchYourFavoriteTeamsAndPopulateListBox).Start();
         }
 
         private void fetchLoginUI()
@@ -153,21 +154,24 @@ namespace BasicFacebookFeatures.Forms
                 {
                     foreach (User friend in m_LoggedInUser.Friends)
                     {
-                        listBoxFriends.Items.Add(friend);
+                        listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Add(friend)));
                     }
                 }
 
                 if (listBoxFriends.Items.Count == 0)
                 {
-                    listBoxFriends.Items.Add("There are no facebook friends to show.");
+                    listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Add("There are no facebook friends to show.")));
+
+
                 }
             }
             catch (Exception)
             {
-                listBoxFriends.Items.Add("Couldn't fetch your facebook friends.");
+                listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Add("Couldn't fetch your facebook friends.")));
+
+
             }
         }
-
         private void fetchYourAlbumsAndPopulateListBox()
         {
             listBoxAlbums.Items.Clear();
@@ -178,18 +182,20 @@ namespace BasicFacebookFeatures.Forms
                 {
                     foreach (Album album in m_LoggedInUser.Albums)
                     {
-                        listBoxAlbums.Items.Add(album);
+                        listBoxAlbums.Invoke(new Action(()=> listBoxAlbums.Items.Add(album)));
                     }
                 }
 
                 if (listBoxAlbums.Items.Count == 0)
                 {
-                    listBoxAlbums.Items.Add("There are no albums to show.");
+                    listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Add("There are no albums to show.")));
+
+                    
                 }
             }
             catch (Exception)
             {
-                listBoxAlbums.Items.Add("Couldn't fetch your albums.");
+                listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Add("Couldn't fetch your albums.")));
             }
         }
 
@@ -203,18 +209,19 @@ namespace BasicFacebookFeatures.Forms
                 {
                     foreach (Page page in m_LoggedInUser.LikedPages)
                     {
-                        listBoxLikePages.Items.Add(page);
+                        listBoxLikePages.Invoke(new Action(() =>listBoxLikePages.Items.Add(page)));
+                        
                     }
                 }
 
                 if (listBoxLikePages.Items.Count == 0)
                 {
-                    listBoxLikePages.Items.Add("There are no liked pages to show.");
+                    listBoxLikePages.Invoke(new Action(() => listBoxLikePages.Items.Add("There are no liked pages to show.")));
                 }
             }
             catch (Exception)
             {
-                listBoxLikePages.Items.Add("Couldn't fetch your liked pages.");
+                listBoxLikePages.Invoke(new Action(() => listBoxLikePages.Items.Add("Couldn't fetch your liked pages.")));
             }
         }
 
@@ -228,18 +235,20 @@ namespace BasicFacebookFeatures.Forms
                 {
                     foreach (Page team in m_LoggedInUser.FavofriteTeams)
                     {
-                        listBoxFavoriteTeams.Items.Add(team);
+                        listBoxFavoriteTeams.Invoke(new Action(() => listBoxFavoriteTeams.Items.Add(team)));
+
                     }
                 }
 
                 if (listBoxFavoriteTeams.Items.Count == 0)
                 {
-                    listBoxFavoriteTeams.Items.Add("There are no favorite teams to show.");
+                    listBoxFavoriteTeams.Invoke(new Action(() => listBoxFavoriteTeams.Items.Add("There are no favorite teams to show.")));
                 }
             }
             catch (Exception)
             {
-                listBoxFavoriteTeams.Items.Add("Couldn't fetch your favorite teams.");
+                listBoxFavoriteTeams.Invoke(new Action(() => listBoxFavoriteTeams.Items.Add("Couldn't fetch your favorite teams.")));
+
             }
         }
 
