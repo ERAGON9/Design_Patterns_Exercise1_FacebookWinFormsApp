@@ -120,27 +120,29 @@ namespace BasicFacebookFeatures.Forms
                     {
                         if (post.Message != null)
                         {
-                            listBoxPosts.Items.Add(post.Message);
+                            listBoxPosts.Invoke(new Action(()=>listBoxPosts.Items.Add(post.Message)));
                         }
                         else if (post.Caption != null)
                         {
-                            listBoxPosts.Items.Add(post.Caption);
+                            listBoxPosts.Invoke(new Action(()=>listBoxPosts.Items.Add(post.Caption)));
                         }
                         else
                         {
-                            listBoxPosts.Items.Add($"[{post.Type}]");
+                            listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add($"[{post.Type}]")));
                         }
                     }
                 }
 
                 if (listBoxPosts.Items.Count == 0)
                 {
-                    listBoxPosts.Items.Add("You didn't post anything yet.");
+                    listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add("You didn't post anything yet.")));                  
                 }
             }
             catch (Exception)
             {
-                listBoxPosts.Items.Add("Couldn't fetch your posts.");
+                listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add("Couldn't fetch your posts.")));
+
+         
             }
         }
 
