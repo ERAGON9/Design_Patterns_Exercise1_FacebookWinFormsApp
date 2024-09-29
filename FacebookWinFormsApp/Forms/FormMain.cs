@@ -64,7 +64,6 @@ namespace BasicFacebookFeatures.Forms
             new Thread(fetchUserDetailsAndDisplay).Start();
             new Thread(fetchPostNewStatusAndPopulateTextBox).Start();
             new Thread(fetchYourPostsAndPopulateListBox).Start();
-
             new Thread (fetchYourFriendsAndPopulateListBox).Start();
             new Thread(fetchYourAlbumsAndPopulateListBox).Start();
             new Thread(fetchYourLikePagesAndPopulateListBox).Start();
