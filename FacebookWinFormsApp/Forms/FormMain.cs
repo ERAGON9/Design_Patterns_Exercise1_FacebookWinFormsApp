@@ -18,7 +18,6 @@ using System.Text.RegularExpressions;
 using BasicFacebookFeatures.FacebookLogic.Features;
 using BasicFacebookFeatures.Singleton;
 using BasicFacebookFeatures.FacebookLogic.Factory;
-using System.Threading;
 
 namespace BasicFacebookFeatures.Forms
 {
@@ -125,22 +124,15 @@ namespace BasicFacebookFeatures.Forms
 
         private void fetchYourPostsAndPopulateListBox()
         {
-            listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Clear()));
-            listBoxPosts.DisplayMember = "Message";
             try
             {
                 if (m_LoggedInUser.Posts != null)
                 {
-                    foreach (Post post in m_LoggedInUser.Posts)
-                    {
-                        if (post.Message != null)
-                        {
-                            listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add(post)));
-                        }
-                    }
+                    FacebookObjectCollection<Post> Posts = m_LoggedInUser.Posts;
+                    FacebookObjectCollection<Post> PostsWithMessage = getPostsWithMessage(Posts);
+                    listBoxPosts.Invoke(new Action(() => postBindingSource.DataSource = PostsWithMessage));
                 }
-
-                if (listBoxPosts.Items.Count == 0)
+                else
                 {
                     listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add("You didn't post anything yet.")));                  
                 }
@@ -148,58 +140,55 @@ namespace BasicFacebookFeatures.Forms
             catch (Exception)
             {
                 listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add("Couldn't fetch your posts.")));
-
-         
             }
+        }
+
+        private FacebookObjectCollection<Post> getPostsWithMessage(FacebookObjectCollection<Post> i_Posts)
+        {
+            FacebookObjectCollection<Post> PostsWithMessage = new FacebookObjectCollection<Post>();
+
+            foreach (Post post in i_Posts)
+            {
+                if (!string.IsNullOrEmpty(post.Message))
+                {
+                    PostsWithMessage.Add(post);
+                }
+            }
+
+            return PostsWithMessage;
         }
 
         private void fetchYourFriendsAndPopulateListBox()
         {
-            listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Clear()));
-            listBoxFriends.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
                 if (m_LoggedInUser.Friends != null)
                 {
-                    foreach (User friend in m_LoggedInUser.Friends)
-                    {
-                        listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Add(friend)));
-                    }
+                    FacebookObjectCollection<User> friends = m_LoggedInUser.Friends;
+                    listBoxFriends.Invoke(new Action(() => userFriendsBindingSource.DataSource = friends));
                 }
-
-                if (listBoxFriends.Items.Count == 0)
+                else
                 {
                     listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Add("There are no facebook friends to show.")));
-
-
                 }
             }
             catch (Exception)
             {
                 listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Add("Couldn't fetch your facebook friends.")));
-
-
             }
         }
         private void fetchYourAlbumsAndPopulateListBox()
         {
-            listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Clear()));
-            listBoxAlbums.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
                 if (m_LoggedInUser.Albums != null)
                 {
-                    foreach (Album album in m_LoggedInUser.Albums)
-                    {
-                        listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Add(album)));
-                    }
+                    FacebookObjectCollection<Album> albums = m_LoggedInUser.Albums;
+                    listBoxAlbums.Invoke(new Action(() => albumBindingSource.DataSource = albums));
                 }
-
-                if (listBoxAlbums.Items.Count == 0)
+                else
                 {
                     listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Add("There are no albums to show.")));
-
-                    
                 }
             }
             catch (Exception)
@@ -210,20 +199,14 @@ namespace BasicFacebookFeatures.Forms
 
         private void fetchYourLikePagesAndPopulateListBox()
         {
-            listBoxLikePages.Invoke(new Action(() => listBoxLikePages.Items.Clear()));
-            listBoxLikePages.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
                 if (m_LoggedInUser.LikedPages != null)
                 {
-                    foreach (Page page in m_LoggedInUser.LikedPages)
-                    {
-                        listBoxLikePages.Invoke(new Action(() => listBoxLikePages.Items.Add(page)));
-                        
-                    }
+                    FacebookObjectCollection<Page> likedPages = m_LoggedInUser.LikedPages;
+                    listBoxLikePages.Invoke(new Action(() => likePagesBindingSource.DataSource = likedPages));
                 }
-
-                if (listBoxLikePages.Items.Count == 0)
+                else
                 {
                     listBoxLikePages.Invoke(new Action(() => listBoxLikePages.Items.Add("There are no liked pages to show.")));
                 }
@@ -236,20 +219,14 @@ namespace BasicFacebookFeatures.Forms
 
         private void fetchYourFavoriteTeamsAndPopulateListBox()
         {
-            listBoxFavoriteTeams.Invoke(new Action(() => listBoxFavoriteTeams.Items.Clear()));
-            listBoxFavoriteTeams.DisplayMember = k_DefaultListBoxDisplayMember;
             try
             {
                 if (m_LoggedInUser.FavofriteTeams != null)
                 {
-                    foreach (Page team in m_LoggedInUser.FavofriteTeams)
-                    {
-                        listBoxFavoriteTeams.Invoke(new Action(() => listBoxFavoriteTeams.Items.Add(team)));
-
-                    }
+                    Page[] favoriteTeams = m_LoggedInUser.FavofriteTeams;
+                    listBoxFavoriteTeams.Invoke(new Action(() => favoriteTeamsPageBindingSource.DataSource = favoriteTeams));
                 }
-
-                if (listBoxFavoriteTeams.Items.Count == 0)
+                else
                 {
                     listBoxFavoriteTeams.Invoke(new Action(() => listBoxFavoriteTeams.Items.Add("There are no favorite teams to show.")));
                 }
@@ -257,7 +234,6 @@ namespace BasicFacebookFeatures.Forms
             catch (Exception)
             {
                 listBoxFavoriteTeams.Invoke(new Action(() => listBoxFavoriteTeams.Items.Add("Couldn't fetch your favorite teams.")));
-
             }
         }
 
@@ -281,7 +257,6 @@ namespace BasicFacebookFeatures.Forms
             resetUserDeatils();
             resetPostStatusTextBox();
             clearListBoxes();
-            resetPictureBoxes();
         }
 
         private void resetButtons()
@@ -320,20 +295,11 @@ namespace BasicFacebookFeatures.Forms
 
         private void clearListBoxes()
         {
-            listBoxPosts.Items.Clear();
-            listBoxPostsComments.Items.Clear();
-            listBoxFriends.Items.Clear();
-            listBoxAlbums.Items.Clear();
-            listBoxLikePages.Items.Clear();
-            listBoxFavoriteTeams.Items.Clear();
-        }
-
-        private void resetPictureBoxes()
-        {
-            pictureBoxFriends.Image = null;
-            pictureBoxAlbums.Image = null;
-            pictureBoxLikePages.Image = null;
-            pictureBoxFavoriteTeams.Image = null;
+            postBindingSource.Clear();
+            userFriendsBindingSource.Clear();
+            albumBindingSource.Clear();
+            likePagesBindingSource.Clear();
+            favoriteTeamsPageBindingSource.Clear();
         }
 
         private void buttonFindMatch_Click(object sender, EventArgs e)
@@ -349,13 +315,18 @@ namespace BasicFacebookFeatures.Forms
 
         private void buttonFriendOverView_Click(object sender, EventArgs e)
         {
+            applyFriendOverViewForm();
+        }
+
+        private void applyFriendOverViewForm()
+        {
             Form formFriendOverVie = FormsFactory.CreateForm(FormsFactory.eFormType.FormFriendOverView);
             formFriendOverVie.ShowDialog();
         }
 
         private void buttonPostNewStatus_Click(object sender, EventArgs e)
         {
-            postNewStatus();
+            new Thread(postNewStatus).Start();
         }
 
         private void postNewStatus()
@@ -366,7 +337,7 @@ namespace BasicFacebookFeatures.Forms
                 {
                     m_LoggedInUser.PostStatus(textBoxPostNewStatus.Text);
                     MessageBox.Show("The status was Posted!", "New Status Posted");
-                    fetchYourPostsAndPopulateListBox();
+                    new Thread(fetchYourPostsAndPopulateListBox).Start();
                 }
                 else
                 {
@@ -380,125 +351,6 @@ namespace BasicFacebookFeatures.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void listBoxPosts_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            fetchPostCommentsAndPopulateListBox();
-        }
-
-        private void fetchPostCommentsAndPopulateListBox()
-        {
-            listBoxPostsComments.Items.Clear();
-            listBoxPostsComments.DisplayMember = "Message";
-            try
-            {
-                if (m_LoggedInUser.Posts != null)
-                {
-                    Post selectedPost = m_LoggedInUser.Posts[listBoxPosts.SelectedIndex];
-                    FacebookObjectCollection<Comment> postComments = selectedPost.Comments;
-                    if (postComments.Count > 0)
-                    {
-                        listBoxPostsComments.DataSource = postComments;
-                    }
-                    else
-                    {
-                        listBoxPostsComments.Items.Add("No comments available.");
-                    }
-                }
-                else
-                {
-                    listBoxPostsComments.Items.Add("You didn't post anything yet.");
-                }
-            }
-            catch (Exception)
-            {
-                listBoxPostsComments.Items.Add("Couldn't fetch your post comments.");
-            }
-        }
-
-        private void listBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            fetchFriendsPicture();
-        }
-
-        private void fetchFriendsPicture()
-        {
-            if (listBoxFriends.SelectedItems.Count == 1)
-            {
-                User selectedFriend = listBoxFriends.SelectedItem as User;
-                if (selectedFriend != null && selectedFriend.PictureSmallURL != null)
-                {
-                    pictureBoxFriends.ImageLocation = selectedFriend.PictureNormalURL;
-                }
-                else
-                {
-                    pictureBoxFriends.Image = pictureBoxFriends.ErrorImage;
-                }
-            }
-        }
-
-        private void listBoxAlbums_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            fetchAlbumsPicture();
-        }
-
-        private void fetchAlbumsPicture()
-        {
-            if (listBoxAlbums.SelectedItems.Count == 1)
-            {
-                Album selectedAlbum = listBoxAlbums.SelectedItem as Album;
-                if (selectedAlbum != null && selectedAlbum.PictureAlbumURL != null)
-                {
-                    pictureBoxAlbums.ImageLocation = selectedAlbum.PictureAlbumURL;
-                }
-                else
-                {
-                    pictureBoxAlbums.Image = pictureBoxAlbums.ErrorImage;
-                }
-            }
-        }
-
-        private void listBoxLikePages_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            fetchLikePagesPicture();
-        }
-
-        private void fetchLikePagesPicture()
-        {
-            if (listBoxLikePages.SelectedItems.Count == 1)
-            {
-                Page selectedLikePage = listBoxLikePages.SelectedItem as Page;
-                if (selectedLikePage != null && selectedLikePage.PictureNormalURL != null)
-                {
-                    pictureBoxLikePages.ImageLocation = selectedLikePage.PictureNormalURL;
-                }
-                else
-                {
-                    pictureBoxLikePages.Image = pictureBoxLikePages.ErrorImage;
-                }
-            }
-        }
-
-        private void listBoxFavoriteTeams_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            fetchFavoriteTeamsPicture();
-        }
-
-        private void fetchFavoriteTeamsPicture()
-        {
-            if (listBoxFavoriteTeams.SelectedItems.Count == 1)
-            {
-                Page selectedFavoriteTeam = listBoxFavoriteTeams.SelectedItem as Page;
-                if (selectedFavoriteTeam != null && selectedFavoriteTeam.PictureNormalURL != null)
-                {
-                    pictureBoxFavoriteTeams.ImageLocation = selectedFavoriteTeam.PictureNormalURL;
-                }
-                else
-                {
-                    pictureBoxFavoriteTeams.Image = pictureBoxFavoriteTeams.ErrorImage;
-                }
             }
         }
     }
