@@ -125,16 +125,9 @@ namespace BasicFacebookFeatures.Forms
         {
             pictureBoxMatches.ImageLocation = i_UserMatched.PictureNormalURL;
             labelMatchesFullName.Text = $"Full Name: {i_UserMatched.Name ?? string.Empty}";
-            labelMatchesBirthday.Text = $"Birthdate: {(i_UserMatched.Birthday != null ? changeBirthdayUSToILFormat(i_UserMatched.Birthday) : string.Empty)}";
+            labelMatchesBirthday.Text = $"Birthdate: {(i_UserMatched.Birthday != null ? FormatChange.ChangeBirthdayUSToILFormat(i_UserMatched.Birthday) : string.Empty)}";
             labelMatchesLocation.Text = $"Location: {i_UserMatched.Location?.Name ?? string.Empty}";
             labelMatchesEmail.Text = $"Email: {i_UserMatched.Email ?? string.Empty}";
-        }
-
-        private string changeBirthdayUSToILFormat(string i_USFormatBirthday) // TODO: Move to a static class. (Duplication)
-        {
-            DateTime parsedDate = DateTime.ParseExact(i_USFormatBirthday, "MM/dd/yyyy", null);
-
-            return parsedDate.ToString("dd/MM/yyyy");
         }
     }
 }

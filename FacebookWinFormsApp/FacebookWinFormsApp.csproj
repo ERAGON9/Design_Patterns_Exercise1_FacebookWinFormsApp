@@ -102,6 +102,7 @@
     <Compile Include="FacebookLogic\Strategy\MutualLikedPagesStrategy.cs" />
     <Compile Include="FacebookLogic\Strategy\SimilarLanguagesStrategy.cs" />
     <Compile Include="FacebookLogic\Strategy\SimilarSportsStrategy.cs" />
+    <Compile Include="Forms\FormatChange.cs" />
     <Compile Include="Forms\FormFindMatch.cs">
       <SubType>Form</SubType>
     </Compile>

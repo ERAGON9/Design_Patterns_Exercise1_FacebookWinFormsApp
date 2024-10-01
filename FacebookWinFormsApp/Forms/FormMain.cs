@@ -23,7 +23,6 @@ namespace BasicFacebookFeatures.Forms
 {
     public partial class FormMain : Form
     {
-        private const string k_DefaultListBoxDisplayMember = "Name";
         private User m_LoggedInUser;
 
         public FormMain()
@@ -93,20 +92,13 @@ namespace BasicFacebookFeatures.Forms
             string userGender = m_LoggedInUser.Gender?.ToString();
             labelUserGender.Invoke(new Action(() => labelUserGender.Text = $"Gender: {userGender ?? string.Empty}"));
             string userBirthdate = m_LoggedInUser.Birthday;
-            labelUserBirthdate.Invoke(new Action(() => labelUserBirthdate.Text = $"Birthdate: {(userBirthdate != null ? changeBirthdayUSToILFormat(userBirthdate) : string.Empty)}"));
+            labelUserBirthdate.Invoke(new Action(() => labelUserBirthdate.Text = $"Birthdate: {(userBirthdate != null ? FormatChange.ChangeBirthdayUSToILFormat(userBirthdate) : string.Empty)}"));
             string userHometown = m_LoggedInUser.Hometown?.Name;
             labelUserHometown.Invoke(new Action(() => labelUserHometown.Text = $"Hometown: {userHometown ?? string.Empty}"));
             string userLocation = m_LoggedInUser.Location?.Name;
             labelUserLocation.Invoke(new Action(() => labelUserLocation.Text = $"Location: {userLocation ?? string.Empty}"));
             string userEmail = m_LoggedInUser.Email;
             labelUserEmail.Invoke(new Action(() => labelUserEmail.Text = $"Email: {userEmail ?? string.Empty}"));
-        }
-
-        private string changeBirthdayUSToILFormat(string i_USFormatBirthday) // TODO: Move to a static class. (Duplication)
-        {
-            DateTime parsedDate = DateTime.ParseExact(i_USFormatBirthday, "MM/dd/yyyy", null);
-
-            return parsedDate.ToString("dd/MM/yyyy");
         }
 
         private void fetchPostNewStatusAndPopulateTextBox()
@@ -126,20 +118,17 @@ namespace BasicFacebookFeatures.Forms
         {
             try
             {
-                if (m_LoggedInUser.Posts != null)
+                FacebookObjectCollection<Post> posts = m_LoggedInUser.Posts;
+                FacebookObjectCollection<Post> PostsWithMessage = getPostsWithMessage(posts);
+                listBoxPosts.Invoke(new Action(() => postBindingSource.DataSource = PostsWithMessage));
+                if (PostsWithMessage.Count == 0)
                 {
-                    FacebookObjectCollection<Post> Posts = m_LoggedInUser.Posts;
-                    FacebookObjectCollection<Post> PostsWithMessage = getPostsWithMessage(Posts);
-                    listBoxPosts.Invoke(new Action(() => postBindingSource.DataSource = PostsWithMessage));
-                }
-                else
-                {
-                    listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add("You didn't post anything yet.")));                  
+                    MessageBox.Show("You don't have posts with message yet.");
                 }
             }
             catch (Exception)
             {
-                listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add("Couldn't fetch your posts.")));
+                MessageBox.Show("Couldn't fetch your posts.");
             }
         }
 
@@ -162,38 +151,32 @@ namespace BasicFacebookFeatures.Forms
         {
             try
             {
-                if (m_LoggedInUser.Friends != null)
+                FacebookObjectCollection<User> friends = m_LoggedInUser.Friends;
+                listBoxFriends.Invoke(new Action(() => userFriendsBindingSource.DataSource = friends));
+                if (friends.Count == 0)
                 {
-                    FacebookObjectCollection<User> friends = m_LoggedInUser.Friends;
-                    listBoxFriends.Invoke(new Action(() => userFriendsBindingSource.DataSource = friends));
-                }
-                else
-                {
-                    listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Add("There are no facebook friends to show.")));
+                    MessageBox.Show("There are no facebook friends to show.");
                 }
             }
             catch (Exception)
             {
-                listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Add("Couldn't fetch your facebook friends.")));
+                MessageBox.Show("Couldn't fetch your facebook friends.");
             }
         }
         private void fetchYourAlbumsAndPopulateListBox()
         {
             try
             {
-                if (m_LoggedInUser.Albums != null)
+                FacebookObjectCollection<Album> albums = m_LoggedInUser.Albums;
+                listBoxAlbums.Invoke(new Action(() => albumBindingSource.DataSource = albums));
+                if (albums.Count == 0)
                 {
-                    FacebookObjectCollection<Album> albums = m_LoggedInUser.Albums;
-                    listBoxAlbums.Invoke(new Action(() => albumBindingSource.DataSource = albums));
-                }
-                else
-                {
-                    listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Add("There are no albums to show.")));
+                    MessageBox.Show("There are no albums to show.");
                 }
             }
             catch (Exception)
             {
-                listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Add("Couldn't fetch your albums.")));
+                MessageBox.Show("Couldn't fetch your albums.");
             }
         }
 
@@ -201,19 +184,16 @@ namespace BasicFacebookFeatures.Forms
         {
             try
             {
-                if (m_LoggedInUser.LikedPages != null)
+                FacebookObjectCollection<Page> likedPages = m_LoggedInUser.LikedPages;
+                listBoxLikePages.Invoke(new Action(() => likePagesBindingSource.DataSource = likedPages));
+                if (likedPages.Count == 0)
                 {
-                    FacebookObjectCollection<Page> likedPages = m_LoggedInUser.LikedPages;
-                    listBoxLikePages.Invoke(new Action(() => likePagesBindingSource.DataSource = likedPages));
-                }
-                else
-                {
-                    listBoxLikePages.Invoke(new Action(() => listBoxLikePages.Items.Add("There are no liked pages to show.")));
+                    MessageBox.Show("There are no liked pages to show.");
                 }
             }
             catch (Exception)
             {
-                listBoxLikePages.Invoke(new Action(() => listBoxLikePages.Items.Add("Couldn't fetch your liked pages.")));
+                MessageBox.Show("Couldn't fetch your liked pages.");
             }
         }
 
@@ -221,19 +201,16 @@ namespace BasicFacebookFeatures.Forms
         {
             try
             {
-                if (m_LoggedInUser.FavofriteTeams != null)
+                Page[] favoriteTeams = m_LoggedInUser.FavofriteTeams;
+                listBoxFavoriteTeams.Invoke(new Action(() => favoriteTeamsPageBindingSource.DataSource = favoriteTeams));
+                if (favoriteTeams.Length == 0)
                 {
-                    Page[] favoriteTeams = m_LoggedInUser.FavofriteTeams;
-                    listBoxFavoriteTeams.Invoke(new Action(() => favoriteTeamsPageBindingSource.DataSource = favoriteTeams));
-                }
-                else
-                {
-                    listBoxFavoriteTeams.Invoke(new Action(() => listBoxFavoriteTeams.Items.Add("There are no favorite teams to show.")));
+                    MessageBox.Show("There are no favorite teams to show.");
                 }
             }
             catch (Exception)
             {
-                listBoxFavoriteTeams.Invoke(new Action(() => listBoxFavoriteTeams.Items.Add("Couldn't fetch your favorite teams.")));
+                MessageBox.Show("Couldn't fetch your favorite teams.");
             }
         }
 
