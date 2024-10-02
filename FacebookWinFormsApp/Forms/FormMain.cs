@@ -52,12 +52,12 @@ namespace BasicFacebookFeatures.Forms
 
         private void loginUI()
         {
+            updateButtons();
             fetchHomePageDataAndDisplay();
         }
 
         private void fetchHomePageDataAndDisplay()
         {
-            fetchLoginUI();
             new Thread(fetchUserDataLoginUI).Start();
             new Thread(fetchUserDetailsAndDisplay).Start();
             new Thread(fetchPostNewStatusAndPopulateTextBox).Start();
@@ -68,7 +68,7 @@ namespace BasicFacebookFeatures.Forms
             new Thread(fetchYourFavoriteTeamsAndPopulateListBox).Start();
         }
 
-        private void fetchLoginUI()
+        private void updateButtons()
         {
             buttonLogin.Text = $"Logged in";
             buttonLogin.Enabled = false;
