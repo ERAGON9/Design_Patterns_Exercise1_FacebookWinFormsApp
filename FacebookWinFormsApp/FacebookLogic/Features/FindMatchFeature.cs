@@ -65,7 +65,7 @@ namespace BasicFacebookFeatures.FacebookLogic.Features
 
         public List<User> FindUserMatches()
         {
-            ReusableExceptionsChecks.throwExceptionIfUserLoginIsNull(UserLogin);
+            ReusableExceptionsChecks.ThrowExceptionIfUserLoginIsNull(UserLogin);
             FacebookObjectCollection<User> friends = UserLogin.Friends;
             List<User> potentialMatches = new List<User>();
 

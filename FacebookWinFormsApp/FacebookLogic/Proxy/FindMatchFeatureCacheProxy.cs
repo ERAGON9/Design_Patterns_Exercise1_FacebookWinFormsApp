@@ -69,7 +69,7 @@ namespace BasicFacebookFeatures.FacebookLogic.Proxy
 
         public List<User> FindUserMatches()
         {
-            ReusableExceptionsChecks.throwExceptionIfUserLoginIsNull(UserLogin);
+            ReusableExceptionsChecks.ThrowExceptionIfUserLoginIsNull(UserLogin);
             FacebookObjectCollection<User> friends = getFriendsFromCacheOrFromFacebokDB();
             List<User> potentialMatches = new List<User>();
 

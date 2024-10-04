@@ -14,7 +14,7 @@ namespace BasicFacebookFeatures.FacebookLogic.Features
 
         public T GetData(User i_SelectedFriend)
         {
-            ReusableExceptionsChecks.throwExceptionIfLoggedInUserOrSelectedFriendAreNull(LoggedInUser, i_SelectedFriend);
+            ReusableExceptionsChecks.ThrowExceptionIfLoggedInUserOrSelectedFriendAreNull(LoggedInUser, i_SelectedFriend);
 
             return OverViewStrategy.GetOverViewData(LoggedInUser, i_SelectedFriend);
         }

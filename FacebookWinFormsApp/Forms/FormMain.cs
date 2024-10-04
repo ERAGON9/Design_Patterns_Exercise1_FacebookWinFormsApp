@@ -134,17 +134,17 @@ namespace BasicFacebookFeatures.Forms
 
         private FacebookObjectCollection<Post> getPostsWithMessage(FacebookObjectCollection<Post> i_Posts)
         {
-            FacebookObjectCollection<Post> PostsWithMessage = new FacebookObjectCollection<Post>();
+            FacebookObjectCollection<Post> postsWithMessage = new FacebookObjectCollection<Post>();
 
             foreach (Post post in i_Posts)
             {
                 if (!string.IsNullOrEmpty(post.Message))
                 {
-                    PostsWithMessage.Add(post);
+                    postsWithMessage.Add(post);
                 }
             }
 
-            return PostsWithMessage;
+            return postsWithMessage;
         }
 
         private void fetchYourFriendsAndPopulateListBox()

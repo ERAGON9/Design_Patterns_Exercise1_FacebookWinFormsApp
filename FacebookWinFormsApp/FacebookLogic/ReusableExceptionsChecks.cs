@@ -9,7 +9,7 @@ namespace BasicFacebookFeatures.FacebookLogic
 {
     public static class ReusableExceptionsChecks
     {
-        public static void throwExceptionIfUserLoginIsNull(User i_UserLogin)
+        public static void ThrowExceptionIfUserLoginIsNull(User i_UserLogin)
         {
             if (i_UserLogin == null)
             {
@@ -17,7 +17,7 @@ namespace BasicFacebookFeatures.FacebookLogic
             }
         }
 
-        public static void throwExceptionIfLoggedInUserOrSelectedFriendAreNull(User i_LoggedInUser, User i_SelectedFriend)
+        public static void ThrowExceptionIfLoggedInUserOrSelectedFriendAreNull(User i_LoggedInUser, User i_SelectedFriend)
         {
             if (i_LoggedInUser == null || i_SelectedFriend == null)
             {

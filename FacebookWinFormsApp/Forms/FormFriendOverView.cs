@@ -83,12 +83,12 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void fetchCommentsNumberAndDisplay(User i_selectedFriend)
+        private void fetchCommentsNumberAndDisplay(User i_SelectedFriend)
         {
             try
             {
                 m_InteractionOverviewFeature.OverViewStrategy = new CommentsFromFriendStrategy();
-                int numberOfComments = m_InteractionOverviewFeature.GetData(i_selectedFriend);
+                int numberOfComments = m_InteractionOverviewFeature.GetData(i_SelectedFriend);
                 LabelCommentsNum.Text = numberOfComments.ToString();
             }
             catch (Exception ex)
@@ -98,12 +98,12 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void fetchLikesNumberAndDisplay(User i_selectedFriend)
+        private void fetchLikesNumberAndDisplay(User i_SelectedFriend)
         {
             try
             {
                 m_InteractionOverviewFeature.OverViewStrategy = new LikesFromFriendStrategy();
-                int numberOfLikes = m_InteractionOverviewFeature.GetData(i_selectedFriend);
+                int numberOfLikes = m_InteractionOverviewFeature.GetData(i_SelectedFriend);
                 LabelLikesNum.Text = numberOfLikes.ToString();
             }
             catch (Exception ex)
@@ -135,14 +135,14 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void showSimilarLanguages(User i_selectedFriend)
+        private void showSimilarLanguages(User i_SelectedFriend)
         {
             listBoxLanguages.DisplayMember = k_DefaultListBoxDisplayMember;
             listBoxLanguages.Items.Clear();
             try
             {
                 m_SimilaritiesOverviewFeature.OverViewStrategy = new SimilarLanguagesStrategy();
-                Page[] similarLanguages = m_SimilaritiesOverviewFeature.GetData(i_selectedFriend);
+                Page[] similarLanguages = m_SimilaritiesOverviewFeature.GetData(i_SelectedFriend);
 
                 if (similarLanguages.Length > 0)
                 {
@@ -159,14 +159,14 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void showMutualFriends(User selectedFriend)
+        private void showMutualFriends(User i_SelectedFriend)
         {
             listBoxMutualFriends.DisplayMember = k_DefaultListBoxDisplayMember;
             listBoxMutualFriends.Items.Clear();
             try
             {
                 m_MutualFriendsOverviewFeature.OverViewStrategy = new MutualFriendsStrategy();
-                User[] mutualFriends = m_MutualFriendsOverviewFeature.GetData(selectedFriend);
+                User[] mutualFriends = m_MutualFriendsOverviewFeature.GetData(i_SelectedFriend);
 
                 if (mutualFriends.Length > 0)
                 {
@@ -186,14 +186,14 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void showMutualLikedPages(User i_selectedFriend)
+        private void showMutualLikedPages(User i_SelectedFriend)
         {
             listBoxLikedPages.DisplayMember = k_DefaultListBoxDisplayMember;
             listBoxLikedPages.Items.Clear();
             try
             {
                 m_SimilaritiesOverviewFeature.OverViewStrategy = new MutualLikedPagesStrategy();
-                Page[] mutualLikedPages = m_SimilaritiesOverviewFeature.GetData(i_selectedFriend);
+                Page[] mutualLikedPages = m_SimilaritiesOverviewFeature.GetData(i_SelectedFriend);
 
                 if (mutualLikedPages.Length > 0)
                 {
@@ -213,14 +213,14 @@ namespace BasicFacebookFeatures.Forms
             }
         }
 
-        private void showSimilarSports(User i_selectedFriend)
+        private void showSimilarSports(User i_SelectedFriend)
         {
             listBoxSports.DisplayMember = k_DefaultListBoxDisplayMember;
             listBoxSports.Items.Clear();
             try
             {
                 m_SimilaritiesOverviewFeature.OverViewStrategy = new SimilarSportsStrategy();
-                Page[] similarSports = m_SimilaritiesOverviewFeature.GetData(i_selectedFriend);
+                Page[] similarSports = m_SimilaritiesOverviewFeature.GetData(i_SelectedFriend);
 
                 if (similarSports.Length > 0)
                 {
